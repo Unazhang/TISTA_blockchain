@@ -28,7 +28,7 @@ class Home extends Component {
     const accounts = await web3.eth.getAccounts()
     this.setState({ account: accounts[0] })
     console.log(accounts)
-    const XYZAddress = "0x4Dc973cF34CB1845f2F36491bdB6Fa622932c2B2" // Replace DAI Address Here
+    const XYZAddress = "0x8b0070828f11247Ed1f479927df558a199342239" // Replace DAI Address Here
     const daiTokenMock = new web3.eth.Contract(XYZ.abi, XYZAddress)
 
     this.setState({ daiTokenMock: daiTokenMock })
@@ -86,7 +86,7 @@ class Home extends Component {
                   const recipient = this.recipient.value
                   const amount = window.web3.utils.toWei(this.amount.value, 'Ether')
                   this.transfer(recipient, amount)
-                  
+
                 }}>
                   <div className="form-group mr-sm-2">
                     <input
@@ -116,14 +116,14 @@ class Home extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    { this.state.transactions.map((tx, key) => {
+                    {this.state.transactions.map((tx, key) => {
                       return (
                         <tr key={key} >
                           <td>{tx.returnValues.to}</td>
                           <td>{window.web3.utils.fromWei(tx.returnValues.value.toString(), 'Ether')}</td>
                         </tr>
                       )
-                    }) }
+                    })}
                   </tbody>
                 </table>
               </div>
