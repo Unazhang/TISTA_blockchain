@@ -11,7 +11,8 @@ function NavLink({
   children,
   to,
   activeOnlyWhenExact,
-  history
+  history,
+  onClick,
 }) {
   return (
     <Route
@@ -21,6 +22,7 @@ function NavLink({
         <ListItem
           onClick={() => {
             history.push(to);
+            onClick();
           }}
           button
           selected={Boolean(match)}

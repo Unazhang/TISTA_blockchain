@@ -1,4 +1,6 @@
 import React from "react";
+import { useHistory } from 'react-router-dom';
+
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -8,9 +10,13 @@ import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 // https://material-ui.com/style/icons/
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
 import HomeIcon from "@material-ui/icons/Home";
 import HelpIcon from "@material-ui/icons/HelpOutlined";
 import NavLink from "./NavLink";
+import authService from "../../service/authService";
 
 // https://material-ui.com/demos/drawers/#full-height-navigation
 const drawerWidth = 240;
@@ -40,7 +46,10 @@ const styles = theme => ({
 
 function MainLayout(props) {
   const { classes, children } = props;
-
+  const his = () => {
+    const history = useHistory();
+    history.push('/login');
+  }
   return (
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.appBar}>
@@ -71,6 +80,9 @@ function MainLayout(props) {
           </NavLink>
           <NavLink to="/transaction" icon={HelpIcon}>
             Transaction
+          </NavLink>
+          <NavLink to="/login" onClick={() => {authService.logOut();}} icon={HelpIcon}>
+            log out
           </NavLink>
         </List>
       </Drawer>
