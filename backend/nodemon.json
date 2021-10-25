@@ -1,0 +1,7 @@
+{
+    "env": {
+        "DB_USER": "Narujil",
+        "DB_PASSWORD": "Narujil",
+        "DB_NAME": "mytable"
+    }
+}
