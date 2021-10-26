@@ -1,13 +1,15 @@
 const Migrations = artifacts.require("Migrations");
-const DaiTokenMock = artifacts.require("DaiTokenMock");
+const XYZ = artifacts.require("XYZ");
 
 module.exports = async function(deployer) {
   await deployer.deploy(Migrations);
-  await deployer.deploy(DaiTokenMock);
-  const tokenMock = await DaiTokenMock.deployed()
+  await deployer.deploy(XYZ);
+
+  const tokenMock = await XYZ.deployed()
+
   // Mint 1,000 Dai Tokens for the deployer
   await tokenMock.mint(
-    '0x23711fF3eD42a36b2b70276Adc4deA19f72d2AEC',
-    '1000000000000000000000'
+    '0x847d2827188fA5Da7b4b20AaA3d5BbB449Cf0AFb',
+    '10000000000000000000000'
   )
 };

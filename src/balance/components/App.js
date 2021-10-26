@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import daiLogo from '../dai-logo.png';
 import './App.css';
 import Web3 from 'web3';
-import DaiTokenMock from '../abis/DaiTokenMock.json'
+import XYZ from '../abis/XYZ.json'
 
-class App extends Component {
+class Home extends Component {
   async componentWillMount() {
     await this.loadWeb3()
     await this.loadBlockchainData()
@@ -27,14 +27,17 @@ class App extends Component {
     const web3 = window.web3
     const accounts = await web3.eth.getAccounts()
     this.setState({ account: accounts[0] })
-    const daiTokenAddress = "0x7b729B07EcBDEd8879Acf997aAF6546926982830" // Replace DAI Address Here
-    const daiTokenMock = new web3.eth.Contract(DaiTokenMock.abi, daiTokenAddress)
+    console.log(accounts)
+    const XYZAddress = "0x4Dc973cF34CB1845f2F36491bdB6Fa622932c2B2" // Replace DAI Address Here
+    const daiTokenMock = new web3.eth.Contract(XYZ.abi, XYZAddress)
+
     this.setState({ daiTokenMock: daiTokenMock })
     const balance = await daiTokenMock.methods.balanceOf(this.state.account).call()
+
     this.setState({ balance: web3.utils.fromWei(balance.toString(), 'Ether') })
     const transactions = await daiTokenMock.getPastEvents('Transfer', { fromBlock: 0, toBlock: 'latest', filter: { from: this.state.account } })
     this.setState({ transactions: transactions })
-    console.log(transactions)
+    console.log(web3.utils.fromWei(balance.toString(), 'Ether'));
   }
 
   transfer(recipient, amount) {
@@ -83,6 +86,7 @@ class App extends Component {
                   const recipient = this.recipient.value
                   const amount = window.web3.utils.toWei(this.amount.value, 'Ether')
                   this.transfer(recipient, amount)
+                  
                 }}>
                   <div className="form-group mr-sm-2">
                     <input
@@ -131,4 +135,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Home;
