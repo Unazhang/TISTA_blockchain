@@ -12,7 +12,7 @@ function NavLink({
   to,
   activeOnlyWhenExact,
   history,
-  onClick,
+  handleClick,
 }) {
   return (
     <Route
@@ -22,7 +22,7 @@ function NavLink({
         <ListItem
           onClick={() => {
             history.push(to);
-            onClick();
+            handleClick && handleClick();
           }}
           button
           selected={Boolean(match)}

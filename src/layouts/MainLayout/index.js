@@ -81,7 +81,7 @@ function MainLayout(props) {
           <NavLink to="/transaction" icon={HelpIcon}>
             Transaction
           </NavLink>
-          <NavLink to="/login" onClick={() => {authService.logOut();}} icon={HelpIcon}>
+          <NavLink to="/login" handleClick={() => {authService.logOut();}} icon={HelpIcon}>
             log out
           </NavLink>
         </List>
