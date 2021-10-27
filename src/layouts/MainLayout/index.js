@@ -19,8 +19,14 @@ import Navbar from 'react-bootstrap/Navbar'
 import Send from "../../pages/Donation/send.js";
 import Controls from "../../controls/Controls";
 import Popup from "../../pages/Popup";
-
-
+import { useHistory } from 'react-router-dom';
+import Drawer from "@material-ui/core/Drawer";
+import List from "@material-ui/core/List";
+// https://material-ui.com/style/icons/
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import authService from "../../service/authService";
 
 // https://material-ui.com/demos/drawers/#full-height-navigation
 const drawerWidth = 240;
@@ -54,6 +60,10 @@ function MainLayout(props) {
   const { classes, children } = props;
   const [openPopup, setOpenDonate] = useState(false)
 
+  const his = () => {
+    const history = useHistory();
+    history.push('/login');
+  }
   return (
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.appBar}>
@@ -69,6 +79,9 @@ function MainLayout(props) {
           <NavLink to="/donation" icon={DonateIcon}>
             Donation
           </NavLink></div>
+          <NavLink to="/login" handleClick={() => {authService.logOut();}} icon={HelpIcon}>
+            log out
+          </NavLink>
           <div style={{ display: "flex", flex: 1 }} />
           <Button variant="contained" color="primary">Buy/Sell</Button>
           <Controls.Button

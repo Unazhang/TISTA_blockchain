@@ -33,7 +33,6 @@ class Home extends Component {
     const web3 = window.web3
     const accounts = await web3.eth.getAccounts()
     this.setState({ account: accounts[0] })
-    console.log(accounts)
     const XYZAddress = "0x8b0070828f11247Ed1f479927df558a199342239" // Replace DAI Address Here
     const daiTokenMock = new web3.eth.Contract(XYZ.abi, XYZAddress)
 

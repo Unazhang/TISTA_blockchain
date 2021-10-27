@@ -1,15 +1,1 @@
 /* Styles go here */
-.mainblock {
-    width:50%;
-    display:inline-block;
-    vertical-align:top;
-    margin-left: 2em;
-    margin-right: 2em;
-    margin-top: 5em;
-}
-#balanceCard {
-    width:40em;
-}
-#transactionTable {
-    width:50%;
-}
