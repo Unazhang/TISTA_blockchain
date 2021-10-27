@@ -3,6 +3,12 @@ import daiLogo from '../dai-logo.png';
 import './App.css';
 import Web3 from 'web3';
 import XYZ from '../abis/XYZ.json'
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from "@material-ui/core/Typography";
+import Paper from '@material-ui/core/Paper';
+import { Table , TableHead, TableRow, TableCell, TableBody} from '@material-ui/core';
+import HomeSend from './HomeSend';
 
 class Home extends Component {
   async componentWillMount() {
@@ -27,8 +33,7 @@ class Home extends Component {
     const web3 = window.web3
     const accounts = await web3.eth.getAccounts()
     this.setState({ account: accounts[0] })
-    console.log(accounts)
-    const XYZAddress = "0x4Dc973cF34CB1845f2F36491bdB6Fa622932c2B2" // Replace DAI Address Here
+    const XYZAddress = "0x8b0070828f11247Ed1f479927df558a199342239" // Replace DAI Address Here
     const daiTokenMock = new web3.eth.Contract(XYZ.abi, XYZAddress)
 
     this.setState({ daiTokenMock: daiTokenMock })
@@ -50,86 +55,69 @@ class Home extends Component {
       account: '',
       daiTokenMock: null,
       balance: 0,
-      transactions: []
+      transactions: [],
+      seen:false
     }
 
     this.transfer = this.transfer.bind(this)
   }
 
+  togglePop = () => {
+    this.setState({
+      seen: !this.state.seen
+    });
+  };
+
   render() {
     return (
       <div>
-        <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-          <a
-            className="navbar-brand col-sm-3 col-md-2 mr-0"
-            href="http://www.dappuniversity.com/bootcamp"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Dapp University
-          </a>
-        </nav>
-        <div className="container-fluid mt-5">
-          <div className="row">
-            <main role="main" className="col-lg-12 d-flex text-center">
-              <div className="content mr-auto ml-auto" style={{ width: "500px" }}>
-                <a
-                  href="http://www.dappuniversity.com/bootcamp"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img src={daiLogo} width="150" />
-                </a>
-                <h1>{this.state.balance} DAI</h1>
-                <form onSubmit={(event) => {
-                  event.preventDefault()
-                  const recipient = this.recipient.value
-                  const amount = window.web3.utils.toWei(this.amount.value, 'Ether')
-                  this.transfer(recipient, amount)
-                  
-                }}>
-                  <div className="form-group mr-sm-2">
-                    <input
-                      id="recipient"
-                      type="text"
-                      ref={(input) => { this.recipient = input }}
-                      className="form-control"
-                      placeholder="Recipient Address"
-                      required />
-                  </div>
-                  <div className="form-group mr-sm-2">
-                    <input
-                      id="amount"
-                      type="text"
-                      ref={(input) => { this.amount = input }}
-                      className="form-control"
-                      placeholder="Amount"
-                      required />
-                  </div>
-                  <button type="submit" className="btn btn-primary btn-block">Send</button>
-                </form>
-                <table className="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">Recipient</th>
-                      <th scope="col">value</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    { this.state.transactions.map((tx, key) => {
+          <div><Typography variant="h6" id="tableTitle" component="div">Home</Typography> </div>
+          <div>
+          <div className="mainblock" id="balanceCard">
+            <Card>
+              <CardContent>
+              <Typography variant="body2" color="textSecondary" component="p">balance</Typography>
+              <div>
+                <Typography variant="body2" color="textSecondary" component="p">DAI Balance</Typography>
+                <Typography gutterBottom variant="h5" component="h2">
+                {this.state.balance} DAI
+                </Typography>
+              </div>
+              <div>
+                <Typography variant="body2" color="textSecondary" component="p">USD Value</Typography>
+                <Typography gutterBottom variant="h5" component="h2">
+                $XXX
+                </Typography>
+              </div>
+              </CardContent>
+            </Card>
+            
+            <HomeSend/>
+          </div>
+          <div className="mainblock" id="transactionTable">
+          <Paper>
+              <Table aria-label="simple table">
+                <TableHead>
+                <Typography variant="h6" id="tableTitle" component="div">Transaction History</Typography>
+                  <TableRow>
+                    <TableCell align="right">Recipient Address</TableCell>
+                    <TableCell align="right">Amount</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  { this.state.transactions.map((tx, key) => {
                       return (
-                        <tr key={key} >
-                          <td>{tx.returnValues.to}</td>
-                          <td>{window.web3.utils.fromWei(tx.returnValues.value.toString(), 'Ether')}</td>
-                        </tr>
+                        <TableRow key={key}>
+                        <TableCell align="right">{tx.returnValues.to}</TableCell>
+                        <TableCell align="right">{window.web3.utils.fromWei(tx.returnValues.value.toString(), 'Ether')}</TableCell>
+                      </TableRow>
                       )
                     }) }
-                  </tbody>
-                </table>
-              </div>
-            </main>
+                </TableBody>
+              </Table>
+            </Paper>
           </div>
-        </div>
+          </div>
       </div>
     );
   }
