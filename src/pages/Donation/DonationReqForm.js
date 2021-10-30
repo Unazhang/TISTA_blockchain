@@ -8,6 +8,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import Typography from '@material-ui/core/Typography';
+
 
 
 const initialFValues = {
@@ -103,6 +105,7 @@ export default function DonationReqForm(props) {
                         options={accountServices.getAccountCollection()}
                         error={errors.accountid}
                     />
+                    <Typography variant="subtitle1">Photo Upload</Typography>
                     <UploadButtons />
 
                     <div>

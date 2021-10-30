@@ -27,6 +27,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import authService from "../../service/authService";
+import { Link } from 'react-router-dom';
 
 // https://material-ui.com/demos/drawers/#full-height-navigation
 const drawerWidth = 240;
@@ -92,7 +93,9 @@ function MainLayout(props) {
                     onClick={() => { setOpenDonate(true); }}
           />
           <IconButton><NotifIcon /></IconButton>
-          <IconButton><ProfileIcon /></IconButton>
+          <IconButton 
+              component={Link}
+              to='/profile'><ProfileIcon /></IconButton>
         </Toolbar>
       </AppBar>
 
