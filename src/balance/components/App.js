@@ -3,6 +3,7 @@ import daiLogo from '../dai-logo.png';
 import './App.css';
 import Web3 from 'web3';
 import XYZ from '../abis/XYZ.json'
+import { get } from "axios";
 
 class Home extends Component {
   async componentWillMount() {
@@ -56,6 +57,11 @@ class Home extends Component {
     this.transfer = this.transfer.bind(this)
   }
 
+  loadData = async () => {
+    const data = await get(`http://localhost:4000/app/test`);
+    console.log(data)
+  };
+
   render() {
     return (
       <div>
@@ -106,7 +112,7 @@ class Home extends Component {
                       placeholder="Amount"
                       required />
                   </div>
-                  <button type="submit" className="btn btn-primary btn-block">Send</button>
+                  <button onClick={this.loadData} type="submit" className="btn btn-primary btn-block">Send</button>
                 </form>
                 <table className="table">
                   <thead>
