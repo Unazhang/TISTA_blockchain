@@ -42,10 +42,4 @@ router.post('/donate', async (req, res) => {
         })
 })
 
-router.get('/test', function(req, res, next) {
-    res.json({
-        hello: '1'
-    })
-})
-
 module.exports = router

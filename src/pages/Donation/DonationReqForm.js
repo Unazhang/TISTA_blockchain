@@ -9,8 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Typography from '@material-ui/core/Typography';
-
-
+import axios from 'axios';
 
 const initialFValues = {
     title:'',
@@ -48,10 +47,18 @@ export default function DonationReqForm(props) {
         resetForm
     } = useForm(initialFValues, true, validate);
 
-    const handleSubmit = e => {
+    const handleSubmit = async e => {
         e.preventDefault()
         if (validate()) {
             // addOrEdit(values, resetForm);
+            console.log(values)
+            await axios.post('localhost:4000/app/request', {
+                amount: values.amount,
+                title: values.tile,
+                reason: values.reason,
+                description: values.description
+            })
+            resetForm()
         }
     }
 
