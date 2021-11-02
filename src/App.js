@@ -6,6 +6,7 @@ import { FAQ } from "./pages";
 import Home from './balance/components/App';
 import SignUp from "./signup/components/App";
 import Donate from "./donate/components/App";
+import Request from "./request/components/App";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/transaction" component={FAQ} />
           <Route path="/signup" component={SignUp} />
           <Route path="/donate" component={Donate} />
+          <Route path="/request" component={Request} />
         </MainLayout>
       </Switch>
     </Router>

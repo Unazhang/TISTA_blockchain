@@ -3,6 +3,7 @@ const express = require('express')
 const router = express.Router()
 const signUpTemplateCopy = require('../models/SignUpModels')
 const donateTemplateCopy = require('../models/DonateModels')
+const requestTemplateCopy = require('../models/RequestModels')
 const bcrypt = require('bcrypt')
 
 router.post('/signup', async (req, res) => {
@@ -34,6 +35,23 @@ router.post('/donate', async (req, res) => {
         payAccount: req.body.payAccount
     })
     donate.save()
+        .then(data => {
+            res.json(data)
+        })
+        .catch(error => {
+            res.json(error)
+        })
+})
+
+router.post('/request', async (req, res) => {
+
+    const request = new requestTemplateCopy({
+        amount: req.body.amount,
+        title: req.body.title,
+        reason: req.body.reason,
+        description: req.body.description
+    })
+    request.save()
         .then(data => {
             res.json(data)
         })

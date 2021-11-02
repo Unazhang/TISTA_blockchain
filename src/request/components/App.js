@@ -2,63 +2,62 @@ import React, { Component } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css"
 import axios from 'axios'
 
-class Donate extends Component {
+class Request extends Component {
     constructor() {
         super()
         this.state = {
-            receiver: '',
             amount: 0,
-            frequency: '',
-            payAccount: ''
+            title: '',
+            reason: '',
+            description: ''
         }
-        this.changeReceiver = this.changeReceiver.bind(this)
         this.changeAmount = this.changeAmount.bind(this)
-        this.changeFrequency = this.changeFrequency.bind(this)
-        this.changePayAccount = this.changePayAccount.bind(this)
+        this.changeTitle = this.changeTitle.bind(this)
+        this.changeReason = this.changeReason.bind(this)
+        this.changeDescription = this.changeDescription.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
     }
 
-    changeReceiver(event) {
-        this.setState({
-            receiver: event.target.value
-        })
-    }
     changeAmount(event) {
         this.setState({
             amount: event.target.value
         })
     }
-    changeFrequency(event) {
+    changeTitle(event) {
         this.setState({
-            frequency: event.target.value
+            title: event.target.value
         })
     }
-    changePayAccount(event) {
+    changeReason(event) {
         this.setState({
-            payAccount: event.target.value
+            reason: event.target.value
         })
     }
-
+    changeDescription(event) {
+        this.setState({
+            description: event.target.value
+        })
+    }
     onSubmit(event) {
         event.preventDefault()
 
         const registered = {
-            receiver: this.state.receiver,
             amount: this.state.amount,
-            frequency: this.state.frequency,
-            payAccount: this.state.payAccount
+            title: this.state.title,
+            reason: this.state.reason,
+            description: this.state.description
         }
 
-        axios.post('http://localhost:4000/app/donate', registered)
+        axios.post('http://localhost:4000/app/request', registered)
             .then(res => console.log(res.data))
 
         // Go back to home page
-        window.location = '/donate'
+        window.location = '/request'
         this.setState({
-            receiver: '',
             amount: 0,
-            frequency: '',
-            payAccount: ''
+            title: '',
+            reason: '',
+            description: ''
         })
     }
 
@@ -68,12 +67,6 @@ class Donate extends Component {
                 <div className='container'>
                     <div className='form-div'>
                         <form onSubmit={this.onSubmit}>
-                            <input type='text'
-                                placeholder='Receiver Identifier'
-                                onChange={this.changeReceiver}
-                                value={this.state.receiver}
-                                className='form-control form-group'
-                            />
                             <input type='number'
                                 placeholder='Amount(DAI)'
                                 onChange={this.changeAmount}
@@ -81,15 +74,21 @@ class Donate extends Component {
                                 className='form-control form-group'
                             />
                             <input type='text'
-                                placeholder='Frequency'
-                                onChange={this.changeFrequency}
-                                value={this.state.frequency}
+                                placeholder='Title'
+                                onChange={this.changeTitle}
+                                value={this.state.title}
                                 className='form-control form-group'
                             />
                             <input type='text'
-                                placeholder='Payment Account'
-                                onChange={this.changePayAccount}
-                                value={this.state.payAccount}
+                                placeholder='Reason'
+                                onChange={this.changeReason}
+                                value={this.state.reason}
+                                className='form-control form-group'
+                            />
+                            <input type='text'
+                                placeholder='Description'
+                                onChange={this.changeDescription}
+                                value={this.state.description}
                                 className='form-control form-group'
                             />
                             <input type='submit'
@@ -104,4 +103,4 @@ class Donate extends Component {
     }
 }
 
-export default Donate
+export default Request

@@ -1,19 +1,19 @@
 const mongoose = require('mongoose');
 
 const requestTemplate = new mongoose.Schema({
-    receiver: {
-        type: String,
-        required: true
-    },
     amount: {
         type: Number,
         required: true
     },
-    frequency: {
+    title: {
         type: String,
         required: true
     },
-    memo: {
+    reason: {
+        type: String,
+        required: true
+    },
+    description: {
         type: String,
         required: true
     },
