@@ -27,7 +27,7 @@ export default function DonationDraft() {
 
     const classes = useStyles();
     const [recordForEdit, setRecordForEdit] = useState(null)
-    const [setFilterFn] = useState({ fn: items => { return items; } })
+    const [filterFn, setFilterFn] = useState({ fn: items => { return items; } })
     const [openPopup, setOpenDonate] = useState(false)
     const [openDonreq, setDonreq] = useState(false);
 

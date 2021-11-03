@@ -17,6 +17,19 @@ import { Search } from "@material-ui/icons";
 import { Table , TableHead, TableRow, TableCell, TableBody} from '@material-ui/core';
 
 
+const Data = [
+  {name: 'Help Kids'},
+  {name: 'Help Kids'},
+  {name: 'Help Veterans'},
+  {name: 'Help Veterans'},
+  {name: 'Treat Cancer'},
+  {name: 'Treat Cancer'},
+  {name: 'Education Support'},
+  {name: 'Education Support'},
+  {name: 'Unintentional Injury'},
+  {name: 'Unintentional Injury'},
+  
+];
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -55,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
-    height:'75vh'
+    height:'100%',
   },
   pageContent: {
         margin: theme.spacing(5),
@@ -67,53 +80,90 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function DonationTab() {
-    
+  const [name, setName] = useState('');
+  const [found, setFound] = useState(Data);
+
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  const [setFilterFn] = useState({ fn: items => { return items; } })
-  let arr = [];
-    for (let i = 0; i < 4; i++) {
-        arr.push(
-        <Grid item xs={12} sm={6}>
-            <Card variant="outlined">
-                <CardActionArea>
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">Please Help</Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">Placeholder
-                    </Typography>
-                </CardContent>
-            </CardActionArea>
-            <CardActions>
-                <Button size="small" color="primary">Learn More</Button>
-            </CardActions>
-            </Card>
-        </Grid>);
-    }
+  const [filterFn, setFilterFn] = useState({ fn: items => { return items; } })
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
-  const handleSearch = e => {
-    let target = e.target;
-    setFilterFn({
-        fn: items => {
-            if (target.value == "")
-                return items;
-            else
-                return items.filter(x => x.fullName.toLowerCase().includes(target.value))
-        }
-    })
+  // let arr = [];
+  //   for (let i = 0; i < 2; i++) {
+  //       arr.push(
+  //       <Grid item xs={12} sm={6}>
+  //           <Card variant="outlined">
+  //               <CardActionArea>
+  //               <CardContent>
+  //                   <Typography id = "title" gutterBottom variant="h5" component="h2">Help Kids</Typography>
+  //                   <Typography variant="body2" color="textSecondary" component="p">Placeholder
+  //                   </Typography>
+  //               </CardContent>
+  //           </CardActionArea>
+  //           <CardActions>
+  //               <Button size="small" color="primary">Learn More</Button>
+  //           </CardActions>
+  //           </Card>
+  //       </Grid>);
+  //   }
+
+  //   for (let i = 2; i < 4; i++) {
+  //     arr.push(
+  //     <Grid item xs={12} sm={6}>
+  //         <Card variant="outlined">
+  //             <CardActionArea>
+  //             <CardContent>
+  //                 <Typography id = "title" gutterBottom variant="h5" component="h2">Help Veteran</Typography>
+  //                 <Typography variant="body2" color="textSecondary" component="p">Placeholder
+  //                 </Typography>
+  //             </CardContent>
+  //         </CardActionArea>
+  //         <CardActions>
+  //             <Button size="small" color="primary">Learn More</Button>
+  //         </CardActions>
+  //         </Card>
+  //     </Grid>);
+  // }
+
+const handleSearch = e => {
+  const keyword = e.target.value;
+  console.log("input is ",keyword)
+  if (keyword !== '') {
+    const results = Data.filter((d) => {
+      return d.name.toLowerCase().includes(keyword.toLowerCase());
+    });
+    
+    setFound(results);
+  } else {
+    setFound(Data);
+  }
+  setName(keyword);
+    // let target = e.target;
+    // setFilterFn({
+    //     fn: items => {
+    //         if (target.value === "")
+    //             return items;
+    //         else
+    //             return items.filter(x => x.title.toLowerCase().includes(target.value.toLowerCase()))
+    //     }
+    // })
 }
 
+const handleChange = (event, newValue) => {
+  setValue(newValue);
+};
+
   return (
+    
     <div className={classes.root}>
+
       <AppBar position="static">
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" centered>
           <Tab label="Community" {...a11yProps(0)} />
           <Tab label="Donation" {...a11yProps(1)} />
         </Tabs>
       </AppBar>
+      
       <TabPanel value={value} index={0}>
         <Toolbar>
             <Controls.Input
@@ -127,9 +177,45 @@ export default function DonationTab() {
                 onChange={handleSearch}
             />
             
+            
         </Toolbar>
         <Grid container spacing={3}>
-            {arr}
+
+          {/* {arr} */}
+          {found && found.length > 0 ? (
+            found.map((d) => (
+                    <Grid item xs={12} sm={6}>
+                    <Card variant="outlined">
+                        <CardActionArea>
+                        <CardContent>
+                            <Typography id = "title" gutterBottom variant="h5" component="h2">{d.name}</Typography>
+                            <Typography variant="body2" color="textSecondary" component="p">Placeholder
+                            </Typography>
+                        </CardContent>
+                    </CardActionArea>
+                    <CardActions>
+                        <Button size="small" color="primary">Learn More</Button>
+                    </CardActions>
+                    </Card>
+                </Grid>
+            ))
+          ) : (
+            <Grid item xs={12} sm={6}>
+                    <Card variant="outlined">
+                        <CardActionArea>
+                        <CardContent>
+                            <Typography id = "title" gutterBottom variant="h5" component="h2">No Result</Typography>
+                            <Typography variant="body2" color="textSecondary" component="p">Placeholder
+                            </Typography>
+                        </CardContent>
+                    </CardActionArea>
+                    <CardActions>
+                        <Button size="small" color="primary">Learn More</Button>
+                    </CardActions>
+                    </Card>
+                </Grid>
+          )}
+
         </Grid>
       </TabPanel>
       <TabPanel value={value} index={1}>
@@ -154,5 +240,8 @@ export default function DonationTab() {
         </Table>
       </TabPanel>
     </div>
+    
   );
 }
+
+
