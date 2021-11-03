@@ -79,7 +79,7 @@ export default function DonationTab() {
     const fetchDonations = async () => {
       try {
         const result = await axios.get(`${API_BASE_URL}/app/donation`);
-        setEvents(result);
+        setEvents(result.data);
         console.log(result);
       } catch (error) {
         console.log('error')
@@ -93,8 +93,8 @@ export default function DonationTab() {
         <Card variant="outlined">
           <CardActionArea>
             <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">events[i].title</Typography>
-              <Typography variant="body2" color="textSecondary" component="p">events[i].description
+              <Typography gutterBottom variant="h5" component="h2">{events[i].title}</Typography>
+              <Typography variant="body2" color="textSecondary" component="p">{events[i].description}
               </Typography>
             </CardContent>
           </CardActionArea>
