@@ -9,14 +9,13 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Typography from '@material-ui/core/Typography';
-
-
+import axios from 'axios';
 
 const initialFValues = {
-    title:'',
-    amount:'',
-    description:'',
-    accountid:''
+    title: '',
+    amount: 0,
+    description: '',
+    accountid: ''
 }
 export default function DonationReqForm(props) {
     const { addOrEdit, recordForEdit } = props
@@ -24,11 +23,11 @@ export default function DonationReqForm(props) {
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
         if ('title' in fieldValues)
-        temp.title = fieldValues.title.length > 0 ? "" : "This field is required."
+            temp.title = fieldValues.title.length > 0 ? "" : "This field is required."
         if ('description' in fieldValues)
-        temp.description = fieldValues.description.length > 0 ? "" : "This field is required."
+            temp.description = fieldValues.description.length > 0 ? "" : "This field is required."
         if ('amount' in fieldValues)
-        temp.amount = fieldValues.amount.length > 0 ? "" : "This field is required."
+            temp.amount = fieldValues.amount.length > 0 ? "" : "This field is required."
         if ('accountid' in fieldValues)
             temp.accountid = fieldValues.accountid.length != 0 ? "" : "This field is required."
         setErrors({
@@ -52,6 +51,12 @@ export default function DonationReqForm(props) {
         e.preventDefault()
         if (validate()) {
             // addOrEdit(values, resetForm);
+            axios.post('http://localhost:4000/app/request', {
+                amount: values.amount,
+                title: values.title,
+                description: values.description
+            })
+            resetForm()
         }
     }
 
@@ -83,9 +88,9 @@ export default function DonationReqForm(props) {
                     <FormControl variant="outlined">
                         <InputLabel id="demo-simple-select-label">Reason</InputLabel>
                         <Select>
-                        <MenuItem value={10}>PlaceHolder</MenuItem>
-                        <MenuItem value={20}>PlaceHolder</MenuItem>
-                        <MenuItem value={30}>PlaceHolder</MenuItem>
+                            <MenuItem value={10}>PlaceHolder</MenuItem>
+                            <MenuItem value={20}>PlaceHolder</MenuItem>
+                            <MenuItem value={30}>PlaceHolder</MenuItem>
                         </Select>
                     </FormControl>
                     <Controls.Input
