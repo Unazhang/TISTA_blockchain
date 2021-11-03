@@ -11,7 +11,7 @@ const requestTemplate = new mongoose.Schema({
     },
     reason: {
         type: String,
-        required: true
+        required: false
     },
     description: {
         type: String,

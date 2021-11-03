@@ -4,6 +4,7 @@ const router = express.Router()
 const signUpTemplateCopy = require('../models/SignUpModels')
 const donateTemplateCopy = require('../models/DonateModels')
 const requestTemplateCopy = require('../models/RequestModels')
+const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 
 router.post('/signup', async (req, res) => {
@@ -60,5 +61,10 @@ router.post('/request', async (req, res) => {
         })
 })
 
+router.get('/donation', async (req, res) => {
+    console.log("requesttable");
+    // requesttable = mongoose.model("Requests", requestTemplateCopy);
+    // console.log(requesttable.find());
+})
 
 module.exports = router
