@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -72,14 +73,27 @@ export default function DonationTab() {
   const [value, setValue] = React.useState(0);
   const [setFilterFn] = useState({ fn: items => { return items; } })
   let arr = [];
-    for (let i = 0; i < 4; i++) {
+  const [events, setEvents] = useState([]);
+  const API_BASE_URL = `https://localhost:4000`;
+  useEffect(() => {
+    const fetchDonations = async () => {
+      try {
+        const result = await axios.get(`${API_BASE_URL}/app/`);
+        setEvents(result);
+      } catch (error) {
+        console.log('error')
+      }
+    };
+    fetchDonations();
+  }, []);
+    for (let i = 0; i < events.length; i++) {
         arr.push(
         <Grid item xs={12} sm={6}>
             <Card variant="outlined">
                 <CardActionArea>
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">Please Help</Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">Placeholder
+                    <Typography gutterBottom variant="h5" component="h2">events[i].title</Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">events[i].description
                     </Typography>
                 </CardContent>
             </CardActionArea>
@@ -98,7 +112,7 @@ export default function DonationTab() {
     let target = e.target;
     setFilterFn({
         fn: items => {
-            if (target.value == "")
+            if (target.value === "")
                 return items;
             else
                 return items.filter(x => x.fullName.toLowerCase().includes(target.value))
