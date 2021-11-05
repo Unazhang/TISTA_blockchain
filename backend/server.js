@@ -7,7 +7,7 @@ const cors = require('cors')
 
 // To avoid typing username and password explicitly when connecting
 dotenv.config()
-mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.cut3w.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`)
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.${process.env.DB_IDENTIFIER}.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`)
     .then(() => console.log("Database connected"))
     .catch(() => console.log("Connection failed"));
 
