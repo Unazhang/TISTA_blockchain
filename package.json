@@ -38,7 +38,7 @@
     "web3": "1.0.0-beta.55"
   },
   "scripts": {
-    "start": "react-app-rewired start",
+    "start": "react-scripts start",
     "build": "react-scripts react-app-rewired build",
     "test": "react-scripts react-app-rewired test",
     "eject": "react-scripts react-app-rewired eject"

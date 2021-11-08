@@ -22,12 +22,6 @@ import { donationStore } from "../../stores/DonationStore";
 
 const TabPanel = observer((props) => {
   const { children, value, index, ...other } = props;
-  useEffect(() => {
-    autorun(() => {
-      console.log("There are now  ", donationStore.isUpdate, " users");
-      donationStore.isUpdate = false;
-    });
-  })
   return (
     <div
       role="tabpanel"
@@ -81,16 +75,23 @@ export default function DonationTab() {
   let arr = [];
   const [events, setEvents] = useState([]);
   const API_BASE_URL = `http://localhost:4000`;
+
+  autorun(() => {
+    donationStore.isUpdate = false;
+    console.log(donationStore.isUpdate)
+    fetchDonations();
+  });
+
+  const fetchDonations = async () => {
+    try {
+      const result = await axios.get(`${API_BASE_URL}/app/donation`);
+      setEvents(result.data);
+    } catch (error) {
+      console.log('error')
+    }
+  };
+
   useEffect(() => {
-    const fetchDonations = async () => {
-      try {
-        const result = await axios.get(`${API_BASE_URL}/app/donation`);
-        setEvents(result.data);
-        console.log(result);
-      } catch (error) {
-        console.log('error')
-      }
-    };
     fetchDonations();
   }, []);
   for (let i = 0; i < events.length; i++) {
