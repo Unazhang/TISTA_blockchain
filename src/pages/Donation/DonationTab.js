@@ -16,12 +16,18 @@ import { makeStyles, Toolbar, InputAdornment } from '@material-ui/core';
 import Controls from '../../controls/Controls';
 import { Search } from "@material-ui/icons";
 import { Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core';
+import { autorun } from "mobx";
+import { observer } from 'mobx-react-lite'
+import { donationStore } from "../../stores/DonationStore";
 
-
-
-function TabPanel(props) {
+const TabPanel = observer((props) => {
   const { children, value, index, ...other } = props;
-
+  useEffect(() => {
+    autorun(() => {
+      console.log("There are now  ", donationStore.isUpdate, " users");
+      donationStore.isUpdate = false;
+    });
+  })
   return (
     <div
       role="tabpanel"
@@ -37,7 +43,7 @@ function TabPanel(props) {
       )}
     </div>
   );
-}
+});
 
 TabPanel.propTypes = {
   children: PropTypes.node,
