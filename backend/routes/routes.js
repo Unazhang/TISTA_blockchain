@@ -13,10 +13,14 @@ router.post('/signup', async (req, res) => {
     const securePassword = await bcrypt.hash(req.body.password, saltPassword)
 
     const signedUpUser = new signUpTemplateCopy({
+        // accounts: req.body.accounts,
+        // donateTo: req.body.donateTo,
+        // donateAddress: req.body.donateAddress,
         fullName: req.body.fullName,
         username: req.body.username,
         email: req.body.email,
         password: securePassword
+
     })
     signedUpUser.save()
         .then(data => {
@@ -47,6 +51,8 @@ router.post('/donate', async (req, res) => {
 router.post('/request', async (req, res) => {
 
     const request = new requestTemplateCopy({
+        requestId: req.body.requestId,
+        userId: req.body.userId,
         amount: req.body.amount,
         title: req.body.title,
         reason: req.body.reason,

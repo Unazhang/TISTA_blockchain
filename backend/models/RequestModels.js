@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 
 const requestTemplate = new mongoose.Schema({
+    userId: String,
+    requestId: String,
+    currentAmount: Number,
     amount: {
         type: Number,
         required: true
@@ -22,5 +25,10 @@ const requestTemplate = new mongoose.Schema({
         default: Date.now
     }
 })
+
+requestTemplate.pre('save', function (next) {
+    this.currentAmount = this.get('amount');
+    next();
+});
 
 module.exports = mongoose.model('requesttable', requestTemplate)

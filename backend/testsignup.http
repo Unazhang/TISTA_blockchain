@@ -5,5 +5,8 @@ Content-Type: application/json
     "fullName": "Keith",
     "username": "kz",
     "email": "k@mail.com",
-    "password": "ethwallet"
+    "password": "ethwallet",
+    "accounts": ["acc1"],
+    "donateTo": [["acc2", 999]],
+    "donateAddress": "addr1"
 }
