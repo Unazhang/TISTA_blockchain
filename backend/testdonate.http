@@ -2,8 +2,6 @@ POST http://localhost:4000/app/donate
 Content-Type: application/json
 
 {
-    "receiver": "jyc",
-    "amount": 100,
-    "frequency": "weekly",
-    "payAccount": "ethwallet"
+    "blockchainAddress": "abc",
+    "amount": 10
 }
