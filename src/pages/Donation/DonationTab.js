@@ -94,23 +94,22 @@ export default function DonationTab() {
   useEffect(() => {
     fetchDonations();
   }, []);
-  for (let i = 0; i < events.length; i++) {
+  // for (let i = 0; i < events.length; i++) {
     arr.push(
       <Grid item xs={12} sm={6}>
         <Card variant="outlined">
           <CardActionArea>
             <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">{events[i].title}</Typography>
-              <Typography variant="body2" color="textSecondary" component="p">{events[i].description}
+              <Typography gutterBottom variant="h5" component="h2">Please Help</Typography>
+              <Typography gutterBottom variant="h5" component="h3">$500/1000</Typography>
+              <Typography variant="body2" color="textSecondary" component="p">description placeholder
               </Typography>
+
             </CardContent>
           </CardActionArea>
-          <CardActions>
-            <Button size="small" color="primary">Learn More</Button>
-          </CardActions>
         </Card>
       </Grid>);
-  }
+  // }
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
