@@ -5,7 +5,7 @@ const signUpTemplate = new mongoose.Schema({
         type: String,
         required: true
     },
-    username: {
+    userName: {
         type: String,
         required: true
     },

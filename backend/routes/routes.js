@@ -17,7 +17,7 @@ router.post('/signup', async (req, res) => {
         // donateTo: req.body.donateTo,
         // donateAddress: req.body.donateAddress,
         fullName: req.body.fullName,
-        username: req.body.username,
+        userName: req.body.userName,
         email: req.body.email,
         password: securePassword
 
