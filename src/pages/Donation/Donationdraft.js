@@ -7,6 +7,7 @@ import Popup from "../Popup";
 import Send from "./send.js";
 import DonationTab from './DonationTab';
 import Typography from "@material-ui/core/Typography";
+import DetectAccount from './DetectAccount';
 
 const useStyles = makeStyles(theme => ({
     pageContent: {
@@ -90,6 +91,7 @@ export default function DonationDraft() {
             <DonationReqForm
                 recordForEdit={recordForEdit}
                 addOrEdit={addOrEdit} />
+                <DetectAccount/>
         </Popup>
         </>
     )

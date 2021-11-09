@@ -29,7 +29,7 @@ class Home extends Component {
     }
   }
 
-  async loadBlockchainData() {
+  async loadBlockchainData() { 
     const web3 = window.web3
     const accounts = await web3.eth.getAccounts()
     this.setState({ account: accounts[0] })
@@ -42,6 +42,7 @@ class Home extends Component {
     this.setState({ balance: web3.utils.fromWei(balance.toString(), 'Ether') })
     const transactions = await daiTokenMock.getPastEvents('Transfer', { fromBlock: 0, toBlock: 'latest', filter: { from: this.state.account } })
     this.setState({ transactions: transactions })
+    console.log(transactions);
     console.log(web3.utils.fromWei(balance.toString(), 'Ether'));
   }
 
