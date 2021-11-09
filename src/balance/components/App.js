@@ -3,6 +3,7 @@ import daiLogo from '../dai-logo.png';
 import './App.css';
 import Web3 from 'web3';
 import XYZ from '../abis/XYZ.json'
+import { get } from "axios";
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from "@material-ui/core/Typography";
