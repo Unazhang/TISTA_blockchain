@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "tistathetajieyu-2bbfb"
-  }
+    "default": "tistathetajieyu-2bbfb",
+    "theta": "thetatistablockchain"
+  },
+  "targets": {}
 }

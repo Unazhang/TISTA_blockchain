@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import DonationReqForm from "./DonationReqForm";
-import {makeStyles} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import Controls from "../../controls/Controls";
 import AddIcon from '@material-ui/icons/Add';
 import Popup from "../Popup";
@@ -18,8 +18,8 @@ const useStyles = makeStyles(theme => ({
         width: '75%'
     },
     newButton: {
-        verticalAlign:'top',
-        top:0
+        verticalAlign: 'top',
+        top: 0
     }
 }))
 
@@ -54,34 +54,26 @@ export default function DonationDraft() {
 
     return (
         <>
-        <div><Typography variant="h6" id="tableTitle" component="div">Donation</Typography> </div>
-        <div style={{width:'80%'}}>
-            <DonationTab />
-        </div>
+            <div><Typography variant="h6" id="tableTitle" component="div">Donation</Typography> </div>
+            <div style={{ width: '80%' }}>
+                <DonationTab />
+            </div>
 
-        <div >
-        <Controls.Button
+            <div >
+                <Controls.Button
                     text="Request Donation"
                     variant="outlined"
                     startIcon={<AddIcon />}
                     className={classes.newButton}
-                    onClick={() => { setDonreq(true);}}
-        />
-        <Controls.Button
+                    onClick={() => { setDonreq(true); }}
+                />
+                <Controls.Button
                     text="Donate"
                     variant="contained"
                     className={classes.newButton}
                     onClick={() => { setOpenDonate(true); }}
-        />
-        </div>
-            
-        <Popup
-            title="Donate"
-            open={openPopup}
-            handleClose={setOpenDonate}
-        >
-            <Send/>
-        </Popup>
+                />
+            </div>
 
         <Popup
             title="Request Donation"
@@ -93,6 +85,13 @@ export default function DonationDraft() {
                 addOrEdit={addOrEdit} />
                 <DetectAccount/>
         </Popup>
+        <Popup
+                title="Donate"
+                open={openPopup}
+                handleClose={setOpenDonate}
+            >
+                <Send />
+            </Popup>
         </>
     )
 }

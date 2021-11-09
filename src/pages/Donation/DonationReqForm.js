@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Grid, } from '@material-ui/core';
 import Controls from "../../controls/Controls";
 import { useForm, Form } from '../useForm';
@@ -10,24 +10,26 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Typography from '@material-ui/core/Typography';
 
+import axios from 'axios';
+import {donationStore} from "../../stores/DonationStore";
 
 const initialFValues = {
-    title:'',
-    amount:'',
-    description:'',
-    accountid:''
+    title: '',
+    amount: 0,
+    description: '',
+    accountid: ''
 }
 export default function DonationReqForm(props) {
     const { addOrEdit, recordForEdit } = props
-
+    console.log('测试',donationStore.isUpdate)
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
         if ('title' in fieldValues)
-        temp.title = fieldValues.title.length > 0 ? "" : "This field is required."
+            temp.title = fieldValues.title.length > 0 ? "" : "This field is required."
         if ('description' in fieldValues)
-        temp.description = fieldValues.description.length > 0 ? "" : "This field is required."
+            temp.description = fieldValues.description.length > 0 ? "" : "This field is required."
         if ('amount' in fieldValues)
-        temp.amount = fieldValues.amount.length > 0 ? "" : "This field is required."
+            temp.amount = fieldValues.amount.length > 0 ? "" : "This field is required."
         if ('accountid' in fieldValues)
             temp.accountid = fieldValues.accountid.length != 0 ? "" : "This field is required."
         setErrors({
@@ -51,6 +53,13 @@ export default function DonationReqForm(props) {
         e.preventDefault()
         if (validate()) {
             // addOrEdit(values, resetForm);
+            axios.post('http://localhost:4000/app/request', {
+                amount: values.amount,
+                title: values.title,
+                description: values.description
+            })
+            donationStore.isUpdate = true;
+            resetForm()
         }
     }
 
@@ -83,9 +92,9 @@ export default function DonationReqForm(props) {
                     <FormControl variant="outlined">
                         <InputLabel id="demo-simple-select-label">Reason</InputLabel>
                         <Select>
-                        <MenuItem value={10}>PlaceHolder</MenuItem>
-                        <MenuItem value={20}>PlaceHolder</MenuItem>
-                        <MenuItem value={30}>PlaceHolder</MenuItem>
+                            <MenuItem value={10}>PlaceHolder</MenuItem>
+                            <MenuItem value={20}>PlaceHolder</MenuItem>
+                            <MenuItem value={30}>PlaceHolder</MenuItem>
                         </Select>
                     </FormControl>
                     <Controls.Input
