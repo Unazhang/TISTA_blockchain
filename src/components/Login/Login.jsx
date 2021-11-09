@@ -93,7 +93,6 @@ export default function SignInSide(props) {
         authService.doLogIn(account.username);
         setAccount({username:"",password:""});
         props.history.push("/home");
-
       }
   };
 
