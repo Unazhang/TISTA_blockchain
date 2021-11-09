@@ -16,6 +16,9 @@ import { makeStyles, Toolbar, InputAdornment } from '@material-ui/core';
 import Controls from '../../controls/Controls';
 import { Search } from "@material-ui/icons";
 import { Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core';
+import { autorun } from "mobx";
+import { observer } from 'mobx-react-lite'
+import { donationStore } from "../../stores/DonationStore";
 
 
 const Data = [
@@ -34,7 +37,6 @@ const Data = [
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"
@@ -50,7 +52,7 @@ function TabPanel(props) {
       )}
     </div>
   );
-}
+};
 
 TabPanel.propTypes = {
   children: PropTypes.node,
@@ -91,16 +93,23 @@ export default function DonationTab() {
   let arr = [];
   const [events, setEvents] = useState([]);
   const API_BASE_URL = `http://localhost:4000`;
+
+  autorun(() => {
+    donationStore.isUpdate = false;
+    console.log(donationStore.isUpdate)
+    fetchDonations();
+  });
+
+  const fetchDonations = async () => {
+    try {
+      const result = await axios.get(`${API_BASE_URL}/app/donation`);
+      setEvents(result.data);
+    } catch (error) {
+      console.log('error')
+    }
+  };
+
   useEffect(() => {
-    const fetchDonations = async () => {
-      try {
-        const result = await axios.get(`${API_BASE_URL}/app/donation`);
-        setEvents(result);
-        console.log(result);
-      } catch (error) {
-        console.log('error')
-      }
-    };
     fetchDonations();
   }, []);
   for (let i = 0; i < events.length; i++) {
@@ -109,8 +118,8 @@ export default function DonationTab() {
         <Card variant="outlined">
           <CardActionArea>
             <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">events[i].title</Typography>
-              <Typography variant="body2" color="textSecondary" component="p">events[i].description
+              <Typography gutterBottom variant="h5" component="h2">{events[i].title}</Typography>
+              <Typography variant="body2" color="textSecondary" component="p">{events[i].description}
               </Typography>
             </CardContent>
           </CardActionArea>

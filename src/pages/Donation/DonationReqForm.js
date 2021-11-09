@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Grid, } from '@material-ui/core';
 import Controls from "../../controls/Controls";
 import { useForm, Form } from '../useForm';
@@ -9,7 +9,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Typography from '@material-ui/core/Typography';
+
 import axios from 'axios';
+import {donationStore} from "../../stores/DonationStore";
 
 const initialFValues = {
     title: '',
@@ -19,7 +21,7 @@ const initialFValues = {
 }
 export default function DonationReqForm(props) {
     const { addOrEdit, recordForEdit } = props
-
+    console.log('测试',donationStore.isUpdate)
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
         if ('title' in fieldValues)
@@ -56,6 +58,7 @@ export default function DonationReqForm(props) {
                 title: values.title,
                 description: values.description
             })
+            donationStore.isUpdate = true;
             resetForm()
         }
     }
@@ -68,6 +71,7 @@ export default function DonationReqForm(props) {
     }, [recordForEdit])
 
     return (
+        
         <Form onSubmit={handleSubmit}>
             <Grid container>
                 <Grid item xs={6}>
@@ -125,5 +129,6 @@ export default function DonationReqForm(props) {
                 </Grid>
             </Grid>
         </Form>
+       
     )
 }
