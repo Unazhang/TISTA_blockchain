@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -14,7 +15,7 @@ import Button from "@material-ui/core/Button";
 import { makeStyles, Toolbar, InputAdornment } from '@material-ui/core';
 import Controls from '../../controls/Controls';
 import { Search } from "@material-ui/icons";
-import { Table , TableHead, TableRow, TableCell, TableBody} from '@material-ui/core';
+import { Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core';
 
 
 const Data = [
@@ -71,12 +72,12 @@ const useStyles = makeStyles((theme) => ({
     height:'100%',
   },
   pageContent: {
-        margin: theme.spacing(5),
-        padding: theme.spacing(3)
-    },
-    searchInput: {
-        width: '100%'
-    }
+    margin: theme.spacing(5),
+    padding: theme.spacing(3)
+  },
+  searchInput: {
+    width: '100%'
+  }
 }));
 
 export default function DonationTab() {
@@ -86,6 +87,39 @@ export default function DonationTab() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const [filterFn, setFilterFn] = useState({ fn: items => { return items; } })
+
+  let arr = [];
+  const [events, setEvents] = useState([]);
+  const API_BASE_URL = `http://localhost:4000`;
+  useEffect(() => {
+    const fetchDonations = async () => {
+      try {
+        const result = await axios.get(`${API_BASE_URL}/app/donation`);
+        setEvents(result);
+        console.log(result);
+      } catch (error) {
+        console.log('error')
+      }
+    };
+    fetchDonations();
+  }, []);
+  for (let i = 0; i < events.length; i++) {
+    arr.push(
+      <Grid item xs={12} sm={6}>
+        <Card variant="outlined">
+          <CardActionArea>
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">events[i].title</Typography>
+              <Typography variant="body2" color="textSecondary" component="p">events[i].description
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+          <CardActions>
+            <Button size="small" color="primary">Learn More</Button>
+          </CardActions>
+        </Card>
+      </Grid>);
+  }
 
 
   // let arr = [];
@@ -148,6 +182,7 @@ const handleSearch = e => {
     //     }
     // })
 }
+
 
 const handleChange = (event, newValue) => {
   setValue(newValue);
