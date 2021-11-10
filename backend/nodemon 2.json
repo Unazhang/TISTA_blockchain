@@ -1,8 +1,0 @@
-{
-    "env": {
-        "DB_USER": "Narujil",
-        "DB_PASSWORD": "Narujil",
-        "DB_IDENTIFIER": "n1ftt",
-        "DB_NAME": "mytable"
-    }
-}
