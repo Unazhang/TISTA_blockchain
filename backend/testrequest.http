@@ -7,5 +7,6 @@ Content-Type: application/json
     "amount": 100,
     "title": "test",
     "reason": "test",
-    "description": "test"
+    "description": "test",
+    "blockchainAddress": "abc"
 } 

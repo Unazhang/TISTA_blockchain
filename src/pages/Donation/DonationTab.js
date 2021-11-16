@@ -103,6 +103,7 @@ export default function DonationTab() {
   const fetchDonations = async () => {
     try {
       const result = await axios.get(`${API_BASE_URL}/app/donation`);
+      console.log('donation', result)
       setEvents(result.data);
     } catch (error) {
       console.log('error')
@@ -168,34 +169,34 @@ export default function DonationTab() {
   //     </Grid>);
   // }
 
-const handleSearch = e => {
-  const keyword = e.target.value;
-  console.log("input is ",keyword)
-  if (keyword !== '') {
-    const results = Data.filter((d) => {
-      return d.name.toLowerCase().includes(keyword.toLowerCase());
-    });
-    
-    setFound(results);
-  } else {
-    setFound(Data);
+  const handleSearch = e => {
+    const keyword = e.target.value;
+    console.log("input is ",keyword)
+    if (keyword !== '') {
+      const results = Data.filter((d) => {
+        return d.name.toLowerCase().includes(keyword.toLowerCase());
+      });
+      
+      setFound(results);
+    } else {
+      setFound(Data);
+    }
+    setName(keyword);
+      // let target = e.target;
+      // setFilterFn({
+      //     fn: items => {
+      //         if (target.value === "")
+      //             return items;
+      //         else
+      //             return items.filter(x => x.title.toLowerCase().includes(target.value.toLowerCase()))
+      //     }
+      // })
   }
-  setName(keyword);
-    // let target = e.target;
-    // setFilterFn({
-    //     fn: items => {
-    //         if (target.value === "")
-    //             return items;
-    //         else
-    //             return items.filter(x => x.title.toLowerCase().includes(target.value.toLowerCase()))
-    //     }
-    // })
-}
 
 
-const handleChange = (event, newValue) => {
-  setValue(newValue);
-};
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   return (
     
@@ -225,8 +226,8 @@ const handleChange = (event, newValue) => {
         </Toolbar>
         <Grid container spacing={3}>
 
-          {/* {arr} */}
-          {found && found.length > 0 ? (
+          {arr}
+          {/* {found && found.length > 0 ? (
             found.map((d) => (
                     <Grid item xs={12} sm={6}>
                     <Card variant="outlined">
@@ -258,7 +259,7 @@ const handleChange = (event, newValue) => {
                     </CardActions>
                     </Card>
                 </Grid>
-          )}
+          )} */}
 
         </Grid>
       </TabPanel>
