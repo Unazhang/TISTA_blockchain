@@ -21,7 +21,6 @@ const initialFValues = {
 }
 export default function DonationReqForm(props) {
     const { addOrEdit, recordForEdit } = props
-    console.log('测试',donationStore.isUpdate)
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
         if ('title' in fieldValues)
@@ -56,7 +55,8 @@ export default function DonationReqForm(props) {
             axios.post('http://localhost:4000/app/request', {
                 amount: values.amount,
                 title: values.title,
-                description: values.description
+                description: values.description,
+                blockchainAddress: localStorage.getItem('blockchainAddress')
             })
             donationStore.isUpdate = true;
             resetForm()
