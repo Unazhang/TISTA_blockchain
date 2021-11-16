@@ -17,7 +17,7 @@ export default function HomeSend() {
                         backgroundColor: "#FD8024",
                         padding: "18px 36px",
                         fontSize: "30px",
-                        width:500,
+                        width:450,
                         height:120,
                         marginTop:130,
                         display: "block",

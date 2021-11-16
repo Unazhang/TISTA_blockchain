@@ -74,15 +74,19 @@ class Home extends Component {
     return (
       <div>
           <div><Typography variant="h6" id="tableTitle" component="div">Home</Typography> </div>
+          
           <div className="mainblockContain">
           <div className="mainblock" id="balance">
+            <div style={{marginBottom:"50px", marginLeft:"30px"}}>
+              <p className="darkp" >Welcome Back!</p>
+            </div>
             <Card id="balanceCard">
               <CardContent>
               <p className="darkp">Balance</p>
               <div className="cardMain">
                 <div className="cardContent">
                   <p className="cardHead">DAI Balance</p>
-                  <p gutterBottom className="darkp" style={{fontSize:"3.0rem"}}>
+                  <p gutterBottom className="darkp">
                   {this.state.balance} DAI
                   </p>
                 </div>
@@ -96,7 +100,7 @@ class Home extends Component {
               </CardContent>
             </Card>
             
-            <HomeSend className="homesend"/>
+            <HomeSend/>
           </div>
           <div className="mainblock" id="transactionTable">
           <div className="transactionMain">
