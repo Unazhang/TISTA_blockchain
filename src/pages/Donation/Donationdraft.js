@@ -90,7 +90,7 @@ export default function DonationDraft() {
                 open={openPopup}
                 handleClose={setOpenDonate}
             >
-                <Send />
+                <Send isDonation/>
             </Popup>
         </>
     )

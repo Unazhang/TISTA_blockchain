@@ -63,7 +63,7 @@ router.post('/request', async (req, res) => {
 
 router.get('/donation', async (req, res) => {
     const requesttable = mongoose.model("requesttable");
-    requesttable.find({}, (err, result) => { res.json(result) });
+    requesttable.find({}, (err, result) => { console.log('result', result);res.json(result) });
 })
 
 module.exports = router
