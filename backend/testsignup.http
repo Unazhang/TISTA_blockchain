@@ -1,0 +1,12 @@
+POST http://localhost:4000/app/signup
+Content-Type: application/json
+
+{
+    "fullName": "Keith",
+    "userName": "kz",
+    "email": "k@mail.com",
+    "password": "ethwallet",
+    "accounts": ["acc1"],
+    "donateTo": [["acc2", 999]],
+    "donateAddress": "addr1"
+}
