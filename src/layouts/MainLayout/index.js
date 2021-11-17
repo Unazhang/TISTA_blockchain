@@ -116,10 +116,6 @@ function MainLayout(props) {
           />
           <IconButton><NotifIcon style={{fill:'white'}}/></IconButton>
           <IconButton 
-<<<<<<< HEAD
-              component={Link}
-              to='/profile' ><ProfileIcon style={{fill:'white'}}/></IconButton>
-=======
               component={Link} onClick={handleopenUser}><ProfileIcon /></IconButton>
           <Dialog
           open={openUser}
@@ -153,7 +149,6 @@ function MainLayout(props) {
                   </div>
             </DialogTitle>
         </Dialog>
->>>>>>> pyx2
         </Toolbar>
       </AppBar>
 
