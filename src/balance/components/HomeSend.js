@@ -12,6 +12,16 @@ export default function HomeSend() {
         <Controls.Button
                     text="Send"
                     variant="contained"
+                    style={{
+                        borderRadius: 30,
+                        backgroundColor: "#FD8024",
+                        padding: "18px 36px",
+                        fontSize: "30px",
+                        width:370,
+                        height:100,
+                        marginTop:70
+                        
+                    }}
                     onClick={() => { setOpenSend(true);}}
         />
 

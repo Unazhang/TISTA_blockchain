@@ -23,19 +23,6 @@ import Paper from '@material-ui/core/Paper';
 import { Table} from '@material-ui/core';
 import HomeSend from '../../balance/components/HomeSend';
 
-function FAQNavLinks() {
-  return (
-    <ul>
-      <li>
-        <NavLink to="/faq/swimming">Swimming</NavLink>
-      </li>
-      <li>
-        <NavLink to="/faq/waterpolo">Water Polo</NavLink>
-      </li>
-    </ul>
-  );
-}
-
 class  FAQ extends Component {
   async componentWillMount() {
     await this.loadWeb3()
@@ -71,6 +58,7 @@ class  FAQ extends Component {
     this.setState({ from_transactions: from_transactions })
     this.setState({ to_transactions: to_transactions })
     console.log(web3.utils.fromWei(balance.toString(), 'Ether'));
+    console.log(this.state);
   }
 
   transfer(recipient, amount) {

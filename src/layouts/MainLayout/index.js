@@ -36,20 +36,22 @@ import Avatar from '@material-ui/core/Avatar';
 import pholder from '../../pages/Profile/avatar.png'
 // https://material-ui.com/demos/drawers/#full-height-navigation
 const drawerWidth = 240;
-
 const styles = theme => ({
   root: {
     display: "flex"
   },
   appBar: {
     width: '100%',
+    backgroundColor: '#194db0'
+    
   },
   drawer: {
     width: drawerWidth,
     flexShrink: 0
   },
   navbutton:{
-    width:200
+    width:200,
+    fontWeight:'bold'
   },
   drawerPaper: {
     width: drawerWidth
@@ -57,8 +59,16 @@ const styles = theme => ({
   toolbar: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: 'white',
     padding: theme.spacing.unit * 3
+  },
+  newButton: {
+    width:150,
+    height:40,
+    marginRight:20,
+    backgroundColor:'white',
+    color:'#194db0',
+    fontWeight:'bold'
   }
 });
 
@@ -83,9 +93,9 @@ function MainLayout(props) {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <div className={classes.navbutton}>
-          <NavLink activeOnlyWhenExact to="/" icon={HomeIcon} >Home
+          <NavLink activeOnlyWhenExact to="/" icon={HomeIcon}>Home
           </NavLink></div>
-          <div className={classes.navbutton}>
+          <div className={classes.navbutton} >
           <NavLink to="/transaction" icon={TransIcon}>
             Transaction
           </NavLink></div>
@@ -97,16 +107,19 @@ function MainLayout(props) {
             log out
           </NavLink> */}
           <div style={{ display: "flex", flex: 1 }} />
-          <Button variant="contained" color="primary">Buy/Sell</Button>
+          <Button variant="contained" className={classes.newButton}>Buy/Sell</Button>
           <Controls.Button
                     text="SEND"
                     variant="contained"
-                    color="primary"
                     className={classes.newButton}
                     onClick={() => { setOpenDonate(true); }}
           />
-          <IconButton><NotifIcon /></IconButton>
+          <IconButton><NotifIcon style={{fill:'white'}}/></IconButton>
           <IconButton 
+<<<<<<< HEAD
+              component={Link}
+              to='/profile' ><ProfileIcon style={{fill:'white'}}/></IconButton>
+=======
               component={Link} onClick={handleopenUser}><ProfileIcon /></IconButton>
           <Dialog
           open={openUser}
@@ -140,6 +153,7 @@ function MainLayout(props) {
                   </div>
             </DialogTitle>
         </Dialog>
+>>>>>>> pyx2
         </Toolbar>
       </AppBar>
 
