@@ -2,7 +2,6 @@ const { request } = require('express')
 const express = require('express')
 const router = express.Router()
 const signUpTemplateCopy = require('../models/SignUpModels')
-const donateTemplateCopy = require('../models/DonateModels')
 const requestTemplateCopy = require('../models/RequestModels')
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
@@ -30,15 +29,15 @@ router.post('/signup', async (req, res) => {
 })
 
 router.post('/donate', async (req, res) => {
-    requesttable.findOneAndUpdate({ blockchainAddress: req.body.blockchainAddress }, { $push: { currentAmount: currentAmount - req.body.amount } })
-
-    // donate.save()
-    //     .then(data => {
-    //         res.json(data)
-    //     })
-    //     .catch(error => {
-    //         res.json(error)
-    //     })
+    requesttable.findOneAndUpdate({ blockchainAddress: req.body.receiver },
+        { $inc: { currentAmount: req.body.amount } }, { overwrite: true },
+        function (err, result) {
+            if (err) {
+                res.send(err);
+            } else {
+                res.send(result);
+            }
+        })
 })
 
 router.post('/request', async (req, res) => {
@@ -63,7 +62,7 @@ router.post('/request', async (req, res) => {
 
 router.get('/donation', async (req, res) => {
     const requesttable = mongoose.model("requesttable");
-    requesttable.find({}, (err, result) => { console.log('result', result);res.json(result) });
+    requesttable.find({}, (err, result) => { console.log('result', result); res.json(result) });
 })
 
 module.exports = router

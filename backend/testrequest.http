@@ -4,9 +4,9 @@ Content-Type: application/json
 {
     "requestId": "id1",
     "userId": "id2",
-    "amount": 100,
-    "title": "test",
+    "amount": 999,
+    "title": "donateTest",
     "reason": "test",
     "description": "test",
-    "blockchainAddress": "abc"
+    "blockchainAddress": "0x847d2827188fA5Da7b4b20AaA3d5BbB449Cf0AFb"
 } 
