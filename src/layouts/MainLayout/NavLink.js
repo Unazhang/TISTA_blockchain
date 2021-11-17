@@ -27,8 +27,9 @@ function NavLink({
           button
           selected={Boolean(match)}
         >
-          <ListItemIcon>{Icon && <Icon />}</ListItemIcon>
-          <ListItemText>{children}</ListItemText>
+          <ListItemIcon>{Icon && <Icon  style={{fill:'white'}} />}</ListItemIcon>
+          <ListItemText >{children}</ListItemText>
+          
         </ListItem>
       )}
     />

@@ -64,11 +64,10 @@ class  DonattionFlowHistory extends Component {
   }
   render() {
     return (
-        <div>
-            <Table aria-label="simple table">
+            <Table aria-label="simple table" >
                 <TableHead>
                   <TableRow>
-                    <TableCell>Receiver</TableCell>
+                    <TableCell >Receiver</TableCell>
                     <TableCell>Transaction ID</TableCell>
                     <TableCell >Amount</TableCell>
                   </TableRow>
@@ -77,15 +76,14 @@ class  DonattionFlowHistory extends Component {
                 { this.state.transactions.map((tx, key) => {
                       return (
                         <TableRow key={key}>
-                        <TableCell >{tx.returnValues.to}</TableCell>
-                        <TableCell>{tx.id}</TableCell>
-                        <TableCell>{window.web3.utils.fromWei(tx.returnValues.value.toString(), 'Ether')}</TableCell>
+                        <TableCell  style={{fontSize:'0.73em'}}>{tx.returnValues.to}</TableCell>
+                        <TableCell  style={{fontSize:'0.73em'}}>{tx.id}</TableCell>
+                        <TableCell  style={{fontSize:'0.73em'}}>{window.web3.utils.fromWei(tx.returnValues.value.toString(), 'Ether')}</TableCell>
                       </TableRow>
                       )
                     }) }
                 </TableBody>
               </Table>
-        </div>
     );
   }
 }

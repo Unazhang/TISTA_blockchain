@@ -20,6 +20,7 @@ import { autorun } from "mobx";
 import { observer } from 'mobx-react-lite'
 import { donationStore } from "../../stores/DonationStore";
 import DonationAccordion from "./DonationAccordion"
+import './Donation.css';
 
 
 const Data = [
@@ -71,15 +72,19 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: "#F5F9FF",
     height:'100%',
+    width:'110vh',
+    borderRadius:'25px'
   },
   pageContent: {
     margin: theme.spacing(5),
     padding: theme.spacing(3)
   },
   searchInput: {
-    width: '100%'
+    width: '100%',
+    backgroundColor: "white",
+    marginBottom:"2%"
   },
 }));
 
@@ -202,7 +207,7 @@ const handleChange = (event, newValue) => {
     <div className={classes.root}>
 
       <AppBar position="static">
-        <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" centered>
+        <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" centered style={{backgroundColor:'#194db0'}} TabIndicatorProps={{style: {background:'#FD8024'}}}>
           <Tab label="Community" {...a11yProps(0)} />
           <Tab label="Donation" {...a11yProps(1)} />
         </Tabs>

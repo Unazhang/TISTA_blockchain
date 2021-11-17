@@ -72,8 +72,7 @@ class Home extends Component {
 
   render() {
     return (
-      <div>
-          <div><Typography variant="h6" id="tableTitle" component="div">Home</Typography> </div>
+      <div className = "main">
           
           <div className="mainblockContain">
           <div className="mainblock" id="balance">
