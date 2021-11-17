@@ -2,6 +2,8 @@ POST http://localhost:4000/app/donate
 Content-Type: application/json
 
 {
-    "blockchainAddress": "abc",
-    "amount": 10
+    "receiver": "0x847d2827188fA5Da7b4b20AaA3d5BbB449Cf0AFb",
+    "amount": 20,
+    "frequency": "Once",
+    "payAccount": "account1"
 }

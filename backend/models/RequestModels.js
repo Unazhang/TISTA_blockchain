@@ -3,7 +3,10 @@ const mongoose = require('mongoose');
 const requestTemplate = new mongoose.Schema({
     userId: String,
     requestId: String,
-    currentAmount: Number,
+    currentAmount: {
+        type: Number,
+        default: 0
+    },
     blockchainAddress: String,
     amount: {
         type: Number,
@@ -27,9 +30,10 @@ const requestTemplate = new mongoose.Schema({
     }
 })
 
-requestTemplate.pre('save', function (next) {
-    this.currentAmount = this.get('amount');
-    next();
-});
+// SET DEFAULT AS AMOUNT
+// requestTemplate.pre('save', function (next) {
+//     this.currentAmount = this.get('amount');
+//     next();
+// });
 
 module.exports = mongoose.model('requesttable', requestTemplate)
