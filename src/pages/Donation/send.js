@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Web3 from 'web3';
+import axios from 'axios';
 import XYZ from '../../balance/abis/XYZ.json'
 import { Form } from '../useForm';
 import TextField from '@material-ui/core/TextField';
@@ -76,6 +77,12 @@ class Send extends Component {
                 const recipient = this.recipientRef.value
                 const amount = window.web3.utils.toWei(this.amountRef.value, 'Ether')
                 this.transfer(recipient, amount)
+                if (this.props.isDonation) {
+                  axios.post('http://localhost:4000/app/donate', {
+                    blockchainAddress: recipient,
+                    amount
+                  })
+                }
           }}>
             <div className="form-group mr-sm-2">
             <TextField

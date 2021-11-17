@@ -110,20 +110,31 @@ export default function DonationTab() {
     }
   };
 
+  const fetchDonatedAddress = async () => {
+    try {
+      const result = await axios.get(`${API_BASE_URL}/app/donatedAddress`);
+      console.log('donatiedAddress', result)
+      setEvents(result.data);
+    } catch (error) {
+      console.log('error')
+    }
+  }
+
   useEffect(() => {
     fetchDonations();
+    fetchDonatedAddress();
   }, []);
   for (let i = 0; i < events.length; i++) {
     arr.push(
       <Grid item xs={12} sm={6}>
         <Card variant="outlined">
-          <CardActionArea>
             <CardContent>
               <Typography gutterBottom variant="h5" component="h2">{events[i].title}</Typography>
-              <Typography variant="body2" color="textSecondary" component="p">{events[i].description}
+              <Typography variant="body2" color="textSecondary" component="p">{events[i].currentAmount} raised of {events[i].amount}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">Blockchain Address: ${localStorage.getItem('blochainAddress')} 
               </Typography>
             </CardContent>
-          </CardActionArea>
           <CardActions>
             <Button size="small" color="primary">Learn More</Button>
           </CardActions>
