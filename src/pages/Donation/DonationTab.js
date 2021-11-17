@@ -205,6 +205,7 @@ const handleChange = (event, newValue) => {
   return (
     
     <div className={classes.root}>
+
       <AppBar position="static">
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" centered style={{backgroundColor:'#194db0'}} TabIndicatorProps={{style: {background:'#FD8024'}}}>
           <Tab label="Community" {...a11yProps(0)} />

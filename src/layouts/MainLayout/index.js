@@ -28,7 +28,12 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import authService from "../../service/authService";
 import { Link } from 'react-router-dom';
-
+import User from "../../pages/Profile/User";
+import Profile from '../../pages/Profile/Profile';
+import CloseIcon from '@material-ui/icons/Close';
+import { Dialog, DialogTitle, DialogContent, makeStyles} from '@material-ui/core';
+import Avatar from '@material-ui/core/Avatar';
+import pholder from '../../pages/Profile/avatar.png'
 // https://material-ui.com/demos/drawers/#full-height-navigation
 const drawerWidth = 240;
 const styles = theme => ({
@@ -70,11 +75,19 @@ const styles = theme => ({
 function MainLayout(props) {
   const { classes, children } = props;
   const [openPopup, setOpenDonate] = useState(false)
-
+  const [openUser, setOpenUser] = useState(false);
   const his = () => {
     const history = useHistory();
     history.push('/login');
   }
+  const handleopenUser = () => {
+    setOpenUser(true)
+  }
+
+  const handleCloseUser = () => {
+    setOpenUser(false)
+  }
+  
   return (
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.appBar}>
@@ -90,9 +103,9 @@ function MainLayout(props) {
           <NavLink to="/donation" icon={DonateIcon}>
             Donation
           </NavLink></div>
-          <NavLink to="/login" handleClick={() => {authService.logOut();}} icon={HelpIcon}>
+          {/* <NavLink to="/login" handleClick={() => {authService.logOut();}} icon={HelpIcon}>
             log out
-          </NavLink>
+          </NavLink> */}
           <div style={{ display: "flex", flex: 1 }} />
           <Button variant="contained" className={classes.newButton}>Buy/Sell</Button>
           <Controls.Button
@@ -103,8 +116,39 @@ function MainLayout(props) {
           />
           <IconButton><NotifIcon style={{fill:'white'}}/></IconButton>
           <IconButton 
-              component={Link}
-              to='/profile' ><ProfileIcon style={{fill:'white'}}/></IconButton>
+              component={Link} onClick={handleopenUser}><ProfileIcon style={{fill:'white'}}/></IconButton>
+          <Dialog
+          open={openUser}
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle maxWidth="md" classes={{ paper: classes.dialogWrapper }}>
+          <div style={{display: 'inline-block'}}>
+                    <Avatar alt="PlaceHolder" src={pholder} className={classes.large} />
+                </div>
+                <div style={{display: 'inline-block', marginLeft:'10px'}}>
+                    <Typography variant="body1" component="div">Lee</Typography>
+                    <Typography variant="body1" component="div" color = "grey">Email@email.com</Typography>
+                </div>
+                  <div style={{ display: 'flex' }}>
+                      <Typography variant="h6" component="div" style={{ flexGrow: 1 }}>
+                      </Typography>
+                      <Controls.ActionButton
+                          color="secondary"
+                          onClick={handleCloseUser}>
+                          <CloseIcon />
+                      </Controls.ActionButton>
+        
+                      <NavLink to="/profile">
+                      Settings
+                    </NavLink>
+      
+                    <NavLink to="/login" handleClick={() => {authService.logOut();}}>
+                       log out
+                    </NavLink>
+   
+                  </div>
+            </DialogTitle>
+        </Dialog>
         </Toolbar>
       </AppBar>
 

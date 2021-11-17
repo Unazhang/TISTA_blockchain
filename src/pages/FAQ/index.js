@@ -108,7 +108,7 @@ class  FAQ extends Component {
         <div>
        <CssBaseline />
        <AppBar position="static">
-       <Tabs aria-label="simple tabs example" centered>
+       <Tabs aria-label="simple tabs example" centered style={{backgroundColor:'#194db0'}}>
            <Tab label="From" onClick={this.handleChange1}/>
            <Tab label="To" onClick={this.handleChange2}/>
          </Tabs>
