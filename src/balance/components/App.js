@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import Paper from '@material-ui/core/Paper';
 import { Table , TableHead, TableRow, TableCell, TableBody} from '@material-ui/core';
 import HomeSend from './HomeSend';
+import TableContainer from '@material-ui/core/TableContainer';
 
 class Home extends Component {
   async componentWillMount() {
@@ -98,13 +99,15 @@ class Home extends Component {
               </div>
               </CardContent>
             </Card>
-            
-            <HomeSend/>
+            <div style={{textAlign:'center', marginRight:70}}>
+            <HomeSend />
+            </div>
           </div>
           <div className="mainblock" id="transactionTable">
           <div className="transactionMain">
-          <p className="darkp" style={{fontSize:"2.0rem"}}>Transaction History</p>
+          <p className="darkp" style={{fontSize:"1.5rem"}}>Transaction History</p>
             <div className="transactionContent" style={{borderRadius:"15px"}}>
+            <TableContainer style={{ maxHeight: 440 }}>
               <Table stickyHeader aria-label="sticky table">
                   <TableHead >
                     <TableRow >
@@ -123,6 +126,7 @@ class Home extends Component {
                       }) }
                   </TableBody>
                 </Table>
+                </TableContainer>
               </div>
             </div>
           </div>

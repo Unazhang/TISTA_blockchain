@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     height:'8vh'
   },
   donationBox: {
-    boxShadow: '2px 8px 10px #c4cee4b0',
+    boxShadow: 'none',
     borderRadius:20
   }
 }));

@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#F5F9FF",
     height:'100%',
     width:'110vh',
-    borderRadius:'25px'
+    borderRadius:'25px',
   },
   pageContent: {
     margin: theme.spacing(5),
@@ -205,7 +205,6 @@ const handleChange = (event, newValue) => {
   return (
     
     <div className={classes.root}>
-
       <AppBar position="static">
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" centered style={{backgroundColor:'#194db0'}} TabIndicatorProps={{style: {background:'#FD8024'}}}>
           <Tab label="Community" {...a11yProps(0)} />
@@ -213,7 +212,7 @@ const handleChange = (event, newValue) => {
         </Tabs>
       </AppBar>
       
-      <TabPanel value={value} index={0}>
+      <TabPanel value={value} index={0} style={{height:'77vh'}}>
         <Toolbar>
             <Controls.Input
                 label="Search"
@@ -225,10 +224,9 @@ const handleChange = (event, newValue) => {
                 }}
                 onChange={handleSearch}
             />
-            
-            
         </Toolbar>
-        <Grid container spacing={3}>
+        <div style={{maxHeight:'66vh', overflow:'auto'}}>
+          <Grid container spacing={3}>
 
           {/* {arr} */}
           {found && found.length > 0 ? (
@@ -254,12 +252,16 @@ const handleChange = (event, newValue) => {
                             
           )}
 
-        </Grid>
+          </Grid>
+        </div>
+        
       </TabPanel>
-      <TabPanel value={value} index={1}>
-            <Typography variant="h6" id="tableTitle" component="div">Donation History</Typography>
-                
+      <TabPanel value={value} index={1} style={{height:'77vh'}}>
+        <Typography variant="h6" id="tableTitle" component="div">Donation History</Typography>
+        <div style={{maxHeight:'66vh', overflow:'auto'}}>
             <DonationAccordion/>
+        </div>
+            
       </TabPanel>
     </div>
     

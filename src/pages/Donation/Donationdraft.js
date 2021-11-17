@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
         borderRadius:'45px',
         width:'15vw',
         height:'9vh',
-        marginTop:'40px'
+        marginTop:'30px'
     }
 }))
 

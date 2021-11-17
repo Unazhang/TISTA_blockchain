@@ -28,10 +28,10 @@
 }
 
 #balanceCard {
-    margin-left:30px;
-    margin-right:30px;
-    height:430px;
-    width:90%;
+    margin-left:70px;
+    margin-right:70px;
+    height:380px;
+    width:72%;
     border-radius: 25px;
     padding:60px;
     background: radial-gradient(#CEE2FF 15%, #FFFFFF 85%);
@@ -41,20 +41,20 @@
 .darkp{
     color:#112957;
     font-weight: bold;
-    font-size:2.3rem;
+    font-size:1.9rem;
     font-family: 'Lato', sans-serif;
 }
 
 .cardHead{
-    color:#757e8f;
+    color:#194db0;
     font-weight: medium;
-    font-size:1.5rem;
+    font-size:1.3rem;
     font-family: 'Lato', sans-serif;
 }
 
 .cardContent{
 display: inline-block;
-margin-right:60px;
+margin-right:30px;
 text-align: left;
 }
 
@@ -62,7 +62,7 @@ text-align: left;
 text-align: left;
 display: block;
 margin-top:60px;
-left:0px;
+left:50px;
 }
 
 .transactionMain{

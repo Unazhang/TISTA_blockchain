@@ -76,9 +76,9 @@ class  DonattionFlowHistory extends Component {
                 { this.state.transactions.map((tx, key) => {
                       return (
                         <TableRow key={key}>
-                        <TableCell  style={{fontSize:'0.73em'}}>{tx.returnValues.to}</TableCell>
-                        <TableCell  style={{fontSize:'0.73em'}}>{tx.id}</TableCell>
-                        <TableCell  style={{fontSize:'0.73em'}}>{window.web3.utils.fromWei(tx.returnValues.value.toString(), 'Ether')}</TableCell>
+                        <TableCell  style={{fontSize:'0.71em'}}>{tx.returnValues.to}</TableCell>
+                        <TableCell  style={{fontSize:'0.71em'}}>{tx.id}</TableCell>
+                        <TableCell  style={{fontSize:'0.71em'}}>{window.web3.utils.fromWei(tx.returnValues.value.toString(), 'Ether')}</TableCell>
                       </TableRow>
                       )
                     }) }
