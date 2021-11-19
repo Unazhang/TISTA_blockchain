@@ -28,23 +28,30 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import authService from "../../service/authService";
 import { Link } from 'react-router-dom';
-
+import User from "../../pages/Profile/User";
+import Profile from '../../pages/Profile/Profile';
+import CloseIcon from '@material-ui/icons/Close';
+import { Dialog, DialogTitle, DialogContent, makeStyles} from '@material-ui/core';
+import Avatar from '@material-ui/core/Avatar';
+import pholder from '../../pages/Profile/avatar.png'
 // https://material-ui.com/demos/drawers/#full-height-navigation
 const drawerWidth = 240;
-
 const styles = theme => ({
   root: {
     display: "flex"
   },
   appBar: {
     width: '100%',
+    backgroundColor: '#194db0'
+    
   },
   drawer: {
     width: drawerWidth,
     flexShrink: 0
   },
   navbutton:{
-    width:200
+    width:200,
+    fontWeight:'bold'
   },
   drawerPaper: {
     width: drawerWidth
@@ -52,27 +59,43 @@ const styles = theme => ({
   toolbar: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: 'white',
     padding: theme.spacing.unit * 3
+  },
+  newButton: {
+    width:150,
+    height:40,
+    marginRight:20,
+    backgroundColor:'white',
+    color:'#194db0',
+    fontWeight:'bold'
   }
 });
 
 function MainLayout(props) {
   const { classes, children } = props;
   const [openPopup, setOpenDonate] = useState(false)
-
+  const [openUser, setOpenUser] = useState(false);
   const his = () => {
     const history = useHistory();
     history.push('/login');
   }
+  const handleopenUser = () => {
+    setOpenUser(true)
+  }
+
+  const handleCloseUser = () => {
+    setOpenUser(false)
+  }
+  
   return (
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <div className={classes.navbutton}>
-          <NavLink activeOnlyWhenExact to="/" icon={HomeIcon} >Home
+          <NavLink activeOnlyWhenExact to="/" icon={HomeIcon}>Home
           </NavLink></div>
-          <div className={classes.navbutton}>
+          <div className={classes.navbutton} >
           <NavLink to="/transaction" icon={TransIcon}>
             Transaction
           </NavLink></div>
@@ -80,22 +103,52 @@ function MainLayout(props) {
           <NavLink to="/donation" icon={DonateIcon}>
             Donation
           </NavLink></div>
-          <NavLink to="/login" handleClick={() => {authService.logOut();}} icon={HelpIcon}>
+          {/* <NavLink to="/login" handleClick={() => {authService.logOut();}} icon={HelpIcon}>
             log out
-          </NavLink>
+          </NavLink> */}
           <div style={{ display: "flex", flex: 1 }} />
-          <Button variant="contained" color="primary">Buy/Sell</Button>
+          <Button variant="contained" className={classes.newButton}>Buy/Sell</Button>
           <Controls.Button
                     text="SEND"
                     variant="contained"
-                    color="primary"
                     className={classes.newButton}
                     onClick={() => { setOpenDonate(true); }}
           />
-          <IconButton><NotifIcon /></IconButton>
+          <IconButton><NotifIcon style={{fill:'white'}}/></IconButton>
           <IconButton 
-              component={Link}
-              to='/profile'><ProfileIcon /></IconButton>
+              component={Link} onClick={handleopenUser}><ProfileIcon style={{fill:'white'}}/></IconButton>
+          <Dialog
+          open={openUser}
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle maxWidth="md" classes={{ paper: classes.dialogWrapper }}>
+          <div style={{display: 'inline-block'}}>
+                    <Avatar alt="PlaceHolder" src={pholder} className={classes.large} />
+                </div>
+                <div style={{display: 'inline-block', marginLeft:'10px'}}>
+                    <Typography variant="body1" component="div">Lee</Typography>
+                    <Typography variant="body1" component="div" color = "grey">Email@email.com</Typography>
+                </div>
+                  <div style={{ display: 'flex' }}>
+                      <Typography variant="h6" component="div" style={{ flexGrow: 1 }}>
+                      </Typography>
+                      <Controls.ActionButton
+                          color="secondary"
+                          onClick={handleCloseUser}>
+                          <CloseIcon />
+                      </Controls.ActionButton>
+        
+                      <NavLink to="/profile">
+                      Settings
+                    </NavLink>
+      
+                    <NavLink to="/login" handleClick={() => {authService.logOut();}}>
+                       log out
+                    </NavLink>
+   
+                  </div>
+            </DialogTitle>
+        </Dialog>
         </Toolbar>
       </AppBar>
 

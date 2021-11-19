@@ -4,7 +4,6 @@ const requestTemplate = new mongoose.Schema({
     userId: String,
     requestId: String,
     currentAmount: Number,
-    blockchainAddress: String,
     amount: {
         type: Number,
         required: true

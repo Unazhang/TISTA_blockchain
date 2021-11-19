@@ -19,6 +19,8 @@ import { Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/c
 import { autorun } from "mobx";
 import { observer } from 'mobx-react-lite'
 import { donationStore } from "../../stores/DonationStore";
+import DonationAccordion from "./DonationAccordion"
+import './Donation.css';
 
 
 const Data = [
@@ -70,16 +72,20 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: "#F5F9FF",
     height:'100%',
+    width:'110vh',
+    borderRadius:'25px',
   },
   pageContent: {
     margin: theme.spacing(5),
     padding: theme.spacing(3)
   },
   searchInput: {
-    width: '100%'
-  }
+    width: '100%',
+    backgroundColor: "white",
+    marginBottom:"2%"
+  },
 }));
 
 export default function DonationTab() {
@@ -103,7 +109,6 @@ export default function DonationTab() {
   const fetchDonations = async () => {
     try {
       const result = await axios.get(`${API_BASE_URL}/app/donation`);
-      console.log('donation', result)
       setEvents(result.data);
     } catch (error) {
       console.log('error')
@@ -113,23 +118,22 @@ export default function DonationTab() {
   useEffect(() => {
     fetchDonations();
   }, []);
-  for (let i = 0; i < events.length; i++) {
+  // for (let i = 0; i < events.length; i++) {
     arr.push(
       <Grid item xs={12} sm={6}>
         <Card variant="outlined">
           <CardActionArea>
             <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">{events[i].title}</Typography>
-              <Typography variant="body2" color="textSecondary" component="p">{events[i].description}
+              <Typography gutterBottom variant="h5" component="h2">Please Help</Typography>
+              <Typography gutterBottom variant="h5" component="h3">$500/1000</Typography>
+              <Typography variant="body2" color="textSecondary" component="p">description placeholder
               </Typography>
+
             </CardContent>
           </CardActionArea>
-          <CardActions>
-            <Button size="small" color="primary">Learn More</Button>
-          </CardActions>
         </Card>
       </Grid>);
-  }
+  // }
 
 
   // let arr = [];
@@ -169,47 +173,47 @@ export default function DonationTab() {
   //     </Grid>);
   // }
 
-  const handleSearch = e => {
-    const keyword = e.target.value;
-    console.log("input is ",keyword)
-    if (keyword !== '') {
-      const results = Data.filter((d) => {
-        return d.name.toLowerCase().includes(keyword.toLowerCase());
-      });
-      
-      setFound(results);
-    } else {
-      setFound(Data);
-    }
-    setName(keyword);
-      // let target = e.target;
-      // setFilterFn({
-      //     fn: items => {
-      //         if (target.value === "")
-      //             return items;
-      //         else
-      //             return items.filter(x => x.title.toLowerCase().includes(target.value.toLowerCase()))
-      //     }
-      // })
+const handleSearch = e => {
+  const keyword = e.target.value;
+  console.log("input is ",keyword)
+  if (keyword !== '') {
+    const results = Data.filter((d) => {
+      return d.name.toLowerCase().includes(keyword.toLowerCase());
+    });
+    
+    setFound(results);
+  } else {
+    setFound(Data);
   }
+  setName(keyword);
+    // let target = e.target;
+    // setFilterFn({
+    //     fn: items => {
+    //         if (target.value === "")
+    //             return items;
+    //         else
+    //             return items.filter(x => x.title.toLowerCase().includes(target.value.toLowerCase()))
+    //     }
+    // })
+}
 
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+const handleChange = (event, newValue) => {
+  setValue(newValue);
+};
 
   return (
     
     <div className={classes.root}>
 
       <AppBar position="static">
-        <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" centered>
+        <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" centered style={{backgroundColor:'#194db0'}} TabIndicatorProps={{style: {background:'#FD8024'}}}>
           <Tab label="Community" {...a11yProps(0)} />
           <Tab label="Donation" {...a11yProps(1)} />
         </Tabs>
       </AppBar>
       
-      <TabPanel value={value} index={0}>
+      <TabPanel value={value} index={0} style={{height:'77vh'}}>
         <Toolbar>
             <Controls.Input
                 label="Search"
@@ -221,13 +225,12 @@ export default function DonationTab() {
                 }}
                 onChange={handleSearch}
             />
-            
-            
         </Toolbar>
-        <Grid container spacing={3}>
+        <div style={{maxHeight:'66vh', overflow:'auto'}}>
+          <Grid container spacing={3}>
 
-          {arr}
-          {/* {found && found.length > 0 ? (
+          {/* {arr} */}
+          {found && found.length > 0 ? (
             found.map((d) => (
                     <Grid item xs={12} sm={6}>
                     <Card variant="outlined">
@@ -245,44 +248,21 @@ export default function DonationTab() {
                 </Grid>
             ))
           ) : (
-            <Grid item xs={12} sm={6}>
-                    <Card variant="outlined">
-                        <CardActionArea>
-                        <CardContent>
-                            <Typography id = "title" gutterBottom variant="h5" component="h2">No Result</Typography>
-                            <Typography variant="body2" color="textSecondary" component="p">Placeholder
-                            </Typography>
-                        </CardContent>
-                    </CardActionArea>
-                    <CardActions>
-                        <Button size="small" color="primary">Learn More</Button>
-                    </CardActions>
-                    </Card>
-                </Grid>
-          )} */}
+            
+              <Typography id = "noResult" gutterBottom variant="h5" component="h2" style={{margin:50}}>No Result</Typography>
+                            
+          )}
 
-        </Grid>
+          </Grid>
+        </div>
+        
       </TabPanel>
-      <TabPanel value={value} index={1}>
-        <Table aria-label="simple table">
-            <TableHead>
-            <Typography variant="h6" id="tableTitle" component="div">Donation History</Typography>
-                <TableRow>
-                <TableCell align="right">Recipient Address</TableCell>
-                <TableCell align="right">Amount</TableCell>
-                </TableRow>
-            </TableHead>
-            <TableBody> 
-                {/* { this.state.transactions.map((tx, key) => {
-                    return (
-                    <TableRow key={key}>
-                    <TableCell align="right">{tx.returnValues.to}</TableCell>
-                    <TableCell align="right">{window.web3.utils.fromWei(tx.returnValues.value.toString(), 'Ether')}</TableCell>
-                    </TableRow>
-                    )
-                }) } */}
-            </TableBody>
-        </Table>
+      <TabPanel value={value} index={1} style={{height:'77vh'}}>
+        <Typography variant="h6" id="tableTitle" component="div">Donation History</Typography>
+        <div style={{maxHeight:'66vh', overflow:'auto'}}>
+            <DonationAccordion/>
+        </div>
+            
       </TabPanel>
     </div>
     
