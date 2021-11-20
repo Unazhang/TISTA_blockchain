@@ -16,7 +16,7 @@ import { makeStyles, Toolbar, InputAdornment } from '@material-ui/core';
 import Controls from '../../controls/Controls';
 import { Search } from "@material-ui/icons";
 import { Table, TableHead, TableRow, TableCell, TableBody } from '@material-ui/core';
-import { autorun } from "mobx";
+import { reaction } from "mobx";
 import { observer } from 'mobx-react-lite'
 import { donationStore } from "../../stores/DonationStore";
 import DonationAccordion from "./DonationAccordion"
@@ -109,10 +109,15 @@ export default function DonationTab() {
     }
   };
 
-  autorun(() => {
-    donationStore.isUpdate = false;
-    console.log('autorun', donationStore.isUpdate)
-    fetchDonations();
+  reaction(() => donationStore.isUpdate,
+    isUpdate => {
+      if (isUpdate) {
+        donationStore.isUpdate = false;
+        console.log('autorun', donationStore.isUpdate)
+        fetchDonations();
+      } else {
+        console.log('autorun false')
+      }
   });
 
   useEffect(() => {
@@ -127,8 +132,8 @@ export default function DonationTab() {
     }
     fetchDonations();
     fetchDonatedAddress();
-  }, []);
-  // for (let i = 0; i < events.length; i++) {
+  }, [null]);
+  for (let i = 0; i < events.length; i++) {
     arr.push(
       <Grid item xs={12} sm={6}>
         <Card variant="outlined">
@@ -136,7 +141,7 @@ export default function DonationTab() {
               <Typography gutterBottom variant="h5" component="h2">{events[i].title}</Typography>
               <Typography variant="body2" color="textSecondary" component="p">{events[i].currentAmount} raised of {events[i].amount}
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">Blockchain Address: {localStorage.getItem('blochainAddress')} 
+              <Typography variant="body2" color="textSecondary" component="p">Blockchain Address: {events[i].blockchainAddress} 
               </Typography>
 
             </CardContent>
@@ -145,7 +150,7 @@ export default function DonationTab() {
           </CardActions>
         </Card>
       </Grid>);
-  // }
+  }
 
 
   // let arr = [];
@@ -241,8 +246,8 @@ const handleChange = (event, newValue) => {
         <div style={{maxHeight:'66vh', overflow:'auto'}}>
           <Grid container spacing={3}>
 
-          {/* {arr} */}
-          {found && found.length > 0 ? (
+          {arr}
+          {/* {found && found.length > 0 ? (
             found.map((d) => (
                     <Grid item xs={12} sm={6}>
                     <Card variant="outlined">
@@ -263,7 +268,7 @@ const handleChange = (event, newValue) => {
             
               <Typography id = "noResult" gutterBottom variant="h5" component="h2" style={{margin:50}}>No Result</Typography>
                             
-          )}
+          )} */}
 
           </Grid>
         </div>

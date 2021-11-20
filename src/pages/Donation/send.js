@@ -10,6 +10,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import {donationStore} from "../../stores/DonationStore";
 
 class Send extends Component {
   async componentWillMount() {
@@ -77,13 +78,14 @@ class Send extends Component {
                 const recipient = this.recipientRef.value
                 const amount = window.web3.utils.toWei(this.amountRef.value, 'Ether')
                 this.transfer(recipient, amount)
+                console.log('donate', recipient, this.amountRef.value)
                 if (this.props.isDonation) {
                   axios.post('http://localhost:4000/app/donate', {
                     receiver: recipient,
                     amount: this.amountRef.value,
                     frequency: "Once",
                     payAccount: "account1"
-                  })
+                  }).then(() => donationStore.isUpdate = true)
                 }
           }}>
             <div className="form-group mr-sm-2">

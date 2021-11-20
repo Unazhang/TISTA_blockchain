@@ -64,7 +64,7 @@ export default function DonationReqForm(props) {
     return (
         
         <Form onSubmit={handleSubmit}>
-            <Send/>
+            <Send />
             {/* <Grid container>
                 <Grid item xs={6}>
                     <Controls.Input

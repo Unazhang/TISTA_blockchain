@@ -3,7 +3,11 @@ const mongoose = require('mongoose');
 const requestTemplate = new mongoose.Schema({
     userId: String,
     requestId: String,
-    currentAmount: Number,
+    currentAmount: {
+        type: Number,
+        default: 0
+    },
+    blockchainAddress: String,
     amount: {
         type: Number,
         required: true
