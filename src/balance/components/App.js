@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import Paper from '@material-ui/core/Paper';
 import { Table , TableHead, TableRow, TableCell, TableBody} from '@material-ui/core';
 import HomeSend from './HomeSend';
+import TableContainer from '@material-ui/core/TableContainer';
 
 class Home extends Component {
   async componentWillMount() {
@@ -72,52 +73,62 @@ class Home extends Component {
 
   render() {
     return (
-      <div>
-          <div><Typography variant="h6" id="tableTitle" component="div">Home</Typography> </div>
-          <div>
-          <div className="mainblock" id="balanceCard">
-            <Card>
+      <div className = "main">
+          
+          <div className="mainblockContain">
+          <div className="mainblock" id="balance">
+            <div style={{marginBottom:"50px", marginLeft:"30px"}}>
+              <p className="darkp" >Welcome Back!</p>
+            </div>
+            <Card id="balanceCard">
               <CardContent>
-              <Typography variant="body2" color="textSecondary" component="p">balance</Typography>
-              <div>
-                <Typography variant="body2" color="textSecondary" component="p">DAI Balance</Typography>
-                <Typography gutterBottom variant="h5" component="h2">
-                {this.state.balance} DAI
-                </Typography>
-              </div>
-              <div>
-                <Typography variant="body2" color="textSecondary" component="p">USD Value</Typography>
-                <Typography gutterBottom variant="h5" component="h2">
-                $XXX
-                </Typography>
+              <p className="darkp">Balance</p>
+              <div className="cardMain">
+                <div className="cardContent">
+                  <p className="cardHead">DAI Balance</p>
+                  <p gutterBottom className="darkp">
+                  {this.state.balance} DAI
+                  </p>
+                </div>
+                <div className="cardContent">
+                  <p className="cardHead">USD Value</p>
+                  <p gutterBottom className="darkp">
+                  $XXX
+                  </p>
+                </div>
               </div>
               </CardContent>
             </Card>
-            
-            <HomeSend/>
+            <div style={{textAlign:'center', marginRight:70}}>
+            <HomeSend />
+            </div>
           </div>
           <div className="mainblock" id="transactionTable">
-          <Paper>
-              <Table aria-label="simple table">
-                <TableHead>
-                <Typography variant="h6" id="tableTitle" component="div">Transaction History</Typography>
-                  <TableRow>
-                    <TableCell align="right">Recipient Address</TableCell>
-                    <TableCell align="right">Amount</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  { this.state.transactions.map((tx, key) => {
-                      return (
-                        <TableRow key={key}>
-                        <TableCell align="right">{tx.returnValues.to}</TableCell>
-                        <TableCell align="right">{window.web3.utils.fromWei(tx.returnValues.value.toString(), 'Ether')}</TableCell>
-                      </TableRow>
-                      )
-                    }) }
-                </TableBody>
-              </Table>
-            </Paper>
+          <div className="transactionMain">
+          <p className="darkp" style={{fontSize:"1.5rem"}}>Transaction History</p>
+            <div className="transactionContent" style={{borderRadius:"15px"}}>
+            <TableContainer style={{ maxHeight: 440 }}>
+              <Table stickyHeader aria-label="sticky table">
+                  <TableHead >
+                    <TableRow >
+                      <TableCell align="left" style={{fontSize:"16px"}}>Recipient Address</TableCell>
+                      <TableCell align="left" style={{fontSize:"16px"}}>Amount</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    { this.state.transactions.map((tx, key) => {
+                        return (
+                          <TableRow key={key}>
+                          <TableCell align="left" style={{fontSize:"15px"}}>{tx.returnValues.to}</TableCell>
+                          <TableCell align="left" style={{fontSize:"15px"}}>{window.web3.utils.fromWei(tx.returnValues.value.toString(), 'Ether')}</TableCell>
+                        </TableRow>
+                        )
+                      }) }
+                  </TableBody>
+                </Table>
+                </TableContainer>
+              </div>
+            </div>
           </div>
           </div>
       </div>

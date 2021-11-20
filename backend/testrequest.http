@@ -7,6 +7,5 @@ Content-Type: application/json
     "amount": 999,
     "title": "donateTest",
     "reason": "test",
-    "description": "test",
-    "blockchainAddress": "0x847d2827188fA5Da7b4b20AaA3d5BbB449Cf0AFb"
+    "description": "test"
 } 

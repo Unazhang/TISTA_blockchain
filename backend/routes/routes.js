@@ -6,18 +6,20 @@ const requestTemplateCopy = require('../models/RequestModels')
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 
-const requesttable = mongoose.model('requesttable');
-
 router.post('/signup', async (req, res) => {
 
     const saltPassword = await bcrypt.genSalt(10)
     const securePassword = await bcrypt.hash(req.body.password, saltPassword)
 
     const signedUpUser = new signUpTemplateCopy({
+        // accounts: req.body.accounts,
+        // donateTo: req.body.donateTo,
+        // donateAddress: req.body.donateAddress,
         fullName: req.body.fullName,
         userName: req.body.userName,
         email: req.body.email,
         password: securePassword
+
     })
     signedUpUser.save()
         .then(data => {
@@ -48,8 +50,7 @@ router.post('/request', async (req, res) => {
         amount: req.body.amount,
         title: req.body.title,
         reason: req.body.reason,
-        description: req.body.description,
-        blockchainAddress: req.body.blockchainAddress
+        description: req.body.description
     })
     request.save()
         .then(data => {
