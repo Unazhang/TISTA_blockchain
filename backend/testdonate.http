@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
     "receiver": "0x847d2827188fA5Da7b4b20AaA3d5BbB449Cf0AFb",
-    "amount": 20,
+    "amount": 1,
     "frequency": "Once",
     "payAccount": "account1"
 }

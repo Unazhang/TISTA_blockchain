@@ -79,8 +79,10 @@ class Send extends Component {
                 this.transfer(recipient, amount)
                 if (this.props.isDonation) {
                   axios.post('http://localhost:4000/app/donate', {
-                    blockchainAddress: recipient,
-                    amount
+                    receiver: recipient,
+                    amount: this.amountRef.value,
+                    frequency: "Once",
+                    payAccount: "account1"
                   })
                 }
           }}>

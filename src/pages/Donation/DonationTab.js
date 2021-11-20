@@ -94,12 +94,6 @@ export default function DonationTab() {
   const [events, setEvents] = useState([]);
   const API_BASE_URL = `http://localhost:4000`;
 
-  autorun(() => {
-    donationStore.isUpdate = false;
-    console.log(donationStore.isUpdate)
-    fetchDonations();
-  });
-
   const fetchDonations = async () => {
     try {
       const result = await axios.get(`${API_BASE_URL}/app/donation`);
@@ -110,17 +104,22 @@ export default function DonationTab() {
     }
   };
 
-  const fetchDonatedAddress = async () => {
-    try {
-      const result = await axios.get(`${API_BASE_URL}/app/donatedAddress`);
-      console.log('donatiedAddress', result)
-      setEvents(result.data);
-    } catch (error) {
-      console.log('error')
-    }
-  }
+  autorun(() => {
+    donationStore.isUpdate = false;
+    console.log('autorun', donationStore.isUpdate)
+    fetchDonations();
+  });
 
   useEffect(() => {
+    const fetchDonatedAddress = async () => {
+      try {
+        const result = await axios.get(`${API_BASE_URL}/app/donatedAddress`);
+        console.log('donatiedAddress', result)
+        setEvents(result.data);
+      } catch (error) {
+        console.log('error')
+      }
+    }
     fetchDonations();
     fetchDonatedAddress();
   }, []);
@@ -132,7 +131,7 @@ export default function DonationTab() {
               <Typography gutterBottom variant="h5" component="h2">{events[i].title}</Typography>
               <Typography variant="body2" color="textSecondary" component="p">{events[i].currentAmount} raised of {events[i].amount}
               </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">Blockchain Address: ${localStorage.getItem('blochainAddress')} 
+              <Typography variant="body2" color="textSecondary" component="p">Blockchain Address: {localStorage.getItem('blochainAddress')} 
               </Typography>
             </CardContent>
           <CardActions>
