@@ -2,10 +2,11 @@ const { request } = require('express')
 const express = require('express')
 const router = express.Router()
 const signUpTemplateCopy = require('../models/SignUpModels')
-const donateTemplateCopy = require('../models/DonateModels')
 const requestTemplateCopy = require('../models/RequestModels')
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
+
+const requesttable = mongoose.model('requesttable');
 
 router.post('/signup', async (req, res) => {
 
@@ -13,9 +14,6 @@ router.post('/signup', async (req, res) => {
     const securePassword = await bcrypt.hash(req.body.password, saltPassword)
 
     const signedUpUser = new signUpTemplateCopy({
-        // accounts: req.body.accounts,
-        // donateTo: req.body.donateTo,
-        // donateAddress: req.body.donateAddress,
         fullName: req.body.fullName,
         userName: req.body.userName,
         email: req.body.email,
@@ -32,19 +30,14 @@ router.post('/signup', async (req, res) => {
 })
 
 router.post('/donate', async (req, res) => {
-
-    const donate = new donateTemplateCopy({
-        receiver: req.body.receiver,
-        amount: req.body.amount,
-        frequency: req.body.frequency,
-        payAccount: req.body.payAccount
-    })
-    donate.save()
-        .then(data => {
-            res.json(data)
-        })
-        .catch(error => {
-            res.json(error)
+    requesttable.findOneAndUpdate({ blockchainAddress: req.body.receiver },
+        { $inc: { currentAmount: req.body.amount } }, { overwrite: true },
+        function (err, result) {
+            if (err) {
+                res.send(err);
+            } else {
+                res.send(result);
+            }
         })
 })
 
@@ -56,7 +49,8 @@ router.post('/request', async (req, res) => {
         amount: req.body.amount,
         title: req.body.title,
         reason: req.body.reason,
-        description: req.body.description
+        description: req.body.description,
+        blockchainAddress: req.body.blockchainAddress
     })
     request.save()
         .then(data => {
@@ -69,7 +63,7 @@ router.post('/request', async (req, res) => {
 
 router.get('/donation', async (req, res) => {
     const requesttable = mongoose.model("requesttable");
-    requesttable.find({}, (err, result) => { res.json(result) });
+    requesttable.find({}, (err, result) => { console.log('result', result); res.json(result) });
 })
 
 module.exports = router
