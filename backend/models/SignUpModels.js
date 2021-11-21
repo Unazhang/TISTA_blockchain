@@ -9,6 +9,7 @@ const signUpTemplate = new mongoose.Schema({
         type: String,
         required: true
     },
+    userId: String,
     email: {
         type: String,
         required: true
@@ -17,7 +18,7 @@ const signUpTemplate = new mongoose.Schema({
         type: String,
         required: true
     },
-    accounts: [String],
+    donationAddress: [String],
     donateTo: [[String, Number]],
     donateAddress: String,
     date: {
@@ -25,5 +26,10 @@ const signUpTemplate = new mongoose.Schema({
         default: Date.now
     }
 })
+
+signUpTemplate.pre('save', function (next) {
+    this.userId = this._id.toString();
+    next();
+});
 
 module.exports = mongoose.model('mytable', signUpTemplate)
