@@ -10,7 +10,7 @@ const requesttable = mongoose.model('requesttable');
 const mytable = mongoose.model('mytable');
 
 router.post('/signup', async (req, res) => {
-
+    console.log('signup', req.body)
     const saltPassword = await bcrypt.genSalt(10)
     const securePassword = await bcrypt.hash(req.body.password, saltPassword)
 
@@ -26,7 +26,10 @@ router.post('/signup', async (req, res) => {
     })
     signedUpUser.save()
         .then(data => {
-            res.json(data)
+            res.json({
+                data,
+                success: true
+            })
         })
         .catch(error => {
             res.json(error)
@@ -56,15 +59,19 @@ router.post('/donate', async (req, res) => {
 })
 
 router.post('/login', async (req, res) => {
+    console.log('login', req.body)
     mytable.findOne({ userName: req.body.userName },
         function (err, result) {
             if (err) {
+                console.log('error')
                 res.send(err);
             } else {
-                if (bcrypt.compareSync(req.body.password, result.password)) {
+                if (result && bcrypt.compareSync(req.body.password, result.password)) {
+                    console.log('success', req.body)
                     res.send({ "userName": req.body.userName, verified: true });
                 }
                 else {
+                    console.log('unable')
                     res.send("Unable to verify");
                 }
             }
@@ -72,7 +79,6 @@ router.post('/login', async (req, res) => {
 })
 
 router.post('/request', async (req, res) => {
-
     const request = new requestTemplateCopy({
         requestId: req.body.requestId,
         userId: req.body.userId,
@@ -99,6 +105,7 @@ router.get('/donation', async (req, res) => {
 router.get('/donatedAddress', async (req, res) => {
     mytable.findOne({ userId: req.body.userId },
         function (err, result) {
+            console.log('donated address', err, result, req.body)
             if (err) {
                 res.send(err);
             } else if (result == null) {
@@ -106,7 +113,7 @@ router.get('/donatedAddress', async (req, res) => {
             } else if (!('donateAddress' in result)) {
                 res.send("Don't have any donation address");
             } else {
-                res.send(result.donateAddress);
+                res.send(result.donateTo);
             }
         });
 })

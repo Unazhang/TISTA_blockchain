@@ -109,27 +109,31 @@ export default function DonationTab() {
     }
   };
 
+  const fetchDonatedAddress = async () => {
+    try {
+      const result = await axios.get(`${API_BASE_URL}/app/donatedAddress`, {
+        userId: localStorage.getItem('userName')
+      });
+      console.log('donatiedAddress', result)
+      // setEvents(result.data);
+    } catch (error) {
+      console.log('error')
+    }
+  }
+
   reaction(() => donationStore.isUpdate,
     isUpdate => {
       if (isUpdate) {
         donationStore.isUpdate = false;
         console.log('autorun', donationStore.isUpdate)
         fetchDonations();
+        fetchDonatedAddress()
       } else {
         console.log('autorun !false')
       }
   });
 
   useEffect(() => {
-    const fetchDonatedAddress = async () => {
-      try {
-        const result = await axios.get(`${API_BASE_URL}/app/donatedAddress`);
-        console.log('donatiedAddress', result)
-        // setEvents(result.data);
-      } catch (error) {
-        console.log('error')
-      }
-    }
     fetchDonations();
     fetchDonatedAddress();
   }, [null]);

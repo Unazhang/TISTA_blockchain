@@ -48,7 +48,7 @@ class Send extends Component {
   }
 
   transfer(recipient, amount) {
-    this.state.daiTokenMock.methods.transfer(recipient, amount).send({ from: this.state.account })
+    this.state.daiTokenMock.methods.transfer(recipient, amount).send({ from: this.state.account }).on('transactionHash', () => {console.log('finished transaction')})
   }
 
   constructor(props) {
