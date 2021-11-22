@@ -7,6 +7,7 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 
 const requesttable = mongoose.model('requesttable');
+const mytable = mongoose.model('mytable');
 
 router.post('/signup', async (req, res) => {
 
@@ -16,6 +17,9 @@ router.post('/signup', async (req, res) => {
     const signedUpUser = new signUpTemplateCopy({
         fullName: req.body.fullName,
         userName: req.body.userName,
+        donationAddress: req.body.donationAddress,
+        donateTo: req.body.donateTo,
+        donateAddress: req.body.donateAddress,
         email: req.body.email,
         password: securePassword
 
@@ -64,6 +68,32 @@ router.post('/request', async (req, res) => {
 router.get('/donation', async (req, res) => {
     const requesttable = mongoose.model("requesttable");
     requesttable.find({}, (err, result) => { console.log('result', result); res.json(result) });
+})
+
+router.get('/donatedAddress', async (req, res) => {
+    mytable.findOne({ userId: req.body.userId },
+        function (err, result) {
+            if (err) {
+                res.send(err);
+            } else if (result == null) {
+                res.send("User not found");
+            } else if (!('donateAddress' in result)) {
+                res.send("Don't have any donation address");
+            } else {
+                res.send(result.donateAddress);
+            }
+        });
+})
+
+router.get('/addresses', async (req, res) => {
+    mytable.findOne({ userId: req.body.userId },
+        function (err, result) {
+            if (err) {
+                res.send(err);
+            } else {
+                res.send(result.donationAddress);
+            }
+        });
 })
 
 module.exports = router
