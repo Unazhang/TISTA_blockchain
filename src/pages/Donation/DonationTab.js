@@ -122,12 +122,11 @@ export default function DonationTab() {
   }
 
   reaction(() => donationStore.isUpdate,
-    isUpdate => {
+    async isUpdate => {
       if (isUpdate) {
         donationStore.isUpdate = false;
-        console.log('autorun', donationStore.isUpdate)
-        fetchDonations();
-        fetchDonatedAddress()
+        await fetchDonations();
+        await fetchDonatedAddress()
       } else {
         console.log('autorun !false')
       }
@@ -196,7 +195,6 @@ export default function DonationTab() {
 
 const handleSearch = e => {
   const keyword = e.target.value;
-  console.log("input is ",keyword)
   if (keyword !== '') {
     const results = Data.filter((d) => {
       return d.name.toLowerCase().includes(keyword.toLowerCase());

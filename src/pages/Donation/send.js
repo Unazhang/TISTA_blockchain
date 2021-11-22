@@ -47,8 +47,18 @@ class Send extends Component {
     console.log(web3.utils.fromWei(balance.toString(), 'Ether'));
   }
 
-  transfer(recipient, amount) {
-    this.state.daiTokenMock.methods.transfer(recipient, amount).send({ from: this.state.account }).on('transactionHash', () => {console.log('finished transaction')})
+  async transfer(recipient, amount) {
+    this.state.daiTokenMock.methods.transfer(recipient, amount).send({ from: this.state.account }).on('transactionHash', () => {
+      console.log('donate', recipient, this.amountRef.value)
+      if (this.props.isDonation) {
+        axios.post('http://localhost:4000/app/donate', {
+          receiver: recipient,
+          amount: this.amountRef.value,
+          frequency: "Once",
+          payAccount: "account1"
+        }).then(() => donationStore.isUpdate = true)
+      }
+    })
   }
 
   constructor(props) {
@@ -78,15 +88,6 @@ class Send extends Component {
                 const recipient = this.recipientRef.value
                 const amount = window.web3.utils.toWei(this.amountRef.value, 'Ether')
                 this.transfer(recipient, amount)
-                console.log('donate', recipient, this.amountRef.value)
-                if (this.props.isDonation) {
-                  axios.post('http://localhost:4000/app/donate', {
-                    receiver: recipient,
-                    amount: this.amountRef.value,
-                    frequency: "Once",
-                    payAccount: "account1"
-                  }).then(() => donationStore.isUpdate = true)
-                }
           }}>
             <div className="form-group mr-sm-2">
             <TextField
