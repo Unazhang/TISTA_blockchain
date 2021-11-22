@@ -116,7 +116,7 @@ export default function DonationTab() {
         console.log('autorun', donationStore.isUpdate)
         fetchDonations();
       } else {
-        console.log('autorun false')
+        console.log('autorun !false')
       }
   });
 
@@ -125,7 +125,7 @@ export default function DonationTab() {
       try {
         const result = await axios.get(`${API_BASE_URL}/app/donatedAddress`);
         console.log('donatiedAddress', result)
-        setEvents(result.data);
+        // setEvents(result.data);
       } catch (error) {
         console.log('error')
       }
