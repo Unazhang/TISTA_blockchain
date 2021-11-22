@@ -40,9 +40,35 @@ router.post('/donate', async (req, res) => {
             if (err) {
                 res.send(err);
             } else {
-                res.send(result);
+                console.log("Current Amount Updated", result);
             }
         })
+    mytable.findOneAndUpdate({ userId: req.body.userId },
+        { $addToSet: { donateTo: [req.body.receiver, req.body.amount] } },
+        function (err, result) {
+            if (err) {
+                res.send(err);
+            } else {
+                res.send(result)
+                console.log("User Donation Record Updated");
+            }
+        })
+})
+
+router.post('/login', async (req, res) => {
+    mytable.findOne({ userName: req.body.userName },
+        function (err, result) {
+            if (err) {
+                res.send(err);
+            } else {
+                if (bcrypt.compareSync(req.body.password, result.password)) {
+                    res.send({ "userName": req.body.userName, verified: true });
+                }
+                else {
+                    res.send("Unable to verify");
+                }
+            }
+        });
 })
 
 router.post('/request', async (req, res) => {
