@@ -19,7 +19,7 @@ const signUpTemplate = new mongoose.Schema({
         required: true
     },
     donationAddress: [String],
-    donateTo: [[String, Number]],
+    donateTo: [String],
     donateAddress: String,
     date: {
         type: Date,

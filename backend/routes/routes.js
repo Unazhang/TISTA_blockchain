@@ -47,7 +47,7 @@ router.post('/donate', async (req, res) => {
             }
         })
     mytable.findOneAndUpdate({ userId: req.body.userId },
-        { $addToSet: { donateTo: [req.body.receiver, req.body.amount] } },
+        { $addToSet: { donateTo: req.body.receiver } },
         function (err, result) {
             if (err) {
                 res.send(err);

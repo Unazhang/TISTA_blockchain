@@ -3,10 +3,10 @@ Content-Type: application/json
 
 {
     "fullName": "Keith",
-    "userName": "donationAddress-kz",
+    "userName": "1122-kz",
     "email": "k@mail.com",
     "password": "ethwallet",
     "donationAddress": ["acc1"],
-    "donateTo": [["acc2", 999]],
+    "donateTo": ["acc2"],
     "donateAddress": "addr1"
 }
