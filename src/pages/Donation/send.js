@@ -55,7 +55,8 @@ class Send extends Component {
           receiver: recipient,
           amount: this.amountRef.value,
           frequency: "Once",
-          payAccount: "account1"
+          payAccount: "account1",
+          userName: localStorage.getItem('userName')
         }).then(() => donationStore.isUpdate = true)
       }
     })

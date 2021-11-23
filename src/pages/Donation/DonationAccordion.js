@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -6,6 +7,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DonattionFlowHistory from './DonationFlowHistory';
+const API_BASE_URL = `http://localhost:4000`;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,41 +36,42 @@ const useStyles = makeStyles((theme) => ({
 export default function ControlledAccordions() {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
-
+  const [address, setAddress] = React.useState([])
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
 
+  useEffect(() => {
+    const fetchDonatedAddress = async() => {
+      const userName = localStorage.getItem('userName')
+      const result = await axios.post(`${API_BASE_URL}/app/donatedAddress`, {
+        userName
+      })
+      console.log('donated', result.data)
+      result.data && setAddress(result.data)
+      console.log('donatedAddress', address, userName, result)
+    }
+    fetchDonatedAddress()
+  }, [null]);
+
   return (
     <div className={classes.root}>
-        <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')} className={classes.donationBox}>
+      {address && address.length > 0 && address.map((d, i) => {
+        return (<Accordion expanded={expanded === `panel${i+1}`} onChange={handleChange(`panel${i+1}`)} className={classes.donationBox}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="panel1a-header"
           className={classes.donationAccordion}
         >
-          <Typography className={classes.heading}>Donated To: 0x98BfA478D7e25f4A424c8f1E96A190368D118b22</Typography>
-          <Typography className={classes.heading}>Amount: 500 DAI</Typography>
+          <Typography className={classes.heading}>Donated To: {d}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-            <DonattionFlowHistory address={"0x98BfA478D7e25f4A424c8f1E96A190368D118b22"} />
+            <DonattionFlowHistory address={d}/>
         </AccordionDetails>
-      </Accordion>
-      <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')} className={classes.donationBox}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-          className={classes.donationAccordion}
-        >
-          <Typography className={classes.heading}>Donated To: 0x847d2827188fA5Da7b4b20AaA3d5BbB449Cf0AFb</Typography>
-          <Typography className={classes.heading}>Amount: 50 DAI</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-            <DonattionFlowHistory address={"0x847d2827188fA5Da7b4b20AaA3d5BbB449Cf0AFb"}/>
-        </AccordionDetails>
-      </Accordion>
+      </Accordion>)
+      })}
+      
     </div>
   );
 }

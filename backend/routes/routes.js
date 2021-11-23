@@ -46,7 +46,7 @@ router.post('/donate', async (req, res) => {
                 console.log("Current Amount Updated", result);
             }
         })
-    mytable.findOneAndUpdate({ userId: req.body.userId },
+    mytable.findOneAndUpdate({ userName: req.body.userName },
         { $addToSet: { donateTo: req.body.receiver } },
         function (err, result) {
             if (err) {
@@ -102,8 +102,9 @@ router.get('/donation', async (req, res) => {
     requesttable.find({}, (err, result) => { console.log('result', result); res.json(result) });
 })
 
-router.get('/donatedAddress', async (req, res) => {
-    mytable.findOne({ userId: req.body.userId },
+router.post('/donatedAddress', async (req, res) => {
+    console.log('donatedAdd', req)
+    mytable.findOne({ userName: req.body.userName },
         function (err, result) {
             console.log('donated address', err, result, req.body)
             if (err) {

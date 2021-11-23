@@ -112,9 +112,8 @@ export default function DonationTab() {
   const fetchDonatedAddress = async () => {
     try {
       const result = await axios.get(`${API_BASE_URL}/app/donatedAddress`, {
-        userId: localStorage.getItem('userName')
-      });
-      console.log('donatiedAddress', result)
+        userName: localStorage.getItem('userName')
+      }).then(res => console.log('donatiedAddress', localStorage.getItem('userName'), res, localStorage.getItem('userName')))
       // setEvents(result.data);
     } catch (error) {
       console.log('error')
