@@ -4,8 +4,8 @@ Content-Type: application/json
 {
     "requestId": "id1",
     "userId": "id2",
-    "amount": 100,
-    "title": "test",
+    "amount": 999,
+    "title": "donateTest",
     "reason": "test",
     "description": "test"
 } 

@@ -50,7 +50,7 @@ class Donate extends Component {
         }
 
         axios.post('http://localhost:4000/app/donate', registered)
-            .then(res => console.log(res.data))
+            .then(res => console.log('donate', res.data))
 
         // Go back to home page
         window.location = '/donate'
