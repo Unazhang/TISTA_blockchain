@@ -142,7 +142,7 @@ class  FAQ extends Component {
        </AppBar>
        <TabPanel value={this.state.value} index={0} style={{height:'77vh'}}>
        {/* <Table columns={col} /> */}
-          <div className="mainblock" id="transactionTable">
+          <div className="mainblock" id="transactionTable" style={{width:"100%"}}>
           <Paper>
               <Table aria-label="simple table">
                 <TableHead>
