@@ -236,7 +236,7 @@ const handleChange = (event, newValue) => {
                     <Grid item xs={12} sm={6}>
                     <Card variant="outlined" style={{height:"25vh"}}>
                         <CardContent style={{height:"18vh",ordWrap: 'break-word',display: "block",overflow: "hidden",whiteSpace:"normal"}}>
-                            <Typography id="title" gutterBottom variant="h6" component="h2">{d.name}</Typography>
+                            <Typography id="title" gutterBottom variant="h6" style={{fontSize:"2.5vh"}}>{d.name}</Typography>
                             <Typography noWrap variant="body2" color="textSecondary" component="p">xxx raised of xxx
                             </Typography>
                             <Typography noWrap variant="body2" color="textSecondary" component="p">Address:placeholder
