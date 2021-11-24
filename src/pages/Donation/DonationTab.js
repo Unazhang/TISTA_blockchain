@@ -21,6 +21,7 @@ import { observer } from 'mobx-react-lite'
 import { donationStore } from "../../stores/DonationStore";
 import DonationAccordion from "./DonationAccordion"
 import './Donation.css';
+import DonationPopOver from './DonationPopOver';
 
 
 const Data = [
@@ -233,14 +234,20 @@ const handleChange = (event, newValue) => {
           {found && found.length > 0 ? (
             found.map((d) => (
                     <Grid item xs={12} sm={6}>
-                    <Card variant="outlined" style={{height:"25vh", overflow:'scroll'}}>
-                        <CardContent>
-                            <Typography id = "title" gutterBottom variant="h6" component="h2">{d.name}</Typography>
-                            <Typography variant="body2" color="textSecondary" component="p" style={{wordWrap: 'break-word'}}>PlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholder
+                    <Card variant="outlined" style={{height:"25vh"}}>
+                        <CardContent style={{height:"18vh",ordWrap: 'break-word',display: "block",overflow: "hidden",whiteSpace:"normal"}}>
+                            <Typography id="title" gutterBottom variant="h6" component="h2">{d.name}</Typography>
+                            <Typography noWrap variant="body2" color="textSecondary" component="p">xxx raised of xxx
+                            </Typography>
+                            <Typography noWrap variant="body2" color="textSecondary" component="p">Address:placeholder
+                            </Typography>
+                            <Typography noWrap variant="body2" color="textSecondary" component="p">PlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholder
                             PlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlacehold
                             </Typography>
                         </CardContent>
                         <CardActions>
+                          <DonationPopOver amount="xxx raised of xxx" address="placeholder" content="PlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholder
+                            PlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlacehold"/>
                       </CardActions>
                     </Card>
                 </Grid>
