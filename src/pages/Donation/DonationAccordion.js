@@ -12,20 +12,23 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   },
   heading: {
-    fontSize: theme.typography.pxToRem(15),
+    fontSize: "0.9vw",
     marginRight:50
   },
   secondaryHeading: {
-    fontSize: theme.typography.pxToRem(15),
+    fontSize: "0.8vw",
     color: theme.palette.text.secondary,
   },
   donationAccordion: {
     margin:15,
-    height:'8vh'
+    height:'7vh'
   },
   donationBox: {
     boxShadow: 'none',
     borderRadius:20
+  },
+  details: {
+    overflow:"scroll"
   }
 }));
 
@@ -51,7 +54,7 @@ export default function ControlledAccordions() {
           <Typography className={classes.heading}>Donated To: 0x98BfA478D7e25f4A424c8f1E96A190368D118b22</Typography>
           <Typography className={classes.heading}>Amount: 500 DAI</Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails className={classes.details}>
             <DonattionFlowHistory address={"0x98BfA478D7e25f4A424c8f1E96A190368D118b22"} />
         </AccordionDetails>
       </Accordion>
@@ -65,7 +68,7 @@ export default function ControlledAccordions() {
           <Typography className={classes.heading}>Donated To: 0x847d2827188fA5Da7b4b20AaA3d5BbB449Cf0AFb</Typography>
           <Typography className={classes.heading}>Amount: 50 DAI</Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails className={classes.details}>
             <DonattionFlowHistory address={"0x847d2827188fA5Da7b4b20AaA3d5BbB449Cf0AFb"}/>
         </AccordionDetails>
       </Accordion>

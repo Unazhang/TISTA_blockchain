@@ -73,8 +73,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: "#F5F9FF",
-    height:'100%',
-    width:'110vh',
+    height:'80vh',
+    width:'60vw',
     borderRadius:'25px',
   },
   pageContent: {
@@ -213,7 +213,7 @@ const handleChange = (event, newValue) => {
         </Tabs>
       </AppBar>
       
-      <TabPanel value={value} index={0} style={{height:'77vh'}}>
+      <TabPanel value={value} index={0}>
         <Toolbar>
             <Controls.Input
                 label="Search"
@@ -226,24 +226,22 @@ const handleChange = (event, newValue) => {
                 onChange={handleSearch}
             />
         </Toolbar>
-        <div style={{maxHeight:'66vh', overflow:'auto'}}>
+        <div style={{maxHeight:'55vh', overflow:'auto'}}>
           <Grid container spacing={3}>
 
           {/* {arr} */}
           {found && found.length > 0 ? (
             found.map((d) => (
                     <Grid item xs={12} sm={6}>
-                    <Card variant="outlined">
-                        <CardActionArea>
+                    <Card variant="outlined" style={{height:"25vh", overflow:'scroll'}}>
                         <CardContent>
-                            <Typography id = "title" gutterBottom variant="h5" component="h2">{d.name}</Typography>
-                            <Typography variant="body2" color="textSecondary" component="p">Placeholder
+                            <Typography id = "title" gutterBottom variant="h6" component="h2">{d.name}</Typography>
+                            <Typography variant="body2" color="textSecondary" component="p" style={{wordWrap: 'break-word'}}>PlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholder
+                            PlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlacehold
                             </Typography>
                         </CardContent>
-                    </CardActionArea>
-                    <CardActions>
-                        <Button size="small" color="primary">Learn More</Button>
-                    </CardActions>
+                        <CardActions>
+                      </CardActions>
                     </Card>
                 </Grid>
             ))
@@ -257,9 +255,9 @@ const handleChange = (event, newValue) => {
         </div>
         
       </TabPanel>
-      <TabPanel value={value} index={1} style={{height:'77vh'}}>
+      <TabPanel value={value} index={1}>
         <Typography variant="h6" id="tableTitle" component="div">Donation History</Typography>
-        <div style={{maxHeight:'66vh', overflow:'auto'}}>
+        <div style={{maxHeight:'58vh', overflow:'auto'}}>
             <DonationAccordion/>
         </div>
             
