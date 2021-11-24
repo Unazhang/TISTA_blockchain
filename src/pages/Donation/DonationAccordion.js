@@ -14,20 +14,23 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   },
   heading: {
-    fontSize: theme.typography.pxToRem(15),
-    marginRight:50
+    fontSize: "0.9vw",
+    marginRight: 50
   },
   secondaryHeading: {
-    fontSize: theme.typography.pxToRem(15),
+    fontSize: "0.8vw",
     color: theme.palette.text.secondary,
   },
   donationAccordion: {
-    margin:15,
-    height:'8vh'
+    margin: 15,
+    height: '7vh'
   },
   donationBox: {
     boxShadow: 'none',
-    borderRadius:20
+    borderRadius: 20
+  },
+  details: {
+    overflow: "scroll"
   }
 }));
 
@@ -42,7 +45,7 @@ export default function ControlledAccordions() {
   };
 
   useEffect(() => {
-    const fetchDonatedAddress = async() => {
+    const fetchDonatedAddress = async () => {
       const userName = localStorage.getItem('userName')
       const result = await axios.post(`${API_BASE_URL}/app/donatedAddress`, {
         userName
@@ -57,21 +60,21 @@ export default function ControlledAccordions() {
   return (
     <div className={classes.root}>
       {address && address.length > 0 && address.map((d, i) => {
-        return (<Accordion expanded={expanded === `panel${i+1}`} onChange={handleChange(`panel${i+1}`)} className={classes.donationBox}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-          className={classes.donationAccordion}
-        >
-          <Typography className={classes.heading}>Donated To: {d}</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-            <DonattionFlowHistory address={d}/>
-        </AccordionDetails>
-      </Accordion>)
+        return (<Accordion expanded={expanded === `panel${i + 1}`} onChange={handleChange(`panel${i + 1}`)} className={classes.donationBox}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+            className={classes.donationAccordion}
+          >
+            <Typography className={classes.heading}>Donated To: {d}</Typography>
+          </AccordionSummary>
+          <AccordionDetails className={classes.details}>
+            <DonattionFlowHistory address={d} />
+          </AccordionDetails>
+        </Accordion>)
       })}
-      
+
     </div>
   );
 }

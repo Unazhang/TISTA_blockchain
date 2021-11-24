@@ -1,8 +1,4 @@
 /* Styles go here */
-.main{
-    width:100%;
-    height:100%
-}
 .mainblock {
     display: inline-block;
     
@@ -15,58 +11,64 @@
 }
 
 #transactionTable{
-    width:100%;
-    height: 20%;
-    margin-left:10px;
+    height: 35vw;
+    width: 50vw;
 
 }
 
 #balance{
-    width:100%;
-    height:800px;
-    margin-right:20px
+    margin-right:5vw
 }
-
 #balanceCard {
-    margin-left:70px;
-    margin-right:70px;
-    height:380px;
-    width:72%;
+    margin-top:10%;
+    margin-left:auto;
+    margin-right:auto;
+    height:25vw;
+    width:35vw;
     border-radius: 25px;
-    padding:60px;
+    padding:6%;
     background: radial-gradient(#CEE2FF 15%, #FFFFFF 85%);
     border: 2px solid #CEE2FF;
+    display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+
+#sendContain {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding:6%;
 }
 
 .darkp{
     color:#112957;
     font-weight: bold;
-    font-size:1.9rem;
+    font-size:1.5vw;
     font-family: 'Lato', sans-serif;
 }
 
 .cardHead{
     color:#194db0;
     font-weight: medium;
-    font-size:1.3rem;
+    font-size:1.5vw;
     font-family: 'Lato', sans-serif;
 }
 
 .cardContent{
 display: inline-block;
-margin-right:45px;
+margin-right:4vw;
 text-align: left;
 }
 
 .cardMain{
 text-align: left;
 display: block;
-margin-top:60px;
-left:50px;
+margin-top:6vh;
 }
 
 .transactionMain{
-    height:700px;
+    height:40vw;
     padding:50px;
     background-color: #f5f9ff;
     border-radius: 25px;
@@ -74,7 +76,7 @@ left:50px;
 }
 .transactionContent{
     border-radius: 25px;
-    padding:30px;
+    padding:3%;
     height:90%;
     background-color: #ffffff;
 }

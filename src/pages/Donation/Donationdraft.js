@@ -65,7 +65,7 @@ export default function DonationDraft() {
                             <Controls.Button
                                 text="Donate"
                                 variant="contained"
-                                style={{backgroundColor:"#194db0", fontSize:"25px"}}
+                                style={{backgroundColor:"#194db0", fontSize:"1.5vw"}}
                                 className={classes.newButton}
                                 onClick={() => { setOpenDonate(true); }}
                             />
@@ -75,7 +75,7 @@ export default function DonationDraft() {
                                 text="Request"
                                 variant="outlined"
                                 startIcon={<AddIcon />}
-                                style={{border:"3px solid #194db0", fontSize:"25px"}}
+                                style={{border:"3px solid #194db0", fontSize:"1.5vw"}}
                                 className={classes.newButton}
                                 onClick={() => { setDonreq(true); }}
                             />

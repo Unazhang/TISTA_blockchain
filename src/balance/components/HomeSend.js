@@ -16,10 +16,9 @@ export default function HomeSend() {
                         borderRadius: 30,
                         backgroundColor: "#FD8024",
                         padding: "18px 36px",
-                        fontSize: "30px",
-                        width:370,
-                        height:100,
-                        marginTop:70
+                        fontSize: "2vw",
+                        width:"25vw",
+                        height:"6vw",
                         
                     }}
                     onClick={() => { setOpenSend(true);}}

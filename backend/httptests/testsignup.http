@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
     "fullName": "Keith",
-    "userName": "1122-kz",
+    "userName": "1123-kz",
     "email": "k@mail.com",
     "password": "ethwallet",
     "donationAddress": ["acc1"],

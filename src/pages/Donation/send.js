@@ -125,7 +125,7 @@ class Send extends Component {
                 </Select>
             </FormControl>
             </div>
-            <button type="submit">Send</button>
+            <Button variant="contained" type="submit">Send</Button>
           </Form>
       )
   }
