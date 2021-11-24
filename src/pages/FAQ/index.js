@@ -1,5 +1,5 @@
 import React from "react";
-import {useState} from 'react';
+import { useState } from 'react';
 import { Switch, Route, NavLink } from "react-router-dom";
 import CssBaseline from '@material-ui/core/CssBaseline'
 import MaUTable from '@material-ui/core/Table'
@@ -12,7 +12,7 @@ import Tab from '@material-ui/core/Tab';
 import { useTable } from 'react-table'
 import AppBar from '@material-ui/core/AppBar';
 import Web3 from 'web3';
-import { Component } from 'react'; 
+import { Component } from 'react';
 // import './App.css';
 import XYZ from '../../balance/abis/XYZ.json'
 import { get } from "axios";
@@ -20,7 +20,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from "@material-ui/core/Typography";
 import Paper from '@material-ui/core/Paper';
-import { Table} from '@material-ui/core';
+import { Table } from '@material-ui/core';
 import HomeSend from '../../balance/components/HomeSend';
 import Box from '@material-ui/core/Box';
 import PropTypes from 'prop-types';
@@ -59,7 +59,7 @@ function a11yProps(index) {
 }
 
 
-class  FAQ extends Component {
+class FAQ extends Component {
   async componentWillMount() {
     await this.loadWeb3()
     await this.loadBlockchainData()
@@ -109,7 +109,7 @@ class  FAQ extends Component {
       balance: 0,
       from_transactions: [],
       to_transactions: [],
-      seen:false,
+      seen: false,
       value: 0
     }
 
@@ -147,11 +147,11 @@ class  FAQ extends Component {
               <Table aria-label="simple table">
                 <TableHead>
                   <TableCell>
-                  Name
-                </TableCell>
-                <TableCell >
-                  Info
-                </TableCell>
+                    Name
+                  </TableCell>
+                  <TableCell >
+                    Info
+                  </TableCell>
                   <TableRow>
                     <TableCell>Sender</TableCell>
                     <TableCell>Transaction ID</TableCell>
@@ -159,51 +159,51 @@ class  FAQ extends Component {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                { this.state.from_transactions.map((tx, key) => {
-                      return (
-                        <TableRow key={key}>
+                  {this.state.from_transactions.map((tx, key) => {
+                    return (
+                      <TableRow key={key}>
                         <TableCell >{tx.returnValues.to}</TableCell>
                         <TableCell>{tx.id}</TableCell>
                         <TableCell>{window.web3.utils.fromWei(tx.returnValues.value.toString(), 'Ether')}</TableCell>
                       </TableRow>
-                      )
-                    }) }
+                    )
+                  })}
                 </TableBody>
               </Table>
             </Paper>
           </div>
-          </TabPanel>
-          <TabPanel value={this.state.value} index={1}>
+        </TabPanel >
+        <TabPanel value={this.state.value} index={1}>
           <Paper>
-              <Table aria-label="simple table">
-                <TableHead>
-                  <TableCell>
+            <Table aria-label="simple table">
+              <TableHead>
+                <TableCell>
                   Name
                 </TableCell>
                 <TableCell >
                   Info
                 </TableCell>
-                  <TableRow>
-                    <TableCell>Receiver</TableCell>
-                    <TableCell>Transaction ID</TableCell>
-                    <TableCell >Amount</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                { this.state.to_transactions.map((tx, key) => {
-                      return (
-                        <TableRow key={key}>
-                        <TableCell >{tx.returnValues.to}</TableCell>
-                        <TableCell>{tx.id}</TableCell>
-                        <TableCell>{window.web3.utils.fromWei(tx.returnValues.value.toString(), 'Ether')}</TableCell>
-                      </TableRow>
-                      )
-                    }) }
-                </TableBody>
-              </Table>
-            </Paper>
-          </TabPanel>
-          </div>
+                <TableRow>
+                  <TableCell>Receiver</TableCell>
+                  <TableCell>Transaction ID</TableCell>
+                  <TableCell >Amount</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {this.state.to_transactions.map((tx, key) => {
+                  return (
+                    <TableRow key={key}>
+                      <TableCell >{tx.returnValues.to}</TableCell>
+                      <TableCell>{tx.id}</TableCell>
+                      <TableCell>{window.web3.utils.fromWei(tx.returnValues.value.toString(), 'Ether')}</TableCell>
+                    </TableRow>
+                  )
+                })}
+              </TableBody>
+            </Table>
+          </Paper>
+        </TabPanel>
+      </div >
     );
   }
 }
@@ -215,7 +215,7 @@ class  FAQ extends Component {
 //     columns,
 //     data,
 //   })
-  
+
 
 //   // Render the UI for your table
 //   return (
@@ -252,87 +252,87 @@ class  FAQ extends Component {
 // }
 
 // function FAQ() {
-  // const columns =[
-  //     {
-  //       Header: 'Name',
-  //       columns: [
-  //         {
-  //           Header: 'Receiver',
-  //           accessor: 'receiver',
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       Header: 'Info',
-  //       columns: [
-  //         {
-  //           Header: 'Transaction ID',
-  //           accessor: 'id',
-  //         },
-  //         {
-  //           Header: 'Amount',
-  //           accessor: 'amount',
-  //         },
-  //       ],
-  //     },
-  //   ]
+// const columns =[
+//     {
+//       Header: 'Name',
+//       columns: [
+//         {
+//           Header: 'Receiver',
+//           accessor: 'receiver',
+//         },
+//       ],
+//     },
+//     {
+//       Header: 'Info',
+//       columns: [
+//         {
+//           Header: 'Transaction ID',
+//           accessor: 'id',
+//         },
+//         {
+//           Header: 'Amount',
+//           accessor: 'amount',
+//         },
+//       ],
+//     },
+//   ]
 
-  // const [col, setCol] = useState(columns);
+// const [col, setCol] = useState(columns);
 
-  // const handleChange1 = (event, newValue) => {
-  //   const new_columns =  [
-  //       {
-  //         Header: 'Name',
-  //         columns: [
-  //           {
-  //             Header: 'Receiver',
-  //             accessor: 'receiver',
-  //           },
-  //         ],
-  //       },
-  //       {
-  //         Header: 'Info',
-  //         columns: [
-  //           {
-  //             Header: 'Transaction ID',
-  //             accessor: 'id',
-  //           },
-  //           {
-  //             Header: 'Amount',
-  //             accessor: 'amount',
-  //           },
-  //         ],
-  //       },
-  //     ]
-  //   setCol(new_columns)
-  // };
-  // const handleChange2 = (event, newValue) => {
-  //   const new_columns =  [
-  //     {
-  //       Header: 'Name',
-  //       columns: [
-  //         {
-  //           Header: 'Sender',
-  //           accessor: 'sender',
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       Header: 'Info',
-  //       columns: [
-  //         {
-  //           Header: 'Transaction ID',
-  //           accessor: 'id',
-  //         },
-  //         {
-  //           Header: 'Amount',
-  //           accessor: 'amount',
-  //         },
-  //       ],
-  //     },
-  //   ]
-  // setCol(new_columns)
-  // };
+// const handleChange1 = (event, newValue) => {
+//   const new_columns =  [
+//       {
+//         Header: 'Name',
+//         columns: [
+//           {
+//             Header: 'Receiver',
+//             accessor: 'receiver',
+//           },
+//         ],
+//       },
+//       {
+//         Header: 'Info',
+//         columns: [
+//           {
+//             Header: 'Transaction ID',
+//             accessor: 'id',
+//           },
+//           {
+//             Header: 'Amount',
+//             accessor: 'amount',
+//           },
+//         ],
+//       },
+//     ]
+//   setCol(new_columns)
+// };
+// const handleChange2 = (event, newValue) => {
+//   const new_columns =  [
+//     {
+//       Header: 'Name',
+//       columns: [
+//         {
+//           Header: 'Sender',
+//           accessor: 'sender',
+//         },
+//       ],
+//     },
+//     {
+//       Header: 'Info',
+//       columns: [
+//         {
+//           Header: 'Transaction ID',
+//           accessor: 'id',
+//         },
+//         {
+//           Header: 'Amount',
+//           accessor: 'amount',
+//         },
+//       ],
+//     },
+//   ]
+// setCol(new_columns)
+// };
 //   // const data = React.useMemo(() => makeData(20), [])
 
 //   return (
