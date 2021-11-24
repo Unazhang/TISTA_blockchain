@@ -2,6 +2,6 @@ POST http://localhost:4000/app/login
 Content-Type: application/json
 
 {
-    "userName": "donationAddress-kz",
-    "password": "ethwallet"
+    "userName": "kz",
+    "password": "kz"
 }

@@ -10,7 +10,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import {donationStore} from "../../stores/DonationStore";
+import { donationStore } from "../../stores/DonationStore";
 
 class Send extends Component {
   async componentWillMount() {
@@ -81,55 +81,55 @@ class Send extends Component {
       this.setState({ helperText: 'Invalid format', error: true });
     }
   }
-  render(){
-      return (
-          
-        <Form onSubmit={(event) => {
-                event.preventDefault()
-                const recipient = this.recipientRef.value
-                const amount = window.web3.utils.toWei(this.amountRef.value, 'Ether')
-                this.transfer(recipient, amount)
-          }}>
-            <div className="form-group mr-sm-2">
-            <TextField
-                variant="outlined" 
-                helperText={this.state.helperText}
-                onChange={this.onChange.bind(this)}
-                error={this.state.error}
-                required
-                id="recipient"
-                label="Recipient Address"
-                inputRef={element => (this.recipientRef = element)}
-            />
-            <TextField
-                variant="outlined" 
-                helperText={this.state.helperText}
-                onChange={this.onChange.bind(this)}
-                error={this.state.error}
-                required
-                id="amount"
-                label="Amount"
-                inputRef={element => (this.amountRef = element)}
-            />
-            <ButtonGroup color="primary" aria-label="outlined primary button group">
-                <Button>One Time Transfer</Button>
-                <Button>Weekly</Button>
-                <Button>Monthly</Button>
-            </ButtonGroup>
-            <FormControl variant="outlined">
-                <InputLabel id="demo-simple-select-label">Pay With Account</InputLabel>
-                <Select>
-                <MenuItem value={10}>Account1</MenuItem>
-                <MenuItem value={20}>Account2</MenuItem>
-                <MenuItem value={30}>Account3</MenuItem>
-                </Select>
-            </FormControl>
-            </div>
-            <Button variant="contained" type="submit">Send</Button>
-          </Form>
-      )
+  render() {
+    return (
+
+      <Form onSubmit={(event) => {
+        event.preventDefault()
+        const recipient = this.recipientRef.value
+        const amount = window.web3.utils.toWei(this.amountRef.value, 'Ether')
+        this.transfer(recipient, amount)
+      }}>
+        <div className="form-group mr-sm-2">
+          <TextField
+            variant="outlined"
+            helperText={this.state.helperText}
+            onChange={this.onChange.bind(this)}
+            error={this.state.error}
+            required
+            id="recipient"
+            label="Recipient Address"
+            inputRef={element => (this.recipientRef = element)}
+          />
+          <TextField
+            variant="outlined"
+            helperText={this.state.helperText}
+            onChange={this.onChange.bind(this)}
+            error={this.state.error}
+            required
+            id="amount"
+            label="Amount"
+            inputRef={element => (this.amountRef = element)}
+          />
+          <ButtonGroup color="primary" aria-label="outlined primary button group">
+            <Button>One Time Transfer</Button>
+            <Button>Weekly</Button>
+            <Button>Monthly</Button>
+          </ButtonGroup>
+          <FormControl variant="outlined">
+            <InputLabel id="demo-simple-select-label">Pay With Account</InputLabel>
+            <Select>
+              <MenuItem value={10}>Account1</MenuItem>
+              <MenuItem value={20}>Account2</MenuItem>
+              <MenuItem value={30}>Account3</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
+        <Button variant="contained" type="submit">Send</Button>
+      </Form>
+    )
   }
-  
+
 }
 
 export default Send;
