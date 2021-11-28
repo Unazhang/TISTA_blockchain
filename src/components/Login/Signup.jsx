@@ -60,14 +60,18 @@ export default function SignUp() {
       password: password
     }
     axios.post('http://localhost:4000/app/signup', register)
-        .then(res => console.log(res.data))
+        .then(res => {
+          if (res && res.data && res.data.success) {
+            window.location = "/login"
+          }
+        })
     
     // Go back to home page
     setName('')
     setUserName('')
     setEmail('')
     setPassword('')
-    window.location = "/login";
+    // window.location = "/login";
   }
   
   return (
@@ -80,7 +84,7 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <div className={classes.form} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -155,7 +159,7 @@ export default function SignUp() {
               </Link>
             </Grid>
           </Grid>
-        </form>
+        </div>
       </div>
     </Container>
   );

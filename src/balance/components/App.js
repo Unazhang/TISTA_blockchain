@@ -80,47 +80,49 @@ class Home extends Component {
             <div style={{marginBottom:"50px", marginLeft:"30px"}}>
               <p className="darkp" >Welcome Back!</p>
             </div>
-            <Card id="balanceCard">
-              <CardContent>
-              <p className="darkp">Balance</p>
-              <div className="cardMain">
-                <div className="cardContent">
-                  <p className="cardHead">DAI Balance</p>
-                  <p gutterBottom className="darkp">
-                  {this.state.balance} DAI
-                  </p>
+              <Card id="balanceCard">
+                <CardContent id="balanceContent">
+                <p className="darkp">Balance</p>
+                <div className="cardMain">
+                  <div className="cardContent">
+                    <p className="cardHead">DAI Balance</p>
+                    <p gutterBottom className="darkp">
+                    {this.state.balance} DAI
+                    </p>
+                  </div>
+                  <div className="cardContent">
+                    <p className="cardHead">USD Value</p>
+                    <p gutterBottom className="darkp">
+                    $XXX
+                    </p>
+                  </div>
                 </div>
-                <div className="cardContent">
-                  <p className="cardHead">USD Value</p>
-                  <p gutterBottom className="darkp">
-                  $XXX
-                  </p>
-                </div>
+                </CardContent>
+              </Card>
+              <div id="sendContain">
+              <HomeSend />
               </div>
-              </CardContent>
-            </Card>
-            <div style={{textAlign:'center', marginRight:70}}>
-            <HomeSend />
-            </div>
+          
+            
           </div>
           <div className="mainblock" id="transactionTable">
           <div className="transactionMain">
-          <p className="darkp" style={{fontSize:"1.5rem"}}>Transaction History</p>
+          <p className="darkp" style={{fontSize:"1.5vw"}}>Transaction History</p>
             <div className="transactionContent" style={{borderRadius:"15px"}}>
-            <TableContainer style={{ maxHeight: 440 }}>
-              <Table stickyHeader aria-label="sticky table">
+            <TableContainer style={{ maxHeight: "85%"}}>
+              <Table stickyHeader aria-label="sticky table" >
                   <TableHead >
                     <TableRow >
-                      <TableCell align="left" style={{fontSize:"16px"}}>Recipient Address</TableCell>
-                      <TableCell align="left" style={{fontSize:"16px"}}>Amount</TableCell>
+                      <TableCell align="left" style={{fontSize:"1vw"}}>Recipient Address</TableCell>
+                      <TableCell align="left" style={{fontSize:"1vw"}}>Amount</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     { this.state.transactions.map((tx, key) => {
                         return (
                           <TableRow key={key}>
-                          <TableCell align="left" style={{fontSize:"15px"}}>{tx.returnValues.to}</TableCell>
-                          <TableCell align="left" style={{fontSize:"15px"}}>{window.web3.utils.fromWei(tx.returnValues.value.toString(), 'Ether')}</TableCell>
+                          <TableCell align="left" style={{fontSize:"1vw"}}>{tx.returnValues.to}</TableCell>
+                          <TableCell align="left" style={{fontSize:"1vw"}}>{window.web3.utils.fromWei(tx.returnValues.value.toString(), 'Ether')}</TableCell>
                         </TableRow>
                         )
                       }) }

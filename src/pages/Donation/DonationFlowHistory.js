@@ -64,21 +64,23 @@ class  DonattionFlowHistory extends Component {
   }
   render() {
     return (
-            <Table aria-label="simple table" >
+            <Table aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell >Receiver</TableCell>
-                    <TableCell>Transaction ID</TableCell>
-                    <TableCell >Amount</TableCell>
+                    <TableCell style={{fontSize:'1vw'}}>Amount</TableCell>
+                    <TableCell style={{fontSize:'1vw'}}>Receiver</TableCell>
+                    <TableCell style={{fontSize:'1vw'}}>Transaction ID</TableCell>
+                    
                   </TableRow>
                 </TableHead>
                 <TableBody>
                 { this.state.transactions.map((tx, key) => {
                       return (
-                        <TableRow key={key}>
-                        <TableCell  style={{fontSize:'0.71em'}}>{tx.returnValues.to}</TableCell>
-                        <TableCell  style={{fontSize:'0.71em'}}>{tx.id}</TableCell>
-                        <TableCell  style={{fontSize:'0.71em'}}>{window.web3.utils.fromWei(tx.returnValues.value.toString(), 'Ether')}</TableCell>
+                        <TableRow key={key} >
+                        <TableCell  style={{fontSize:'0.8vw'}}>{window.web3.utils.fromWei(tx.returnValues.value.toString(), 'Ether')}</TableCell>
+                        <TableCell  style={{fontSize:'0.8vw'}}>{tx.returnValues.to}</TableCell>
+                        <TableCell  style={{fontSize:'0.8vw'}}>{tx.id}</TableCell>
+                        
                       </TableRow>
                       )
                     }) }

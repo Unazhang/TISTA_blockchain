@@ -57,8 +57,7 @@ export default function DonationReqForm(props) {
                 title: values.title,
                 description: values.description,
                 blockchainAddress: localStorage.getItem('blockchainAddress')
-            })
-            donationStore.isUpdate = true;
+            }).then(() => donationStore.isUpdate = true)
             resetForm()
         }
     }

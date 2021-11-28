@@ -46,7 +46,8 @@ class Donate extends Component {
             receiver: this.state.receiver,
             amount: this.state.amount,
             frequency: this.state.frequency,
-            payAccount: this.state.payAccount
+            payAccount: this.state.payAccount,
+            userName: localStorage.getItem('userName')
         }
 
         axios.post('http://localhost:4000/app/donate', registered)
