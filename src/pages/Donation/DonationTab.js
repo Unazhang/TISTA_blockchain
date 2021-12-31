@@ -99,12 +99,14 @@ export default function DonationTab() {
 
   let arr = [];
   const [events, setEvents] = useState([]);
+  const [filter_event, setFilterEvents] = useState([]);
   const API_BASE_URL = `http://localhost:4000`;
 
   const fetchDonations = async () => {
     try {
       const result = await axios.get(`${API_BASE_URL}/app/donation`);
       setEvents(result.data);
+      setFound(result.data);
     } catch (error) {
       console.log('error')
     }
@@ -136,76 +138,40 @@ export default function DonationTab() {
     fetchDonations();
     fetchDonatedAddress();
   }, [null]);
-  for (let i = 0; i < events.length; i++) {
-    arr.push(
-      
-      <Grid item xs={12} sm={6}>
-      <Card variant="outlined" style={{ height: "25vh" }}>
-        <CardContent style={{ height: "18vh", ordWrap: 'break-word', display: "block", overflow: "hidden", whiteSpace: "normal" }}>
-          <Typography id="title" gutterBottom variant="h6" style={{ fontSize: "2.5vh" }}>{events[i].title}</Typography>
-          <Typography noWrap variant="body2" color="textSecondary" component="p">{events[i].currentAmount} raised of {events[i].amount}
-          </Typography>
-          <Typography noWrap variant="body2" color="textSecondary" component="p">Blockchain Address: {events[i].blockchainAddress}
-          </Typography>
-          <Typography noWrap variant="body2" color="textSecondary" component="p">{events[i].description}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <DonationPopOver amount={events[i].currentAmount + " raised of " + events[i].amount} address={events[i].blockchainAddress} content={events[i].description}/>
-        </CardActions>
-      </Card>
-    </Grid>
-      );
-  }
+  // for (let i = 0; i < events.length; i++) {
+  //   arr.push(
 
-
-  // let arr = [];
-  //   for (let i = 0; i < 2; i++) {
-  //       arr.push(
-  //       <Grid item xs={12} sm={6}>
-  //           <Card variant="outlined">
-  //               <CardActionArea>
-  //               <CardContent>
-  //                   <Typography id = "title" gutterBottom variant="h5" component="h2">Help Kids</Typography>
-  //                   <Typography variant="body2" color="textSecondary" component="p">Placeholder
-  //                   </Typography>
-  //               </CardContent>
-  //           </CardActionArea>
-  //           <CardActions>
-  //               <Button size="small" color="primary">Learn More</Button>
-  //           </CardActions>
-  //           </Card>
-  //       </Grid>);
-  //   }
-
-  //   for (let i = 2; i < 4; i++) {
-  //     arr.push(
   //     <Grid item xs={12} sm={6}>
-  //         <Card variant="outlined">
-  //             <CardActionArea>
-  //             <CardContent>
-  //                 <Typography id = "title" gutterBottom variant="h5" component="h2">Help Veteran</Typography>
-  //                 <Typography variant="body2" color="textSecondary" component="p">Placeholder
-  //                 </Typography>
-  //             </CardContent>
-  //         </CardActionArea>
-  //         <CardActions>
-  //             <Button size="small" color="primary">Learn More</Button>
-  //         </CardActions>
-  //         </Card>
-  //     </Grid>);
+  //     <Card variant="outlined" style={{ height: "25vh" }}>
+  //       <CardContent style={{ height: "18vh", ordWrap: 'break-word', display: "block", overflow: "hidden", whiteSpace: "normal" }}>
+  //         <Typography id="title" gutterBottom variant="h6" style={{ fontSize: "2.5vh" }}>{events[i].title}</Typography>
+  //         <Typography noWrap variant="body2" color="textSecondary" component="p">{events[i].currentAmount} raised of {events[i].amount}
+  //         </Typography>
+  //         <Typography noWrap variant="body2" color="textSecondary" component="p">Blockchain Address: {events[i].blockchainAddress}
+  //         </Typography>
+  //         <Typography noWrap variant="body2" color="textSecondary" component="p">{events[i].description}
+  //         </Typography>
+  //       </CardContent>
+  //       <CardActions>
+  //         <DonationPopOver amount={events[i].currentAmount + " raised of " + events[i].amount} address={events[i].blockchainAddress} content={events[i].description}/>
+  //       </CardActions>
+  //     </Card>
+  //   </Grid>
+  //     );
   // }
+
+
 
   const handleSearch = e => {
     const keyword = e.target.value;
     if (keyword !== '') {
-      const results = Data.filter((d) => {
-        return d.name.toLowerCase().includes(keyword.toLowerCase());
+      const results = events.filter((d) => {
+        return d.title.toLowerCase().includes(keyword.toLowerCase());
       });
 
       setFound(results);
     } else {
-      setFound(Data);
+      setFound(events);
     }
     setName(keyword);
     // let target = e.target;
@@ -251,7 +217,30 @@ export default function DonationTab() {
         <div style={{ maxHeight: '55vh', overflow: 'auto' }}>
           <Grid container spacing={3}>
 
-            {arr}
+            {found && found.length > 0 ? (
+              found.map((d) => (
+                <Grid item xs={12} sm={6}>
+                  <Card variant="outlined" style={{ height: "25vh" }}>
+                    <CardContent style={{ height: "18vh", ordWrap: 'break-word', display: "block", overflow: "hidden", whiteSpace: "normal" }}>
+                      <Typography id="title" gutterBottom variant="h6" style={{ fontSize: "2.5vh" }}>{d.title}</Typography>
+                      <Typography noWrap variant="body2" color="textSecondary" component="p">{d.currentAmount} raised of {d.amount}
+                      </Typography>
+                      <Typography noWrap variant="body2" color="textSecondary" component="p">Blockchain Address: {d.blockchainAddress}
+                      </Typography>
+                      <Typography noWrap variant="body2" color="textSecondary" component="p">{d.description}
+                      </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <DonationPopOver amount={d.currentAmount + " raised of " + d.amount} address={d.blockchainAddress} content={d.description} />
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))
+            ) : (
+
+              <Typography id="noResult" gutterBottom variant="h5" component="h2" style={{ margin: 50 }}>No Result</Typography>
+
+            )}
             {/* {found && found.length > 0 ? (
               found.map((d) => (
                 <Grid item xs={12} sm={6}>
