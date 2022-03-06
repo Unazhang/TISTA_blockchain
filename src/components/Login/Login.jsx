@@ -1,5 +1,5 @@
 import React from "react";
-import axios from 'axios';
+import axios from "axios";
 import { NavLink } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -17,7 +17,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import authService from "../../service/authService";
 import users from "../../data/users";
 
-
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
@@ -31,80 +30,78 @@ const useStyles = makeStyles((theme) => ({
 
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   size: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
 
   paper: {
     margin: theme.spacing(2, 6),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(0),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
+    margin: theme.spacing(3, 0, 2),
+  },
 }));
 
 export default function SignInSide(props) {
-
-  if(authService.isLoggedIn()){
-
+  if (authService.isLoggedIn()) {
     props.history.push("./home");
-
   }
 
   const classes = useStyles();
 
   console.log(typeof classes.root);
 
-  const [account, setAccount] = React.useState({username:"",password:""});
+  const [account, setAccount] = React.useState({ username: "", password: "" });
 
-  const handelAccount = (property,event)=>{
-
-    const accountCopy = {...account};
+  const handelAccount = (property, event) => {
+    const accountCopy = { ...account };
     accountCopy[property] = event.target.value;
 
     setAccount(accountCopy);
-
-  }
-
-  const isVarifiedUser=(username, password)=>{
-
-    return users.find((user)=> user.username === username && user.password === password);
-
   };
 
+  const isVarifiedUser = (username, password) => {
+    return users.find(
+      (user) => user.username === username && user.password === password
+    );
+  };
 
-  const handelLogin = ()=>{
-    axios.post('http://localhost:4000/app/login', {
-              userName: account.username,
-              password: account.password,
-            }).then((obj) => {
-              console.log('login', obj)
-              if (obj && obj.data && obj.data.verified) {
-                localStorage.setItem('userName', obj.data.userName)
-                props.history.push("/")
-              }
-            })
-      // if(isVarifiedUser(account.username,account.password)){
-      //   authService.doLogIn(account.username);
-      //   setAccount({username:"",password:""});
-      //   props.history.push("/home");
-      // }
+  const handleLogin = () => {
+    axios
+      .post("http://localhost:4000/app/login", {
+        userName: account.username,
+        password: account.password,
+      })
+      .then((obj) => {
+        console.log("login", obj);
+        if (obj && obj.data && obj.data.verified) {
+          // sessionStorage.setItem("userName", obj.data.userName); // store logged in user info in session
+          // save jwt token in session
+          sessionStorage.setItem("jwtToken", obj.data.jwtToken);
+          props.history.push("/"); // redirect logged in user to home page
+        }
+      });
+    // if(isVarifiedUser(account.username,account.password)){
+    //   authService.doLogIn(account.username);
+    //   setAccount({username:"",password:""});
+    //   props.history.push("/home");
+    // }
   };
 
   return (
@@ -130,7 +127,7 @@ export default function SignInSide(props) {
           </Typography>
           <div className={classes.form} noValidate>
             <TextField
-            onChange={(event)=>handelAccount("username",event)}
+              onChange={(event) => handelAccount("username", event)}
               variant="outlined"
               margin="normal"
               required
@@ -141,7 +138,7 @@ export default function SignInSide(props) {
               autoFocus
             />
             <TextField
-            onChange={(event)=>handelAccount("password",event)}
+              onChange={(event) => handelAccount("password", event)}
               variant="outlined"
               margin="normal"
               required
@@ -162,7 +159,7 @@ export default function SignInSide(props) {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick = {handelLogin}
+              onClick={handleLogin}
             >
               Sign In
             </Button>

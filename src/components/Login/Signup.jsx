@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import axios from 'axios'
+import React, { useState } from "react";
+import axios from "axios";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -19,19 +19,19 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(3)
+    marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
-  }
+    margin: theme.spacing(3, 0, 2),
+  },
 }));
 
 export default function SignUp() {
@@ -42,38 +42,43 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const changeName = (event) => {
     setName(event.target.value);
-  }
+  };
   const changeUserName = (event) => {
     setUserName(event.target.value);
-  }
+  };
   const changeEmail = (event) => {
     setEmail(event.target.value);
-  }
+  };
   const changePassword = (event) => {
     setPassword(event.target.value);
-  }
-  const handleSubmit = () => {
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
     const register = {
       fullName: name,
       userName: userName,
       email: email,
-      password: password
-    }
-    axios.post('http://localhost:4000/app/signup', register)
-        .then(res => {
-          if (res && res.data && res.data.success) {
-            window.location = "/login"
-          }
-        })
-    
+      password: password,
+    };
+    let data = "";
+    axios
+      .post("http://localhost:4000/app/signup", register)
+      .then((res) => {
+        data = res.data;
+        if (res && res.data && res.data.success) {
+          // console.log("res", res);
+          // window.location = "/login";
+        }
+      })
+      .then(console.log("data"));
     // Go back to home page
-    setName('')
-    setUserName('')
-    setEmail('')
-    setPassword('')
-    // window.location = "/login";
-  }
-  
+    setName("");
+    setUserName("");
+    setEmail("");
+    setPassword("");
+    window.location = "/login";
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
