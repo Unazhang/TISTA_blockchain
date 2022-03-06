@@ -8,13 +8,22 @@ const bcrypt = require("bcrypt");
 
 const requesttable = mongoose.model("requesttable");
 const mytable = mongoose.model("mytable");
+const jwt = require("jsonwebtoken");
+
+const maxAge = 3 * 24 * 60 * 60; // 3 days to expire
+const createToken = (id) => {
+  return jwt.sign({ id }, "secret", {
+    expiresIn: maxAge,
+  });
+};
 
 router.post("/signup", async (req, res) => {
   console.log("inside /signup...");
-  console.log("signup", req.body);
+  console.log("signup request body", req.body);
   const saltPassword = await bcrypt.genSalt(10);
   const securePassword = await bcrypt.hash(req.body.password, saltPassword);
 
+  // create new user in MongoDB database
   const signedUpUser = new signUpTemplateCopy({
     fullName: req.body.fullName,
     userName: req.body.userName,
@@ -24,13 +33,16 @@ router.post("/signup", async (req, res) => {
     email: req.body.email,
     password: securePassword,
   });
+
   signedUpUser
     .save()
     .then((data) => {
+      console.log("data", data);
       res.json({
         data,
         success: true,
       });
+      // console.log("signedUpUser resp", res.json);
     })
     .catch((error) => {
       res.json(error);
@@ -72,8 +84,13 @@ router.post("/login", async (req, res) => {
       res.send(err);
     } else {
       if (result && bcrypt.compareSync(req.body.password, result.password)) {
-        console.log("success", req.body);
-        res.send({ userName: req.body.userName, verified: true });
+        // create jwt token based on db user _id
+        const jwt_token = createToken(result._id);
+        res.send({
+          userName: req.body.userName,
+          verified: true,
+          jwtToken: jwt_token,
+        });
       } else {
         console.log("unable");
         res.send("Unable to verify");
