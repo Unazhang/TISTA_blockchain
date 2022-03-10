@@ -10,8 +10,6 @@ import Login from "./components/Login/Login";
 import Signup from "./components/Login/Signup";
 import Profile from "./pages/Profile/Profile";
 import User from "./pages/Profile/User";
-import { GuardProvider, GuardedRoute } from "react-router-guards";
-import { requireAuth } from "./middleware/authMiddleware";
 import { Container } from "react-bootstrap";
 import { AuthProvider } from "./contexts/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
@@ -31,9 +29,9 @@ function App() {
               <Switch>
                 <Route path="/signup" component={Signup} />
                 <Route path="/login" component={Login} />
+                <Route path="/dashboard" component={Dashboard} />
                 <MainLayout>
-                  {/* <PrivateRoute exact path="/" component={Home} /> */}
-                  <PrivateRoute exact path="/" component={Dashboard} />
+                  <PrivateRoute exact path="/" component={Home} />
                   <PrivateRoute exact path="/faq" component={FAQ} />
                   <PrivateRoute exact path="/transaction" component={FAQ} />
                   <PrivateRoute exact path="/request" component={Request} />
