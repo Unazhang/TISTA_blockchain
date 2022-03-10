@@ -12,33 +12,59 @@ import Profile from "./pages/Profile/Profile";
 import User from "./pages/Profile/User";
 import { GuardProvider, GuardedRoute } from "react-router-guards";
 import { requireAuth } from "./middleware/authMiddleware";
+import { Container } from "react-bootstrap";
+import { AuthProvider } from "./contexts/AuthContext";
+import PrivateRoute from "./components/PrivateRoute";
+import Dashboard from "./components/Dashboard";
 
-const reguireLogin = (to, from, next) => {
-  if () { 
-    
-  }
- }
 function App() {
-  const [openPopup, setOpenSend] = useState(true);
+  // const [openPopup, setOpenSend] = useState(true);
   return (
-    <Router>
-      <Switch>
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
-        <MainLayout>
-          <Route path="/" exact component={Home} />
-          <Route path="/faq" component={FAQ} />
-          <Route path="/transaction" component={FAQ} />
-          <Route path="/request" component={Request} />
-          {/* <Route path="/donation" component={Donation} /> */}
-          <Route
-            path="/donation"
-            render={() => requireAuth.routeDisplay(<Donation />)}
-          />
-          <Route path="/profile" component={Profile} />
-        </MainLayout>
-      </Switch>
-    </Router>
+    <div>
+      <Container
+        className="d-flex align-items-center justify-content-center"
+        style={{ minHeight: "100 vh" }}
+      >
+        <div className="w-100" style={{ maxWidth: "400px" }}>
+          <Router>
+            <AuthProvider>
+              <Switch>
+                <Route path="/signup" component={Signup} />
+                <Route path="/login" component={Login} />
+                <MainLayout>
+                  {/* <PrivateRoute exact path="/" component={Home} /> */}
+                  <PrivateRoute exact path="/" component={Dashboard} />
+                  <PrivateRoute exact path="/faq" component={FAQ} />
+                  <PrivateRoute exact path="/transaction" component={FAQ} />
+                  <PrivateRoute exact path="/request" component={Request} />
+                  <PrivateRoute path="/donation" component={Donation} />
+                  <PrivateRoute exact path="/profile" component={Profile} />
+                </MainLayout>
+              </Switch>
+            </AuthProvider>
+          </Router>
+        </div>
+      </Container>
+    </div>
+
+    // <Router>
+    //   <Switch>
+    //     <Route path="/login" component={Login} />
+    //     <Route path="/signup" component={Signup} />
+    // <MainLayout>
+    //   <Route path="/" exact component={Home} />
+    //   <Route path="/faq" component={FAQ} />
+    //   <Route path="/transaction" component={FAQ} />
+    //   <Route path="/request" component={Request} />
+    //   {/* <Route path="/donation" component={Donation} /> */}
+    //   <Route
+    //     path="/donation"
+    //     render={() => requireAuth.routeDisplay(<Donation />)}
+    //   />
+    //   <Route path="/profile" component={Profile} />
+    // </MainLayout>
+    //   </Switch>
+    // </Router>
   );
 }
 
