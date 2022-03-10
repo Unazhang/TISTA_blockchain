@@ -40,6 +40,9 @@ import {
 import Avatar from "@material-ui/core/Avatar";
 import pholder from "../../pages/Profile/avatar.png";
 // https://material-ui.com/demos/drawers/#full-height-navigation
+
+import { useAuth } from "../../contexts/AuthContext";
+
 const drawerWidth = 240;
 const styles = (theme) => ({
   root: {
@@ -96,9 +99,22 @@ function MainLayout(props) {
     setOpenUser(false);
   };
 
-  const handleLogout = () => {
-    sessionStorage.setItem("userName", "");
-  };
+  const userEmail = currentUser == null ? null : currentUser.email;
+
+  // handle log out
+  const [error, setError] = useState("");
+  const { currentUser, logout } = useAuth();
+  const history = useHistory();
+
+  async function handleLogout() {
+    setError("");
+    try {
+      await logout();
+      history.push("/dashboard");
+    } catch {
+      setError("Failed to log out");
+    }
+  }
 
   return (
     <div className={classes.root}>
@@ -156,9 +172,9 @@ function MainLayout(props) {
             <div
               style={{ marginLeft: "140px", fontFamily: "Lato", size: "24px" }}
             >
-              <Typography variant="body1" component="div">
-                Lee
-              </Typography>
+              {/* <Typography variant="body1" component="div">
+                UserName
+              </Typography> */}
             </div>
             <br></br>
             <div
@@ -170,37 +186,29 @@ function MainLayout(props) {
               }}
             >
               <Typography variant="body1" component="div" color="grey">
-                Email@email.com
+                {userEmail}
               </Typography>
             </div>
             <div>
-              <NavLink to="/profile">
-                <div
-                  style={{
-                    fontFamily: "Lato",
-                    size: "18px",
-                    marginLeft: "0px",
-                  }}
-                >
+              <div style={{ fontFamily: "Lato", size: "18px", align: "left" }}>
+                <NavLink to="/profile" icon={TransIcon}>
                   Settings
-                </div>
-              </NavLink>
-
-              <NavLink to="/login">
-                <div
-                  style={{ fontFamily: "Lato", size: "18px", align: "left" }}
-                >
+                </NavLink>
+              </div>
+              <div style={{ fontFamily: "Lato", size: "18px", align: "left" }}>
+                <NavLink to="/faq" icon={TransIcon}>
                   Help
-                </div>
-              </NavLink>
-
-              <NavLink to="/login">
-                <div
-                  style={{ fontFamily: "Lato", size: "18px", align: "left" }}
+                </NavLink>
+              </div>{" "}
+              <div>
+                <Button
+                  variant="link"
+                  onClick={handleLogout}
+                  // style={{ fontFamily: "Lato", size: "18px", align: "middle" }}
                 >
-                  <Button onClick={handleLogout}>Log out</Button>
-                </div>
-              </NavLink>
+                  Log Out
+                </Button>
+              </div>
             </div>
           </Dialog>
         </Toolbar>
