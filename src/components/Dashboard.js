@@ -1,43 +1,36 @@
 import React, { useRef, useState } from "react";
-import {
-  Form,
-  Button,
-  Card,
-  Alert,
-  Container,
-  Row,
-  Col,
-} from "react-bootstrap";
+import Grid from "@material-ui/core/Grid";
+import Image from "material-ui-image";
 import { Link, useHistory } from "react-router-dom";
 import cryptoImage from "../images/crypto.png";
+import { Container, Row, Col } from "react-bootstrap";
 
 export default function Dashboard() {
   return (
     <div>
-      <Container fluid>
-        <Col>
-          <Card>
-            <Card.Body>
-              <Card.Title>Welcome, join us right now!</Card.Title>
-              <Card.Text>
-                <div className="w-100 text-center mt-2">
-                  <Link to="/login">Login</Link>
-                </div>
-                <div className="w-100 text-center mt-2">
-                  <Link to="/signup">Sign Up</Link>
-                </div>
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col>
-          <Card style={{ width: "18rem" }}>
-            <Card.Body>
-              <Card.Img src={cryptoImage} variant="right" />
-            </Card.Body>
-          </Card>
-        </Col>
-      </Container>
+      <div>
+        <Row>
+          <Col>
+            <Link to="/login">Login</Link>
+          </Col>
+          <Col>
+            <Link to="/signup">Sign Up</Link>
+          </Col>
+        </Row>
+      </div>
+      <div>
+        <span>
+          <img
+            src={cryptoImage}
+            class="center-block"
+            style={{ width: "700px", height: "700px", objectFit: "cover" }}
+            align="left"
+          />
+        </span>
+        <span>
+          <h3>Welcome, join us right now!</h3>
+        </span>
+      </div>
     </div>
   );
 }
