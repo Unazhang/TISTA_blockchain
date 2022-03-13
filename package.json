@@ -25,6 +25,7 @@
     "customize-cra": "^1.0.0",
     "firebase": "^9.6.8",
     "heroku": "^7.59.1",
+    "material-ui-image": "^3.3.2",
     "mobx": "^6.3.6",
     "mobx-react-lite": "^3.2.2",
     "react": "^16.14.0",

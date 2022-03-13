@@ -10,7 +10,6 @@ import Login from "./components/Login/Login";
 import Signup from "./components/Login/Signup";
 import Profile from "./pages/Profile/Profile";
 import User from "./pages/Profile/User";
-import { Container } from "react-bootstrap";
 import { AuthProvider } from "./contexts/AuthContext";
 import PrivateRoute from "./components/PrivateRoute";
 import Dashboard from "./components/Dashboard";
@@ -19,30 +18,25 @@ function App() {
   // const [openPopup, setOpenSend] = useState(true);
   return (
     <div>
-      <Container
-        className="d-flex align-items-center justify-content-center"
-        style={{ minHeight: "100 vh" }}
-      >
-        <div className="w-100" style={{ maxWidth: "400px" }}>
-          <Router>
-            <AuthProvider>
-              <Switch>
-                <Route path="/signup" component={Signup} />
-                <Route path="/login" component={Login} />
-                <Route path="/dashboard" component={Dashboard} />
-                <MainLayout>
-                  <PrivateRoute exact path="/" component={Home} />
-                  <PrivateRoute exact path="/faq" component={FAQ} />
-                  <PrivateRoute exact path="/transaction" component={FAQ} />
-                  <PrivateRoute exact path="/request" component={Request} />
-                  <PrivateRoute path="/donation" component={Donation} />
-                  <PrivateRoute exact path="/profile" component={Profile} />
-                </MainLayout>
-              </Switch>
-            </AuthProvider>
-          </Router>
-        </div>
-      </Container>
+      <div className="w-100" style={{ maxWidth: "400px" }}>
+        <Router>
+          <AuthProvider>
+            <Switch>
+              <Route path="/signup" component={Signup} />
+              <Route path="/login" component={Login} />
+              <Route path="/dashboard" component={Dashboard} />
+              <MainLayout>
+                <PrivateRoute exact path="/" component={Home} />
+                <PrivateRoute exact path="/faq" component={FAQ} />
+                <PrivateRoute exact path="/transaction" component={FAQ} />
+                <PrivateRoute exact path="/request" component={Request} />
+                <PrivateRoute path="/donation" component={Donation} />
+                <PrivateRoute exact path="/profile" component={Profile} />
+              </MainLayout>
+            </Switch>
+          </AuthProvider>
+        </Router>
+      </div>
     </div>
 
     // <Router>
