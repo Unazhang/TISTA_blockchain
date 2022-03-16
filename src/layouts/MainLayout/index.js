@@ -40,7 +40,9 @@ import Avatar from "@material-ui/core/Avatar";
 import pholder from "../../pages/Profile/avatar.png";
 // https://material-ui.com/demos/drawers/#full-height-navigation
 
+import BuySell from "../../pages/BuySell/BuySell.js";
 import { useAuth } from "../../contexts/AuthContext";
+
 
 const drawerWidth = 240;
 const styles = (theme) => ({
@@ -85,6 +87,7 @@ const styles = (theme) => ({
 function MainLayout(props) {
   const { classes, children } = props;
   const [openPopup, setOpenDonate] = useState(false);
+  const [openBuySell, setOpenBuySell] = useState(false);
   const [openUser, setOpenUser] = useState(false);
   const his = () => {
     const history = useHistory();
@@ -134,10 +137,19 @@ function MainLayout(props) {
               Donation
             </NavLink>
           </div>
+          {/* <NavLink to="/login" handleClick={() => {authService.logOut();}} icon={HelpIcon}>
+            log out
+          </NavLink> */}
           <div style={{ display: "flex", flex: 1 }} />
-          <Button variant="contained" className={classes.newButton}>
-            Buy/Sell
-          </Button>
+          {/* <Button variant="contained" className={classes.newButton}>Buy/Sell</Button> */}
+          <Controls.Button
+            text="Buy/Sell"
+            variant="contained"
+            className={classes.newButton}
+            onClick={() => {
+              setOpenBuySell(true);
+            }}
+          />
           <Controls.Button
             text="SEND"
             variant="contained"
@@ -168,9 +180,9 @@ function MainLayout(props) {
             <div
               style={{ marginLeft: "140px", fontFamily: "Lato", size: "24px" }}
             >
-              {/* <Typography variant="body1" component="div">
-                UserName
-              </Typography> */}
+              <Typography variant="body1" component="div">
+                Lee
+              </Typography>
             </div>
             <br></br>
             <div
@@ -212,6 +224,10 @@ function MainLayout(props) {
 
       <Popup title="Send" open={openPopup} handleClose={setOpenDonate}>
         <Send />
+      </Popup>
+
+      <Popup title="Buy/Sell" open={openBuySell} handleClose={setOpenBuySell}>
+        <BuySell />
       </Popup>
 
       <main className={classes.content}>
