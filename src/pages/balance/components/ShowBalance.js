@@ -21,7 +21,9 @@ import TableContainer from "@material-ui/core/TableContainer";
 class Home extends Component {
   async componentWillMount() {
     await this.loadWeb3();
-    await this.loadBlockchainData();
+    if (window.web3) {
+      await this.loadBlockchainData();
+    }
   }
 
   // web3 makes the application a blockchain application
