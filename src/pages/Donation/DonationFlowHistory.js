@@ -10,7 +10,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Web3 from "web3";
 import { Component } from "react";
 // import './App.css';
-import XYZ from "../balance/abis/XYZ.json";
+import XYZ from "../Balance/abis/XYZ.json";
 import { Table } from "@material-ui/core";
 
 class DonattionFlowHistory extends Component {

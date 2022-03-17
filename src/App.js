@@ -3,8 +3,8 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import { FAQ } from "./pages";
-import Home from "./pages/balance/components/ShowBalance";
-import Request from "./pages/request/components/App";
+import Home from "./pages/Balance/components/ShowBalance";
+import RequestMoney from "./pages/RequestMoney/RequestMoney";
 import Donation from "./pages/Donation/Donationdraft";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Login/Signup";
@@ -28,7 +28,7 @@ function App() {
                 <PrivateRoute exact path="/" component={Home} />
                 <PrivateRoute exact path="/faq" component={FAQ} />
                 <PrivateRoute exact path="/transaction" component={FAQ} />
-                <PrivateRoute exact path="/request" component={Request} />
+                <PrivateRoute exact path="/request" component={RequestMoney} />
                 <PrivateRoute path="/donation" component={Donation} />
                 <PrivateRoute exact path="/profile" component={Profile} />
               </MainLayout>
