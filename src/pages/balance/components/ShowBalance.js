@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import daiLogo from "../dai-logo.png";
-import "./App.css";
+import "./ShowBalance.css";
 import Web3 from "web3";
 import XYZ from "../abis/XYZ.json";
 import { get } from "axios";
@@ -15,7 +14,7 @@ import {
   TableCell,
   TableBody,
 } from "@material-ui/core";
-import HomeSend from "./HomeSend";
+// import HomeSend from "./HomeSend";
 import TableContainer from "@material-ui/core/TableContainer";
 
 // ref: https://www.youtube.com/watch?app=desktop&v=wSTbBIK8qrY&ab_channel=DappUniversity
@@ -119,9 +118,9 @@ class Home extends Component {
                 </div>
               </CardContent>
             </Card>
-            <div id="sendContain">
+            {/* <div id="sendContain">
               <HomeSend />
-            </div>
+            </div> */}
           </div>
           <div className="mainblock" id="transactionTable">
             <div className="transactionMain">
