@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Web3 from "web3";
-import XYZ from "../balance/abis/XYZ.json";
+import XYZ from "../Balance/abis/XYZ.json";
 
 class DetectAccount extends Component {
   async componentWillMount() {

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Web3 from "web3";
 import axios from "axios";
-import XYZ from "../balance/abis/XYZ.json";
+import XYZ from "../Balance/abis/XYZ.json";
 import { Form } from "../useForm";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";

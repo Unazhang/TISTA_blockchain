@@ -14,7 +14,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Web3 from "web3";
 import { Component } from "react";
 // import './App.css';
-import XYZ from "../balance/abis/XYZ.json";
+import XYZ from "../Balance/abis/XYZ.json";
 import { get } from "axios";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
