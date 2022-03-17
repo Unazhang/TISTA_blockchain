@@ -24,7 +24,7 @@ import {
 } from "@material-ui/core";
 import { reaction } from "mobx";
 import { observer } from "mobx-react-lite";
-import { donationStore } from "../../stores/DonationStore";
+import { donationStore } from "./DonationStore";
 import DonationAccordion from "./DonationAccordion";
 import "./Donation.css";
 import DonationPopOver from "./DonationPopOver";
