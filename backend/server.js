@@ -14,7 +14,7 @@ mongoose
   .connect(process.env.DATABASE_ACCESS)
   .then(() => console.log("Database connected. (MPS Beta SP2022)"))
   .then(app.listen(4000, () => console.log("server is up and running")))
-  .catch(() => console.log("Connection failed"));
+  .catch((err) => console.log("Connection failed", err));
 
 // Body parser to parse incoming and outgoing requests
 app.use(express.json());
