@@ -281,39 +281,39 @@ export default function DonationTab() {
 
   return (
     <div className={classes.root}>
-      <Grid item xs={12} sm={6}>
-        <Card variant="outlined" style={{ height: "300px", width: "2000px" }}>
-          <CardContent
-            style={{
-              height: "18vh",
-              ordWrap: "break-word",
-              display: "block",
-              overflow: "hidden",
-              whiteSpace: "normal",
-            }}
-          >
-            <h6>Steps to make a donation: </h6>
-            <ol>
-              Step 1: If you never used MetaMask wallet before, click here to
-              install the MetaMask extension on your browser. After
-              installation, refresh your current page.
-            </ol>
-            <ol>
-              Step 2: If you don't enough ethereum balance, click the{" "}
-              <b>add balance</b> button.
-            </ol>
-            <ol>
-              Step 3: Browse the following project(s) you would like to help.
-              Copy the <b>Blockchain Address</b> of the project.
-            </ol>
-            <ol>
-              Step 4: Click <b>Donate</b> button on the right. Put the{" "}
-              <b>Blockchain Address</b> in the Recipient Address on the form.
-            </ol>
-            <ol>Step 5: Fill the rest of the information. Click SEND. </ol>
-          </CardContent>
-        </Card>
-      </Grid>
+      {/* <Grid item xs={12} sm={6}> */}
+      <Card variant="outlined" style={{ height: "210px", width: "960px" }}>
+        <CardContent
+          style={{
+            height: "30vh",
+            ordWrap: "break-word",
+            display: "block",
+            overflow: "hidden",
+            whiteSpace: "normal",
+          }}
+        >
+          <h6>Steps to make a donation: </h6>
+          <ol>
+            Step 1: If you never used MetaMask wallet before, click here to
+            install the MetaMask extension on your browser. After installation,
+            refresh your current page.
+          </ol>
+          <ol>
+            Step 2: If you don't enough ethereum balance, click the{" "}
+            <b>add balance</b> button.
+          </ol>
+          <ol>
+            Step 3: Browse the following project(s) you would like to help. Copy
+            the <b>Blockchain Address</b> of the project.
+          </ol>
+          <ol>
+            Step 4: Click <b>Donate</b> button on the right. Put the{" "}
+            <b>Blockchain Address</b> in the Recipient Address on the form.
+          </ol>
+          <ol>Step 5: Fill the rest of the information. Click SEND. </ol>
+        </CardContent>
+      </Card>
+      {/* </Grid> */}
       <AppBar position="static">
         <Tabs
           value={value}

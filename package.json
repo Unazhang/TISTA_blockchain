@@ -23,6 +23,7 @@
     "chai-as-promised": "7.1.1",
     "chai-bignumber": "3.0.0",
     "customize-cra": "^1.0.0",
+    "emailjs-com": "^3.2.0",
     "firebase": "^9.6.8",
     "heroku": "^7.59.1",
     "material-ui-image": "^3.3.2",
