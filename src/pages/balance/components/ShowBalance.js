@@ -18,7 +18,7 @@ import {
 import TableContainer from "@material-ui/core/TableContainer";
 
 // ref: https://www.youtube.com/watch?app=desktop&v=wSTbBIK8qrY&ab_channel=DappUniversity
-class Home extends Component {
+class ShowBalance extends Component {
   async componentWillMount() {
     await this.loadWeb3();
     if (window.web3) {
@@ -173,4 +173,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default ShowBalance;
