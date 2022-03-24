@@ -12,8 +12,8 @@ import Profile from "./pages/Profile/Profile";
 import User from "./pages/Profile/User";
 import { AuthProvider } from "./contexts/AuthContext";
 import PrivateRoute from "./pages/PrivateRoute";
-import Dashboard from "./pages/Dashboard";
-
+import Onboard from "./pages/Onboard";
+import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   return (
     <div>
@@ -23,7 +23,7 @@ function App() {
             <Switch>
               <Route path="/signup" component={Signup} />
               <Route path="/login" component={Login} />
-              <Route path="/dashboard" component={Dashboard} />
+              <Route path="/onboard" component={Onboard} />
               <MainLayout>
                 <PrivateRoute exact path="/" component={ShowBalance} />
                 <PrivateRoute exact path="/faq" component={FAQ} />

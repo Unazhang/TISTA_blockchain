@@ -45,7 +45,9 @@ export default function SignUp() {
               <Form.Control type="email" ref={emailRef} required></Form.Control>
             </Form.Group>
             <Form.Group id="password">
-              <Form.Label>Password</Form.Label>
+              <Form.Label>
+                Password (must be at least 6 characters long)
+              </Form.Label>
               <Form.Control
                 type="password"
                 ref={passwordRef}
