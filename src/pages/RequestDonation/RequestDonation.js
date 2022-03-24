@@ -28,39 +28,50 @@ export default function RequestDonationForm(props) {
   // const { addOrEdit, recordForEdit } = props;
   const validate = () => {
     console.log("inside validate");
+    return true;
   };
+  const [country, setCountry] = useState("");
+  const [category, setCategory] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDesc] = useState("");
+  const [target_amount, setAmount] = useState(0);
+  // requestor and vendor info
+  const [requestor_name, setReqName] = useState("");
+  const [vendor_name, setVendorName] = useState("");
+  const [vendor_email, setVendorEmail] = useState("");
 
-  let title = "";
-  let amount = 0;
-  let description = "";
-  let vendorEmail = "";
   let { currentUser } = useAuth();
-  let userEmail = currentUser.email;
-  let category = "";
+  let user_email = currentUser.email;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("inside submit");
-    console.log("e.target", e.target);
 
+    sendEmailToVendor(e);
+    let data = {
+      user_email: user_email,
+      requestor_name: requestor_name,
+      country: country,
+      category: category,
+      title: title,
+      description: description,
+      target_amount: target_amount,
+      vendor_name: vendor_name,
+      vendor_email: vendor_email,
+    };
+
+    console.log("data", data);
     if (validate()) {
       console.log("is validated");
+      console.log("title++++++++", title);
       // addOrEdit(values, resetForm);
       axios
-        .post("http://localhost:4000/app/request", {
-          title: title,
-          description: description,
-          amount: amount,
-          category: category,
-          userEmail: userEmail,
-          vendorEmail: vendorEmail,
-        })
+        .post("http://localhost:4000/app/request", data)
         .catch((err) => {
           console.log(err);
         })
         .then((e) => {
           // send validation email to vendor
-          sendEmailToVendor(e);
         })
         .then(() => (donationStore.isUpdate = true));
       // resetForm();
@@ -95,13 +106,19 @@ export default function RequestDonationForm(props) {
       <Form onSubmit={handleSubmit}>
         <Form.Group>
           <Form.Label>Where do you live?</Form.Label>
-          <Form.Control as="select">
+          <Form.Control
+            as="select"
+            onChange={(e) => setCountry(e.target.value)}
+          >
             <option value="US">United States</option>
           </Form.Control>
         </Form.Group>
         <Form.Group>
           <Form.Label>What are you fundraising for?</Form.Label>
-          <Form.Control as="select">
+          <Form.Control
+            as="select"
+            onChange={(e) => setCategory(e.target.value)}
+          >
             <option value="0">Choose a category</option>
             <option value="1">Accidents &amp; Emergencies</option>
             <option value="2">Animals &amp; Pets</option>
@@ -119,27 +136,52 @@ export default function RequestDonationForm(props) {
         </Form.Group>
         <Form.Group>
           <Form.Label>Fundraiser Title</Form.Label>
-          <Form.Control type="text" name="title" />
+          <Form.Control
+            type="text"
+            name="title"
+            onChange={(e) => setTitle(e.target.value)}
+          />
         </Form.Group>
         <Form.Group>
           <Form.Label>Description</Form.Label>
-          <Form.Control as="textarea" rows={3} name="description" />
+          <Form.Control
+            as="textarea"
+            rows={3}
+            name="description"
+            onChange={(e) => setDesc(e.target.value)}
+          />
         </Form.Group>
         <Form.Group>
-          <Form.Label>Amount Needed (in XYZ token)</Form.Label>
-          <Form.Control type="number" name="amount" />
+          <Form.Label>Target Amount (in XYZ token)</Form.Label>
+          <Form.Control
+            type="number"
+            name="target_amount"
+            onChange={(e) => setAmount(e.target.value)}
+          />
         </Form.Group>
         <Form.Group>
           <Form.Label>What's your name?</Form.Label>
-          <Form.Control type="text" name="requestor_name" />
+          <Form.Control
+            type="text"
+            name="requestor_name"
+            onChange={(e) => setReqName(e.target.value)}
+          />
         </Form.Group>
         <Form.Group>
           <Form.Label>What's your vendor's name?</Form.Label>
-          <Form.Control type="text" name="vendor_name" />
+          <Form.Control
+            type="text"
+            name="vendor_name"
+            onChange={(e) => setVendorName(e.target.value)}
+          />
         </Form.Group>
         <Form.Group>
           <Form.Label>What's your vendor's email?</Form.Label>
-          <Form.Control type="email" name="vendor_email" />
+          <Form.Control
+            type="email"
+            name="vendor_email"
+            onChange={(e) => setVendorEmail(e.target.value)}
+          />
         </Form.Group>
         <Form.Group>
           <Form.Label>Message to your vendor:</Form.Label>
