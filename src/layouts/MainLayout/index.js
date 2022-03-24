@@ -44,7 +44,6 @@ import pholder from "../../pages/Profile/avatar.png";
 import BuySell from "../../pages/BuySell/BuySell.js";
 import { useAuth } from "../../contexts/AuthContext";
 
-
 const drawerWidth = 240;
 const styles = (theme) => ({
   root: {
@@ -113,7 +112,7 @@ function MainLayout(props) {
     setError("");
     try {
       await logout();
-      history.push("/dashboard");
+      history.push("/onboard");
     } catch {
       setError("Failed to log out");
     }

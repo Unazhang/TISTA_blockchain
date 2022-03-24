@@ -98,10 +98,10 @@ export default function DonationDraft() {
           handleClose={setDonreq}
         >
           <DonationReqForm
-            recordForEdit={recordForEdit}
-            addOrEdit={addOrEdit}
+          // recordForEdit={recordForEdit}
+          // addOrEdit={addOrEdit}
           />
-          <DetectAccount />
+          {/* <DetectAccount /> */}
         </Popup>
         <Popup title="Donate" open={openPopup} handleClose={setOpenDonate}>
           <Send isDonation />

@@ -215,43 +215,6 @@ export default function DonationTab() {
     );
   }
 
-  // let arr = [];
-  //   for (let i = 0; i < 2; i++) {
-  //       arr.push(
-  //       <Grid item xs={12} sm={6}>
-  //           <Card variant="outlined">
-  //               <CardActionArea>
-  //               <CardContent>
-  //                   <Typography id = "title" gutterBottom variant="h5" component="h2">Help Kids</Typography>
-  //                   <Typography variant="body2" color="textSecondary" component="p">Placeholder
-  //                   </Typography>
-  //               </CardContent>
-  //           </CardActionArea>
-  //           <CardActions>
-  //               <Button size="small" color="primary">Learn More</Button>
-  //           </CardActions>
-  //           </Card>
-  //       </Grid>);
-  //   }
-
-  //   for (let i = 2; i < 4; i++) {
-  //     arr.push(
-  //     <Grid item xs={12} sm={6}>
-  //         <Card variant="outlined">
-  //             <CardActionArea>
-  //             <CardContent>
-  //                 <Typography id = "title" gutterBottom variant="h5" component="h2">Help Veteran</Typography>
-  //                 <Typography variant="body2" color="textSecondary" component="p">Placeholder
-  //                 </Typography>
-  //             </CardContent>
-  //         </CardActionArea>
-  //         <CardActions>
-  //             <Button size="small" color="primary">Learn More</Button>
-  //         </CardActions>
-  //         </Card>
-  //     </Grid>);
-  // }
-
   const handleSearch = (e) => {
     const keyword = e.target.value;
     if (keyword !== "") {
@@ -264,15 +227,6 @@ export default function DonationTab() {
       setFound(Data);
     }
     setName(keyword);
-    // let target = e.target;
-    // setFilterFn({
-    //     fn: items => {
-    //         if (target.value === "")
-    //             return items;
-    //         else
-    //             return items.filter(x => x.title.toLowerCase().includes(target.value.toLowerCase()))
-    //     }
-    // })
   };
 
   const handleChange = (event, newValue) => {
@@ -281,8 +235,7 @@ export default function DonationTab() {
 
   return (
     <div className={classes.root}>
-      {/* <Grid item xs={12} sm={6}> */}
-      <Card variant="outlined" style={{ height: "210px", width: "960px" }}>
+      <Card variant="outlined" style={{ height: "250px", width: "960px" }}>
         <CardContent
           style={{
             height: "30vh",
@@ -313,7 +266,6 @@ export default function DonationTab() {
           <ol>Step 5: Fill the rest of the information. Click SEND. </ol>
         </CardContent>
       </Card>
-      {/* </Grid> */}
       <AppBar position="static">
         <Tabs
           value={value}
@@ -324,7 +276,6 @@ export default function DonationTab() {
           TabIndicatorProps={{ style: { background: "#FD8024" } }}
         >
           <Tab label="Community" {...a11yProps(0)} />
-          {/* <Tab label="Donation" {...a11yProps(1)} /> */}
         </Tabs>
       </AppBar>
 
@@ -346,32 +297,6 @@ export default function DonationTab() {
         <div style={{ maxHeight: "55vh", overflow: "auto" }}>
           <Grid container spacing={3}>
             {arr}
-            {/* {found && found.length > 0 ? (
-              found.map((d) => (
-                <Grid item xs={12} sm={6}>
-                  <Card variant="outlined" style={{ height: "25vh" }}>
-                    <CardContent style={{ height: "18vh", ordWrap: 'break-word', display: "block", overflow: "hidden", whiteSpace: "normal" }}>
-                      <Typography id="title" gutterBottom variant="h6" style={{ fontSize: "2.5vh" }}>{d.name}</Typography>
-                      <Typography noWrap variant="body2" color="textSecondary" component="p">xxx raised of xxx
-                      </Typography>
-                      <Typography noWrap variant="body2" color="textSecondary" component="p">Address:placeholder
-                      </Typography>
-                      <Typography noWrap variant="body2" color="textSecondary" component="p">PlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholder
-                        PlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlacehold
-                      </Typography>
-                    </CardContent>
-                    <CardActions>
-                      <DonationPopOver amount="xxx raised of xxx" address="placeholder" content="PlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholder
-                            PlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlaceholderPlacehold"/>
-                    </CardActions>
-                  </Card>
-                </Grid>
-              ))
-            ) : (
-
-              <Typography id="noResult" gutterBottom variant="h5" component="h2" style={{ margin: 50 }}>No Result</Typography>
-
-            )} */}
           </Grid>
         </div>
       </TabPanel>
