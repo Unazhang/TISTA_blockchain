@@ -8,34 +8,34 @@ import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import ProfileIcon from "@material-ui/icons/AccountCircle";
 import NotifIcon from "@material-ui/icons/Notifications";
-import Divider from "@material-ui/core/Divider";
+// import Divider from "@material-ui/core/Divider";
 // https://material-ui.com/style/icons/
 import HomeIcon from "@material-ui/icons/Home";
-import HelpIcon from "@material-ui/icons/HelpOutlined";
+// import HelpIcon from "@material-ui/icons/HelpOutlined";
 import TransIcon from "@material-ui/icons/Payment";
 import DonateIcon from "@material-ui/icons/CardGiftcard";
 import NavLink from "./NavLink";
-import Navbar from "react-bootstrap/Navbar";
+// import Navbar from "react-bootstrap/Navbar";
 import Send from "../../pages/Donation/send.js";
 import Controls from "../../controls/Controls";
 import Popup from "../../pages/Popup";
 import { useHistory } from "react-router-dom";
-import Drawer from "@material-ui/core/Drawer";
-import List from "@material-ui/core/List";
+// import Drawer from "@material-ui/core/Drawer";
+// import List from "@material-ui/core/List";
 // https://material-ui.com/style/icons/
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
+// import ListItem from "@material-ui/core/ListItem";
+// import ListItemIcon from "@material-ui/core/ListItemIcon";
+// import ListItemText from "@material-ui/core/ListItemText";
 // import authService from "../../service/authService";
 import { Link } from "react-router-dom";
-import User from "../../pages/Profile/User";
-import Profile from "../../pages/Profile/Profile";
+// import User from "../../pages/Profile/User";
+// import Profile from "../../pages/Profile/Profile";
 import CloseIcon from "@material-ui/icons/Close";
 import {
   Dialog,
-  DialogTitle,
-  DialogContent,
-  makeStyles,
+  // DialogTitle,
+  // DialogContent,
+  // makeStyles,
 } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import pholder from "../../pages/Profile/avatar.png";
@@ -85,7 +85,7 @@ const styles = (theme) => ({
 });
 
 function MainLayout(props) {
-  const { classes, children } = props;
+  const { classes, children} = props;
   const [openPopup, setOpenDonate] = useState(false);
   const [openBuySell, setOpenBuySell] = useState(false);
   const [openUser, setOpenUser] = useState(false);

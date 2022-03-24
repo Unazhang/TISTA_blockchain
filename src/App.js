@@ -9,11 +9,21 @@ import Donation from "./pages/Donation/Donationdraft";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Login/Signup";
 import Profile from "./pages/Profile/Profile";
-import User from "./pages/Profile/User";
+// import User from "./pages/Profile/User";
 import { AuthProvider } from "./contexts/AuthContext";
 import PrivateRoute from "./pages/PrivateRoute";
 import Onboard from "./pages/Onboard";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Dashboard from "./pages/Dashboard";
+
+import Vender from "./pages/Roles/Vender";
+import Requester from "./pages/Roles/Requester";
+import Donor from "./pages/Roles/Donor";
+
+// const role = "vender";
+const role = "requester";
+// const role = "donor";
+
 function App() {
   return (
     <div>
@@ -23,19 +33,55 @@ function App() {
             <Switch>
               <Route path="/signup" component={Signup} />
               <Route path="/login" component={Login} />
-              <Route path="/onboard" component={Onboard} />
-              <MainLayout>
-                <PrivateRoute exact path="/" component={ShowBalance} />
-                <PrivateRoute exact path="/faq" component={FAQ} />
-                <PrivateRoute exact path="/transaction" component={FAQ} />
-                <PrivateRoute
-                  exact
-                  path="/request"
-                  component={RequestDonation}
-                />
-                <PrivateRoute path="/donation" component={Donation} />
-                <PrivateRoute exact path="/profile" component={Profile} />
-              </MainLayout>
+              <Route path="/dashboard" component={Dashboard} />
+              {role === "vender" && (
+                <MainLayout>
+                  <Vender>
+                    <PrivateRoute exact path="/" component={ShowBalance} />
+                    <PrivateRoute exact path="/faq" component={FAQ} />
+                    <PrivateRoute exact path="/transaction" component={FAQ} />
+                    <PrivateRoute
+                      exact
+                      path="/request"
+                      component={RequestDonation}
+                    />
+                    <PrivateRoute path="/donation" component={Donation} />
+                    <PrivateRoute exact path="/profile" component={Profile} />
+                  </Vender>
+                </MainLayout>
+              )}
+              {role === "requester" && (
+                <MainLayout>
+                  <Requester>
+                    <PrivateRoute exact path="/" component={ShowBalance} />
+                    <PrivateRoute exact path="/faq" component={FAQ} />
+                    <PrivateRoute exact path="/transaction" component={FAQ} />
+                    <PrivateRoute
+                      exact
+                      path="/request"
+                      component={RequestDonation}
+                    />
+                    <PrivateRoute path="/donation" component={Donation} />
+                    <PrivateRoute exact path="/profile" component={Profile} />
+                  </Requester>
+                </MainLayout>
+              )}
+              {role === "donor" && (
+                <MainLayout>
+                  <Donor>
+                    <PrivateRoute exact path="/" component={ShowBalance} />
+                    <PrivateRoute exact path="/faq" component={FAQ} />
+                    <PrivateRoute exact path="/transaction" component={FAQ} />
+                    <PrivateRoute
+                      exact
+                      path="/request"
+                      component={RequestDonation}
+                    />
+                    <PrivateRoute path="/donation" component={Donation} />
+                    <PrivateRoute exact path="/profile" component={Profile} />
+                  </Donor>
+                </MainLayout>
+              )}
             </Switch>
           </AuthProvider>
         </Router>
