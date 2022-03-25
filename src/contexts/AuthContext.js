@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { auth } from "../firebase";
+import axios from "axios";
 
 const AuthContext = React.createContext();
 
@@ -11,8 +12,24 @@ export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
 
-  function signup(email, password) {
-    return auth.createUserWithEmailAndPassword(email, password);
+  async function signup(email, password) {
+    const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+    const user = userCredential.user;
+    
+    if (user) {
+      console.log("auth changed");
+      axios
+        .post("http://localhost:4000/app/signup", {
+          displayName: user.displayName,
+          uid: user.uid,
+          email: user.email,
+        })
+        .then((response) => {
+          console.log(response);
+        });
+    }
+
+    return user;
   }
 
   function login(email, password) {
@@ -40,7 +57,6 @@ export function AuthProvider({ children }) {
       setCurrentUser(user);
       setLoading(false);
     });
-
     return unsubscribe;
   }, []);
 
