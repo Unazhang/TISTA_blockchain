@@ -12,6 +12,10 @@ const userTemplate = new mongoose.Schema({
     },
     blockchainAddress:[String],
     donateTo: [String], // this is a series of uids
+    role: {
+        type: String,
+        default: "donor"
+    }
 })
 
 userTemplate.pre('save', function (next) {
