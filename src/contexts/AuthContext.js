@@ -15,9 +15,8 @@ export function AuthProvider({ children }) {
   async function signup(email, password) {
     const userCredential = await auth.createUserWithEmailAndPassword(email, password);
     const user = userCredential.user;
-    
+
     if (user) {
-      console.log("auth changed");
       axios
         .post("http://localhost:4000/app/signup", {
           displayName: user.displayName,
