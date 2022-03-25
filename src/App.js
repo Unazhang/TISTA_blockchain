@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ReactDOM from "react-dom";
+// import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import { FAQ } from "./pages";
@@ -14,11 +14,11 @@ import { AuthProvider } from "./contexts/AuthContext";
 import PrivateRoute from "./pages/PrivateRoute";
 import Dashboard from "./pages/Dashboard";
 
-import Vender from "./pages/Roles/Vender";
+import Vendor from "./pages/Roles/Vendor";
 import Requester from "./pages/Roles/Requester";
 import Donor from "./pages/Roles/Donor";
 
-// const role = "vender";
+// const role = "vendor";
 const role = "requester";
 // const role = "donor";
 
@@ -32,9 +32,9 @@ function App() {
               <Route path="/signup" component={Signup} />
               <Route path="/login" component={Login} />
               <Route path="/dashboard" component={Dashboard} />
-              {role === "vender" && (
-                <MainLayout>
-                  <Vender>
+              <MainLayout>
+                {role === "vendor" && (
+                  <Vendor>
                     <PrivateRoute exact path="/" component={Home} />
                     <PrivateRoute exact path="/faq" component={FAQ} />
                     <PrivateRoute exact path="/transaction" component={FAQ} />
@@ -45,11 +45,9 @@ function App() {
                     />
                     <PrivateRoute path="/donation" component={Donation} />
                     <PrivateRoute exact path="/profile" component={Profile} />
-                  </Vender>
-                </MainLayout>
-              )}
-              {role === "requester" && (
-                <MainLayout>
+                  </Vendor>
+                )}
+                {role === "requester" && (
                   <Requester>
                     <PrivateRoute exact path="/" component={Home} />
                     <PrivateRoute exact path="/faq" component={FAQ} />
@@ -62,10 +60,8 @@ function App() {
                     <PrivateRoute path="/donation" component={Donation} />
                     <PrivateRoute exact path="/profile" component={Profile} />
                   </Requester>
-                </MainLayout>
-              )}
-              {role === "donor" && (
-                <MainLayout>
+                )}
+                {role === "donor" && (
                   <Donor>
                     <PrivateRoute exact path="/" component={Home} />
                     <PrivateRoute exact path="/faq" component={FAQ} />
@@ -78,8 +74,8 @@ function App() {
                     <PrivateRoute path="/donation" component={Donation} />
                     <PrivateRoute exact path="/profile" component={Profile} />
                   </Donor>
-                </MainLayout>
-              )}
+                )}
+              </MainLayout>
             </Switch>
           </AuthProvider>
         </Router>
