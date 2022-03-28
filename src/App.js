@@ -14,7 +14,6 @@ import { AuthProvider } from "./contexts/AuthContext";
 import PrivateRoute from "./pages/PrivateRoute";
 import Onboard from "./pages/Onboard";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Dashboard from "./pages/Dashboard";
 
 import Vendor from "./pages/Roles/Vendor";
 import Requester from "./pages/Roles/Requester";
@@ -33,7 +32,7 @@ function App() {
             <Switch>
               <Route path="/signup" component={Signup} />
               <Route path="/login" component={Login} />
-              <Route path="/dashboard" component={Dashboard} />
+              <Route path="/onboard" component={Onboard} />
               <MainLayout>
                 {role === "vendor" && (
                   <Vendor>
