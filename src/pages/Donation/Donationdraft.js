@@ -74,23 +74,6 @@ export default function DonationDraft() {
               }}
             />
           </div>
-          <div>
-            <Controls.Button
-              text="Request"
-              variant="outlined"
-              startIcon={<AddIcon />}
-              style={{ border: "3px solid #194db0", fontSize: "1.5vw" }}
-              className={classes.newButton}
-              onClick={() => {
-                setDonreq(true);
-              }}
-            />
-          </div>
-          <div className="poster">
-            <p>
-              Did you know that Chainbase helped 10k homeless to find shelter?
-            </p>
-          </div>
         </div>
         <Popup
           title="Request Donation"
@@ -101,7 +84,7 @@ export default function DonationDraft() {
           // recordForEdit={recordForEdit}
           // addOrEdit={addOrEdit}
           />
-          {/* <DetectAccount /> */}
+          <DetectAccount />
         </Popup>
         <Popup title="Donate" open={openPopup} handleClose={setOpenDonate}>
           <Send isDonation />
