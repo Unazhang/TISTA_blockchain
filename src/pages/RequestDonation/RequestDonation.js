@@ -6,22 +6,6 @@ import emailjs from "emailjs-com";
 import axios from "axios";
 import { donationStore } from "../Donation/DonationStore";
 import { useAuth } from "../../contexts/AuthContext";
-// import {
-//   Form,
-//   Input,
-//   Button,
-//   Radio,
-//   Select,
-//   Cascader,
-//   DatePicker,
-//   InputNumber,
-//   TreeSelect,
-//   Switch,
-//   Dropdown,
-//   Menu,
-// } from "antd";
-// import { DownOutlined, UserOutlined } from "@ant-design/icons";
-// import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
 import { Form, Button, Select } from "react-bootstrap";
 
 export default function RequestDonationForm(props) {
