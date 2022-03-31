@@ -130,14 +130,17 @@ router.post("/login", async (req, res) => {
 });
 
 router.post("/request", async (req, res) => {
+  console.log("inside /request", req.body);
   const request = new requestTemplateCopy({
-    requestId: req.body.requestId,
-    userId: req.body.userId,
-    amount: req.body.amount,
+    user_email: req.body.user_email,
+    requestor_name: req.body.requestor_name,
+    country: req.body.country,
+    category: req.body.category,
     title: req.body.title,
-    reason: req.body.reason,
     description: req.body.description,
-    blockchainAddress: req.body.blockchainAddress,
+    target_amount: req.body.target_amount,
+    vendor_name: req.body.vendor_name,
+    vendor_email: req.body.vendor_email,
   });
   request
     .save()
@@ -145,6 +148,7 @@ router.post("/request", async (req, res) => {
       res.json(data);
     })
     .catch((error) => {
+      console.log("error", error);
       res.json(error);
     });
 });
