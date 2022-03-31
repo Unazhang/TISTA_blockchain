@@ -1,3 +1,5 @@
+// not in use, reference only
+
 const mongoose = require('mongoose');
 
 const signUpTemplate = new mongoose.Schema({

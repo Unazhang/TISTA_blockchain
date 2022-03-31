@@ -64,8 +64,8 @@ class ShowBalance extends Component {
       filter: { from: this.state.account },
     });
     this.setState({ transactions: transactions });
-    console.log(transactions);
-    console.log(web3.utils.fromWei(balance.toString(), "Ether"));
+    // console.log(transactions);
+    // console.log(web3.utils.fromWei(balance.toString(), "Ether"));
   }
 
   transfer(recipient, amount) {

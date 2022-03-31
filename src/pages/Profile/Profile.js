@@ -26,7 +26,7 @@ import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 
 const Data = [
-  { name: "Jack", status: "Verified Vender" },
+  { name: "Jack", status: "Verified Vendor" },
   { name: "Lucy", status: "Verified Receiver" },
   { name: "Lee", status: "Verified Receiver" },
   { name: "Lucy", status: "Verified Receiver" },
@@ -550,8 +550,8 @@ export default function Profile() {
                       <TextField
                         fullWidth
                         className={classes.textF}
-                        id="standard-multiline-static"
-                        label="Multiline"
+                        // id="standard-multiline-static"
+                        // label="Multiline"
                         multiline
                         rows={10}
                         label="Brief statement of your reason for validation"

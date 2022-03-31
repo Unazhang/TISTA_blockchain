@@ -2,12 +2,14 @@ const { request } = require("express");
 const express = require("express");
 const router = express.Router();
 const signUpTemplateCopy = require("../models/SignUpModels");
+const userTemplate = require("../models/UserModel");
 const requestTemplateCopy = require("../models/RequestModels");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
 const requesttable = mongoose.model("requesttable");
 const mytable = mongoose.model("mytable");
+const users = mongoose.model("users");
 const jwt = require("jsonwebtoken");
 
 const maxAge = 3 * 24 * 60 * 60; // 3 days to expire
@@ -17,21 +19,47 @@ const createToken = (id) => {
   });
 };
 
+// router.post("/signup", async (req, res) => {
+//   console.log("inside /signup...");
+//   console.log("signup request body", req.body);
+//   const saltPassword = await bcrypt.genSalt(10);
+//   const securePassword = await bcrypt.hash(req.body.password, saltPassword);
+
+//   // create new user in MongoDB database
+//   const signedUpUser = new signUpTemplateCopy({
+//     fullName: req.body.fullName,
+//     userName: req.body.userName,
+//     donationAddress: req.body.donationAddress,
+//     donateTo: req.body.donateTo,
+//     donateAddress: req.body.donateAddress,
+//     email: req.body.email,
+//     password: securePassword,
+//   });
+
+//   signedUpUser
+//     .save()
+//     .then((data) => {
+//       console.log("data", data);
+//       res.json({
+//         data,
+//         success: true,
+//       });
+//       // console.log("signedUpUser resp", res.json);
+//     })
+//     .catch((error) => {
+//       res.json(error);
+//     });
+// });
 router.post("/signup", async (req, res) => {
   console.log("inside /signup...");
   console.log("signup request body", req.body);
-  const saltPassword = await bcrypt.genSalt(10);
-  const securePassword = await bcrypt.hash(req.body.password, saltPassword);
 
   // create new user in MongoDB database
-  const signedUpUser = new signUpTemplateCopy({
-    fullName: req.body.fullName,
-    userName: req.body.userName,
-    donationAddress: req.body.donationAddress,
-    donateTo: req.body.donateTo,
-    donateAddress: req.body.donateAddress,
+  const signedUpUser = new userTemplate({
+    displayName: req.body.displayName,
+    uid: req.body.uid,
     email: req.body.email,
-    password: securePassword,
+    blockchainAddress: req.body.blockchainAddress,
   });
 
   signedUpUser
@@ -49,6 +77,8 @@ router.post("/signup", async (req, res) => {
     });
 });
 
+
+//TODO change according to new user schema
 router.post("/donate", async (req, res) => {
   requesttable.findOneAndUpdate(
     { blockchainAddress: req.body.receiver },
