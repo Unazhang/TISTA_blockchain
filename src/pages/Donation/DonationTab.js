@@ -15,6 +15,15 @@ import Button from "@material-ui/core/Button";
 import { makeStyles, Toolbar, InputAdornment } from "@material-ui/core";
 import Controls from "../../controls/Controls";
 import { Search } from "@material-ui/icons";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { styled } from "@mui/material/styles";
+import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
+import MuiAccordion from "@mui/material/Accordion";
+import MuiAccordionSummary from "@mui/material/AccordionSummary";
+import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import {
   Table,
   TableHead,
@@ -182,7 +191,7 @@ export default function DonationTab() {
               color="textSecondary"
               component="p"
             >
-              {events[i].currentAmount} raised of {events[i].amount}
+              {events[i].current_amount} raised of {events[i].target_amount}
             </Typography>
             <Typography
               noWrap
@@ -204,7 +213,9 @@ export default function DonationTab() {
           <CardActions>
             <DonationPopOver
               amount={
-                events[i].currentAmount + " raised of " + events[i].amount
+                events[i].current_amount +
+                " raised of " +
+                events[i].target_amount
               }
               address={events[i].blockchainAddress}
               content={events[i].description}
@@ -233,9 +244,19 @@ export default function DonationTab() {
     setValue(newValue);
   };
 
+  const [expanded, setExpanded] = React.useState();
+
+  const handleChangeInstr = (panel) => (event, newExpanded) => {
+    setExpanded(newExpanded ? panel : false);
+  };
+
   return (
     <div className={classes.root}>
-      <Card variant="outlined" style={{ height: "250px", width: "960px" }}>
+      <Card
+        color="light"
+        variant="outlined"
+        style={{ height: "250px", width: "960px" }}
+      >
         <CardContent
           style={{
             height: "30vh",
@@ -245,40 +266,57 @@ export default function DonationTab() {
             whiteSpace: "normal",
           }}
         >
-          <h6>Steps to make a donation: </h6>
-          <ol>
-            Step 1: If you never used MetaMask wallet before, click here to
-            install the MetaMask extension on your browser. After installation,
-            refresh your current page.
-          </ol>
-          <ol>
-            Step 2: If you don't enough ethereum balance, click the{" "}
-            <b>add balance</b> button.
-          </ol>
-          <ol>
-            Step 3: Browse the following project(s) you would like to help. Copy
-            the <b>Blockchain Address</b> of the project.
-          </ol>
-          <ol>
-            Step 4: Click <b>Donate</b> button on the right. Put the{" "}
-            <b>Blockchain Address</b> in the Recipient Address on the form.
-          </ol>
-          <ol>Step 5: Fill the rest of the information. Click SEND. </ol>
+          <Accordion
+            expanded={expanded === "panel1"}
+            onChange={handleChangeInstr("panel1")}
+          >
+            <AccordionSummary
+              aria-controls="panel1d-content"
+              id="panel1d-header"
+            >
+              <Typography>Step 1</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                Step 1: Install MetaMask wallet extension on your browser.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion
+            expanded={expanded === "panel2"}
+            onChange={handleChangeInstr("panel2")}
+          >
+            <AccordionSummary
+              aria-controls="panel2d-content"
+              id="panel2d-header"
+            >
+              <Typography>Step 2</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                If you don't enough ethereum balance, click the{" "}
+                <b>add balance</b> button.{" "}
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+          <Accordion
+            expanded={expanded === "panel3"}
+            onChange={handleChangeInstr("panel3")}
+          >
+            <AccordionSummary
+              aria-controls="panel3d-content"
+              id="panel3d-header"
+            >
+              <Typography>Step 3</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                Open the project card below and get started.
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
         </CardContent>
       </Card>
-      <AppBar position="static">
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="simple tabs example"
-          centered
-          style={{ backgroundColor: "#194db0" }}
-          TabIndicatorProps={{ style: { background: "#FD8024" } }}
-        >
-          <Tab label="Community" {...a11yProps(0)} />
-        </Tabs>
-      </AppBar>
-
       <TabPanel value={value} index={0}>
         <Toolbar>
           <Controls.Input

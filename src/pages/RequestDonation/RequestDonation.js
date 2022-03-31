@@ -6,7 +6,7 @@ import emailjs from "emailjs-com";
 import axios from "axios";
 import { donationStore } from "../Donation/DonationStore";
 import { useAuth } from "../../contexts/AuthContext";
-import { Form, Button, Select } from "react-bootstrap";
+import { Form, Button, Select, Card } from "react-bootstrap";
 
 export default function RequestDonationForm(props) {
   // const { addOrEdit, recordForEdit } = props;
@@ -87,101 +87,104 @@ export default function RequestDonationForm(props) {
 
   return (
     <div>
-      <Form onSubmit={handleSubmit}>
-        <Form.Group>
-          <Form.Label>Where do you live?</Form.Label>
-          <Form.Control
-            as="select"
-            onChange={(e) => setCountry(e.target.value)}
-          >
-            <option value="US">United States</option>
-          </Form.Control>
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>What are you fundraising for?</Form.Label>
-          <Form.Control
-            as="select"
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            <option value="0">Choose a category</option>
-            <option value="1">Accidents &amp; Emergencies</option>
-            <option value="2">Animals &amp; Pets</option>
-            <option value="3">Babies, Kids &amp; Family</option>
-            <option value="4">Community &amp; Neighbors</option>
-            <option value="5">Dreams, Hopes &amp; Wishes</option>
-            <option value="6">Education &amp; Learning</option>
-            <option value="7">Funerals &amp; Memorials</option>
-            <option value="8">Medical, Illness &amp; Healing</option>
-            <option value="9">Rent, Food &amp; Monthly Bills</option>
-            <option value="10">Sports, Teams &amp; Clubs</option>
-            <option value="11">Volunteer &amp; Service</option>
-            <option value="12">Other</option>
-          </Form.Control>
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Fundraiser Title</Form.Label>
-          <Form.Control
-            type="text"
-            name="title"
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Description</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={3}
-            name="description"
-            onChange={(e) => setDesc(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Target Amount (in XYZ token)</Form.Label>
-          <Form.Control
-            type="number"
-            name="target_amount"
-            onChange={(e) => setAmount(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>What's your name?</Form.Label>
-          <Form.Control
-            type="text"
-            name="requestor_name"
-            onChange={(e) => setReqName(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>What's your vendor's name?</Form.Label>
-          <Form.Control
-            type="text"
-            name="vendor_name"
-            onChange={(e) => setVendorName(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>What's your vendor's email?</Form.Label>
-          <Form.Control
-            type="email"
-            name="vendor_email"
-            onChange={(e) => setVendorEmail(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Message to your vendor:</Form.Label>
-          <Form.Control as="textarea" rows={3} name="message" />
-        </Form.Group>
-        <Form.Group>
-          {/* <Controls.Button type="submit" text="Notify Vendor" /> */}
-          {/* <Controls.Button type="submit" text="Submit" /> */}
-          <Button variant="primary" type="submit">
-            Submit and Notify Vendor
-          </Button>
-        </Form.Group>
-        {/* <Form.Group>
+      <Card style={{ width: "50rem" }} border="light">
+        <Form onSubmit={handleSubmit}>
+          <Form.Group>
+            <Form.Label>Where do you live?</Form.Label>
+            <Form.Control
+              as="select"
+              onChange={(e) => setCountry(e.target.value)}
+              width="100%"
+            >
+              <option value="US">United States</option>
+            </Form.Control>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>What are you fundraising for?</Form.Label>
+            <Form.Control
+              as="select"
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="0">Choose a category</option>
+              <option value="1">Accidents &amp; Emergencies</option>
+              <option value="2">Animals &amp; Pets</option>
+              <option value="3">Babies, Kids &amp; Family</option>
+              <option value="4">Community &amp; Neighbors</option>
+              <option value="5">Dreams, Hopes &amp; Wishes</option>
+              <option value="6">Education &amp; Learning</option>
+              <option value="7">Funerals &amp; Memorials</option>
+              <option value="8">Medical, Illness &amp; Healing</option>
+              <option value="9">Rent, Food &amp; Monthly Bills</option>
+              <option value="10">Sports, Teams &amp; Clubs</option>
+              <option value="11">Volunteer &amp; Service</option>
+              <option value="12">Other</option>
+            </Form.Control>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Fundraiser Title</Form.Label>
+            <Form.Control
+              type="text"
+              name="title"
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Description</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={3}
+              name="description"
+              onChange={(e) => setDesc(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Target Amount (in XYZ token)</Form.Label>
+            <Form.Control
+              type="number"
+              name="target_amount"
+              onChange={(e) => setAmount(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>What's your name?</Form.Label>
+            <Form.Control
+              type="text"
+              name="requestor_name"
+              onChange={(e) => setReqName(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>What's your vendor's name?</Form.Label>
+            <Form.Control
+              type="text"
+              name="vendor_name"
+              onChange={(e) => setVendorName(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>What's your vendor's email?</Form.Label>
+            <Form.Control
+              type="email"
+              name="vendor_email"
+              onChange={(e) => setVendorEmail(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Message to your vendor:</Form.Label>
+            <Form.Control as="textarea" rows={3} name="message" />
+          </Form.Group>
+          <Form.Group>
+            {/* <Controls.Button type="submit" text="Notify Vendor" /> */}
+            {/* <Controls.Button type="submit" text="Submit" /> */}
+            <Button variant="primary" type="submit">
+              Submit and Notify Vendor
+            </Button>
+          </Form.Group>
+          {/* <Form.Group>
           <Controls.Button text="Reset" color="default" onClick={resetForm} />
         </Form.Group> */}
-      </Form>
+        </Form>
+      </Card>
     </div>
   );
 }

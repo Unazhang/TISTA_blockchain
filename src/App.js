@@ -17,7 +17,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   return (
     <div>
-      <div className="w-100" style={{ maxWidth: "400px" }}>
+      <div className="subpage">
         <Router>
           <AuthProvider>
             <Switch>
@@ -27,7 +27,6 @@ function App() {
               <MainLayout>
                 <PrivateRoute exact path="/" component={ShowBalance} />
                 <PrivateRoute exact path="/faq" component={FAQ} />
-                <PrivateRoute exact path="/transaction" component={FAQ} />
                 <PrivateRoute
                   exact
                   path="/request"
