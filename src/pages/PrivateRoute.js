@@ -1,20 +1,15 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import axios from "axios";
 
 // wrapper for current route
-export default function PrivateRoute({ component: Component, ...rest }) {
+export default function PrivateRoute({ children }) {
   const { currentUser } = useAuth();
-
   return (
     <Route
-      {...rest}
-      render={(props) => {
-        return currentUser ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to="/onboard" />
-        );
+      render={() => {
+        return currentUser ? { ...children } : <Redirect to="/onboard" />;
       }}
     ></Route>
   );

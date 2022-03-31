@@ -1,0 +1,6 @@
+POST  http://localhost:4000/app/role
+Content-Type: application/json
+
+{
+    "uid": "53H4xyfQ0lNKNT4B3Zc79wCcbK83"
+}
