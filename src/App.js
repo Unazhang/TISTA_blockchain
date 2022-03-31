@@ -5,7 +5,7 @@ import MainLayout from "./layouts/MainLayout";
 import { FAQ } from "./pages";
 import ShowBalance from "./pages/Balance/components/ShowBalance";
 import RequestDonation from "./pages/RequestDonation/RequestDonation";
-import Donation from "./pages/Donation/Donationdraft";
+import CommunityPage from "./pages/Donation/CommunityPage";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Login/Signup";
 import Profile from "./pages/Profile/Profile";
@@ -20,19 +20,18 @@ import Donor from "./pages/Roles/Donor";
 import { useAuth } from "./contexts/AuthContext";
 import axios from "axios";
 
-
 function App() {
   const [role, setRole] = useState("vendor");
   const { currentUser } = useAuth();
 
   const getRole = async () => {
     await axios
-    .post("http://localhost:4000/app/role", {
-      uid: currentUser.uid
-    })
-    .then((response) => {
-      setRole(response.data);
-    });
+      .post("http://localhost:4000/app/role", {
+        uid: currentUser.uid,
+      })
+      .then((response) => {
+        setRole(response.data);
+      });
   };
 
   if (currentUser) {

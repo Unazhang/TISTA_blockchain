@@ -8,6 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
 import CardActions from "@material-ui/core/CardActions";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
@@ -37,6 +38,7 @@ import { donationStore } from "./DonationStore";
 import DonationAccordion from "./DonationAccordion";
 import "./Donation.css";
 import DonationPopOver from "./DonationPopOver";
+import Popover from "@material-ui/core/Popover";
 
 const Data = [
   { name: "Help Kids" },
@@ -102,7 +104,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DonationTab() {
+export default function AllProjects() {
   const [name, setName] = useState("");
   const [found, setFound] = useState(Data);
 
@@ -222,6 +224,7 @@ export default function DonationTab() {
             />
           </CardActions>
         </Card>
+        <Button>Testttt</Button>
       </Grid>
     );
   }
@@ -250,20 +253,41 @@ export default function DonationTab() {
     setExpanded(newExpanded ? panel : false);
   };
 
+  // donation instruction control
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
+
   return (
     <div className={classes.root}>
-      <Card
-        color="light"
-        variant="outlined"
-        style={{ height: "250px", width: "960px" }}
-      >
-        <CardContent
-          style={{
-            height: "30vh",
-            ordWrap: "break-word",
-            display: "block",
-            overflow: "hidden",
-            whiteSpace: "normal",
+      <div>
+        <Button aria-describedby={id} color="primary" onClick={handleClick}>
+          See instructions
+        </Button>
+        <Popover
+          id={id}
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "left",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "left",
+          }}
+          PaperProps={{
+            style: { width: "30vw", height: "20vh", overflow: "scroll" },
           }}
         >
           <Accordion
@@ -315,8 +339,8 @@ export default function DonationTab() {
               </Typography>
             </AccordionDetails>
           </Accordion>
-        </CardContent>
-      </Card>
+        </Popover>
+      </div>
       <TabPanel value={value} index={0}>
         <Toolbar>
           <Controls.Input

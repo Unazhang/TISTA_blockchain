@@ -5,7 +5,7 @@ import Controls from "../../controls/Controls";
 import AddIcon from "@material-ui/icons/Add";
 import Popup from "../Popup";
 import Send from "./send.js";
-import DonationTab from "./DonationTab";
+import AllProjects from "./AllProjects.js";
 import Typography from "@material-ui/core/Typography";
 import DetectAccount from "./DetectAccount";
 import "./Donation.css";
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DonationDraft() {
+export default function CommunityPage() {
   const classes = useStyles();
   const [recordForEdit, setRecordForEdit] = useState(null);
   const [setFilterFn] = useState({
@@ -59,13 +59,12 @@ export default function DonationDraft() {
     <>
       <div className="donationMain">
         <div className="donationBlock">
-          <DonationTab />
+          <AllProjects />
         </div>
-
-        <div className="donationBlock" style={{ marginTop: "2%" }}>
+        {/* <div className="donationBlock" style={{ marginTop: "2%" }}>
           <div>
             <Controls.Button
-              text="Donate"
+              text="Donate222"
               variant="contained"
               style={{ backgroundColor: "#194db0", fontSize: "1.5vw" }}
               className={classes.newButton}
@@ -74,38 +73,14 @@ export default function DonationDraft() {
               }}
             />
           </div>
-          <div>
-            <Controls.Button
-              text="Request"
-              variant="outlined"
-              startIcon={<AddIcon />}
-              style={{ border: "3px solid #194db0", fontSize: "1.5vw" }}
-              className={classes.newButton}
-              onClick={() => {
-                setDonreq(true);
-              }}
-            />
-          </div>
-          <div className="poster">
-            <p>
-              Did you know that Chainbase helped 10k homeless to find shelter?
-            </p>
-          </div>
         </div>
         <Popup
-          title="Request Donation"
-          open={openDonreq}
-          handleClose={setDonreq}
+          title="New Donation"
+          open={openPopup}
+          handleClose={setOpenDonate}
         >
-          <DonationReqForm
-          // recordForEdit={recordForEdit}
-          // addOrEdit={addOrEdit}
-          />
-          {/* <DetectAccount /> */}
-        </Popup>
-        <Popup title="Donate" open={openPopup} handleClose={setOpenDonate}>
           <Send isDonation />
-        </Popup>
+        </Popup> */}
       </div>
     </>
   );

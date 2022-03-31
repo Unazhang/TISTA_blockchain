@@ -26,9 +26,14 @@ export default function DonationPopOver(props) {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
+  // handle donate button
+  const handleClickDonate = (props) => {
+    console.log("inside donate", props);
+  };
+
   return (
     <div>
-      <Button aria-describedby={id} color="primary" onClick={handleClick}>
+      <Button aria-describedby={id} variant="outlined" onClick={handleClick}>
         Learn More
       </Button>
       <Popover
@@ -59,6 +64,16 @@ export default function DonationPopOver(props) {
           {props.content}
         </Typography>
       </Popover>
+      <Button
+        aria-describedby={id}
+        variant="contained"
+        color="primary"
+        onClick={(props) => {
+          handleClickDonate(props.address);
+        }}
+      >
+        Donate
+      </Button>
     </div>
   );
 }
