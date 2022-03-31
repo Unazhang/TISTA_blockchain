@@ -187,4 +187,14 @@ router.get("/addresses", async (req, res) => {
   });
 });
 
+router.post("/role", async (req, res) => {
+  users.findOne({ uid: req.body.uid }, function(err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result.role);
+    }
+  });
+});
+
 module.exports = router;
