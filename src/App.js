@@ -5,7 +5,7 @@ import MainLayout from "./layouts/MainLayout";
 import { FAQ } from "./pages";
 import ShowBalance from "./pages/Balance/components/ShowBalance";
 import RequestDonation from "./pages/RequestDonation/RequestDonation";
-import Donation from "./pages/Donation/Donationdraft";
+import CommunityPage from "./pages/Donation/CommunityPage";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Login/Signup";
 import Profile from "./pages/Profile/Profile";
@@ -44,7 +44,7 @@ function App() {
                       path="/request"
                       component={RequestDonation}
                     />
-                    <PrivateRoute path="/donation" component={Donation} />
+                    <PrivateRoute path="/donation" component={CommunityPage} />
                     <PrivateRoute exact path="/profile" component={Profile} />
                   </Vendor>
                 )}
@@ -58,7 +58,7 @@ function App() {
                       path="/request"
                       component={RequestDonation}
                     />
-                    <PrivateRoute path="/donation" component={Donation} />
+                    <PrivateRoute path="/donation" component={CommunityPage} />
                     <PrivateRoute exact path="/profile" component={Profile} />
                   </Requester>
                 )}
@@ -72,7 +72,7 @@ function App() {
                       path="/request"
                       component={RequestDonation}
                     />
-                    <PrivateRoute path="/donation" component={Donation} />
+                    <PrivateRoute path="/donation" component={CommunityPage} />
                     <PrivateRoute exact path="/profile" component={Profile} />
                   </Donor>
                 )}

@@ -37,9 +37,10 @@ const requestTemplate = new mongoose.Schema({
     type: String,
     required: true,
   },
-  // blockchainAddress: String,
-  //   userId: String,
-  //   requestId: String,
+  blockchainAddress: {
+    type: String,
+    default: "0xb68c9015543802b72D0DF7fe14B5714200e17520", // test
+  },
 
   date: {
     type: Date,
