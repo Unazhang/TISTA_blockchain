@@ -12,6 +12,7 @@ import Profile from "./pages/Profile/Profile";
 import Onboard from "./pages/Onboard";
 import "bootstrap/dist/css/bootstrap.min.css";
 import PrivateRoute from "./pages/PrivateRoute";
+import HomePage from "./pages/Home/Homepage"
 
 import Vendor from "./pages/Roles/Vendor";
 import Requester from "./pages/Roles/Requester";
@@ -49,7 +50,7 @@ function App() {
             <MainLayout>
               {role === "vendor" && (
                 <Vendor>
-                  <Route exact path="/" component={ShowBalance} />
+                  <Route exact path="/" component={HomePage} />
                   <Route exact path="/faq" component={FAQ} />
                   <Route exact path="/transaction" component={FAQ} />
                   <Route exact path="/request" component={RequestDonation} />
@@ -59,7 +60,7 @@ function App() {
               )}
               {role === "requester" && (
                 <Requester>
-                  <Route exact path="/" component={ShowBalance} />
+                  <Route exact path="/" component={HomePage} />
                   <Route exact path="/faq" component={FAQ} />
                   <Route exact path="/transaction" component={FAQ} />
                   <Route exact path="/request" component={RequestDonation} />
@@ -69,7 +70,7 @@ function App() {
               )}
               {role === "donor" && (
                 <Donor>
-                  <Route exact path="/" component={ShowBalance} />
+                  <Route exact path="/" component={HomePage} />
                   <Route exact path="/faq" component={FAQ} />
                   <Route exact path="/transaction" component={FAQ} />
                   <Route exact path="/request" component={RequestDonation} />

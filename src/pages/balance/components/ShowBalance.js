@@ -54,7 +54,7 @@ class ShowBalance extends Component {
     // fetch the balance of the MetaMask account
     const balance = await daiTokenMock.methods
       .balanceOf(this.state.account)
-      .call();
+      .call().catch((error)=>{console.log(error)});
 
     // fromWei: convert Ether to Wei (the smallest nomination of Ether)
     this.setState({ balance: web3.utils.fromWei(balance.toString(), "Ether") });
