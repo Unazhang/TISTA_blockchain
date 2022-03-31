@@ -13,7 +13,8 @@ import NotifIcon from "@material-ui/icons/Notifications";
 import HomeIcon from "@material-ui/icons/Home";
 // import HelpIcon from "@material-ui/icons/HelpOutlined";
 import TransIcon from "@material-ui/icons/Payment";
-import DonateIcon from "@material-ui/icons/CardGiftcard";
+import VolunteerActivismRoundedIcon from "@mui/icons-material/VolunteerActivismRounded";
+import RequestPageIcon from "@mui/icons-material/RequestPage";
 import NavLink from "./NavLink";
 // import Navbar from "react-bootstrap/Navbar";
 import Send from "../../pages/Donation/send.js";
@@ -128,13 +129,13 @@ function MainLayout(props) {
             </NavLink>
           </div>
           <div className={classes.navbutton}>
-            <NavLink to="/transaction" icon={TransIcon}>
-              Transaction
+            <NavLink to="/donation" icon={VolunteerActivismRoundedIcon}>
+              Community
             </NavLink>
           </div>
           <div className={classes.navbutton}>
-            <NavLink to="/donation" icon={DonateIcon}>
-              Donation
+            <NavLink to="/request" icon={RequestPageIcon}>
+              Request
             </NavLink>
           </div>
           {/* <NavLink to="/login" handleClick={() => {authService.logOut();}} icon={HelpIcon}>
@@ -142,22 +143,22 @@ function MainLayout(props) {
           </NavLink> */}
           <div style={{ display: "flex", flex: 1 }} />
           {/* <Button variant="contained" className={classes.newButton}>Buy/Sell</Button> */}
-          <Controls.Button
+          {/* <Controls.Button
             text="Buy/Sell"
             variant="contained"
             className={classes.newButton}
             onClick={() => {
               setOpenBuySell(true);
             }}
-          />
-          <Controls.Button
+          /> */}
+          {/* <Controls.Button
             text="SEND"
             variant="contained"
             className={classes.newButton}
             onClick={() => {
               setOpenDonate(true);
             }}
-          />
+          /> */}
           <IconButton>
             <NotifIcon style={{ fill: "white" }} />
           </IconButton>
@@ -222,13 +223,13 @@ function MainLayout(props) {
         </Toolbar>
       </AppBar>
 
-      <Popup title="Send" open={openPopup} handleClose={setOpenDonate}>
+      {/* <Popup title="Send" open={openPopup} handleClose={setOpenDonate}>
         <Send />
-      </Popup>
+      </Popup> */}
 
-      <Popup title="Buy/Sell" open={openBuySell} handleClose={setOpenBuySell}>
+      {/* <Popup title="Buy/Sell" open={openBuySell} handleClose={setOpenBuySell}>
         <BuySell />
-      </Popup>
+      </Popup> */}
 
       <main className={classes.content}>
         <div className={classes.toolbar} />

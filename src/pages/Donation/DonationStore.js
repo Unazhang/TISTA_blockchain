@@ -1,9 +1,9 @@
-import { createContext } from 'react'
-import { makeObservable, observable, computed, action } from 'mobx'
+import { createContext } from "react";
+import { makeObservable, observable, computed, action } from "mobx";
 
 export const donationStore = observable({
-    isUpdate: false
-})
+  isUpdate: false,
+});
 
 // class DonationStore {
 //     // updated = false;
@@ -35,8 +35,5 @@ export const donationStore = observable({
 //     updated: observable,
 //     getUpdated: computed
 // })
-
-
-
 
 // export default new DonationStore()

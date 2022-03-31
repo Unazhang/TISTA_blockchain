@@ -26,7 +26,7 @@ const role = "requester";
 function App() {
   return (
     <div>
-      <div className="w-100" style={{ maxWidth: "400px" }}>
+      <div className="subpage">
         <Router>
           <AuthProvider>
             <Switch>
