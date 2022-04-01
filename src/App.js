@@ -54,7 +54,7 @@ function App() {
                   <Route exact path="/faq" component={FAQ} />
                   <Route exact path="/transaction" component={FAQ} />
                   <Route exact path="/request" component={RequestDonation} />
-                  <Route path="/donation" component={Donation} />
+                  <Route path="/donation" component={CommunityPage} />
                   <Route exact path="/profile" component={Profile} />
                 </Vendor>
               )}
@@ -64,7 +64,7 @@ function App() {
                   <Route exact path="/faq" component={FAQ} />
                   <Route exact path="/transaction" component={FAQ} />
                   <Route exact path="/request" component={RequestDonation} />
-                  <Route path="/donation" component={Donation} />
+                  <Route path="/donation" component={CommunityPage} />
                   <Route exact path="/profile" component={Profile} />
                 </Requester>
               )}
@@ -74,7 +74,7 @@ function App() {
                   <Route exact path="/faq" component={FAQ} />
                   <Route exact path="/transaction" component={FAQ} />
                   <Route exact path="/request" component={RequestDonation} />
-                  <Route path="/donation" component={Donation} />
+                  <Route path="/donation" component={CommunityPage} />
                   <Route exact path="/profile" component={Profile} />
                 </Donor>
               )}
