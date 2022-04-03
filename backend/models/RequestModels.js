@@ -5,7 +5,7 @@ const requestTemplate = new mongoose.Schema({
     type: String,
     required: true,
   },
-  requestor_name: {
+  requester_name: {
     type: String,
     required: true,
   },
@@ -49,6 +49,9 @@ const requestTemplate = new mongoose.Schema({
   current_amount: {
     type: Number,
     default: 0,
+  },
+  donation_history: {
+    type: [],
   },
 });
 

@@ -31,11 +31,22 @@ export default function DonationPopOver(props) {
   const history = useHistory();
 
   const handleClickDonate = (props) => {
+    const request_id = props.request_id;
     console.log("inside donate", props);
-    // history.push("/make-a-donation", props);
+    const data = {
+      request_id: props.request_id,
+      blockchain_address: props.address,
+      current_amount: props.current_amount,
+      target_amount: props.target_amount,
+      requester_name: props.requester_name,
+      req_title: props.req_title,
+      description: props.description,
+      donation_history: props.donation_history,
+    };
+    console.log(data);
     history.push({
       pathname: "/make-a-donation",
-      state: props,
+      state: data,
     });
   };
 
@@ -77,10 +88,10 @@ export default function DonationPopOver(props) {
         variant="contained"
         color="primary"
         onClick={() => {
-          handleClickDonate(props.address);
+          handleClickDonate(props);
         }}
       >
-        Donate555
+        Donate
       </Button>
     </div>
   );

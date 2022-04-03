@@ -61,7 +61,7 @@ export default function CommunityPage() {
         <div className="donationBlock">
           <AllProjects />
         </div>
-        {/* <div className="donationBlock" style={{ marginTop: "2%" }}>
+        <div className="donationBlock" style={{ marginTop: "2%" }}>
           <div>
             <Controls.Button
               text="Donate222"
@@ -75,12 +75,12 @@ export default function CommunityPage() {
           </div>
         </div>
         <Popup
-          title="New Donation"
+          title="New Donation 222"
           open={openPopup}
           handleClose={setOpenDonate}
         >
           <Send isDonation />
-        </Popup> */}
+        </Popup>
       </div>
     </>
   );

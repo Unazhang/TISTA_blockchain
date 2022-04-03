@@ -213,6 +213,15 @@ export default function AllProjects() {
             >
               {events[i].description}
             </Typography>
+            {/* test _id */}
+            <Typography
+              noWrap
+              variant="body2"
+              color="textSecondary"
+              component="p"
+            >
+              {events[i]._id}
+            </Typography>
           </CardContent>
           <CardActions>
             <DonationPopOver
@@ -223,15 +232,17 @@ export default function AllProjects() {
               }
               address={events[i].blockchainAddress}
               content={events[i].description}
+              request_id={events[i]._id}
+              blockchain_address={events[i].address}
+              current_amount={events[i].current_amount}
+              target_amount={events[i].target_amount}
+              requester_name={events[i].requester_name}
+              req_title={events[i].title}
+              description={events[i].description}
+              donation_history={events[i].donation_history}
             />
           </CardActions>
         </Card>
-        {/* <Button onClick={() => handleOpenDonate(events[i].blockchainAddress)}>
-          Donate111
-        </Button>
-        <Modal open={openDonate} onClose={handleCloseDonate}>
-          <Typography>Text in modal</Typography>
-        </Modal> */}
       </Grid>
     );
   }

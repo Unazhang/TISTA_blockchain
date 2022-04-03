@@ -41,7 +41,7 @@ function App() {
 
   return (
     <div>
-      <div className="w-100" style={{ maxWidth: "400px" }}>
+      <div width="100%">
         <Switch>
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
