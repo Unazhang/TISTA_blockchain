@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Popover from "@material-ui/core/Popover";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import { Link, useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   typography: {
@@ -27,8 +28,15 @@ export default function DonationPopOver(props) {
   const id = open ? "simple-popover" : undefined;
 
   // handle donate button
+  const history = useHistory();
+
   const handleClickDonate = (props) => {
     console.log("inside donate", props);
+    // history.push("/make-a-donation", props);
+    history.push({
+      pathname: "/make-a-donation",
+      state: props,
+    });
   };
 
   return (
@@ -68,11 +76,11 @@ export default function DonationPopOver(props) {
         aria-describedby={id}
         variant="contained"
         color="primary"
-        onClick={(props) => {
+        onClick={() => {
           handleClickDonate(props.address);
         }}
       >
-        Donate
+        Donate555
       </Button>
     </div>
   );

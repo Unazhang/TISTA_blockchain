@@ -39,6 +39,7 @@ import DonationAccordion from "./DonationAccordion";
 import "./Donation.css";
 import DonationPopOver from "./DonationPopOver";
 import Popover from "@material-ui/core/Popover";
+import Modal from "@mui/material/Modal";
 
 const Data = [
   { name: "Help Kids" },
@@ -166,6 +167,7 @@ export default function AllProjects() {
     fetchDonations();
     fetchDonatedAddress();
   }, [null]);
+
   for (let i = 0; i < events.length; i++) {
     arr.push(
       <Grid item xs={12} sm={6}>
@@ -224,10 +226,32 @@ export default function AllProjects() {
             />
           </CardActions>
         </Card>
-        <Button>Testttt</Button>
+        {/* <Button onClick={() => handleOpenDonate(events[i].blockchainAddress)}>
+          Donate111
+        </Button>
+        <Modal open={openDonate} onClose={handleCloseDonate}>
+          <Typography>Text in modal</Typography>
+        </Modal> */}
       </Grid>
     );
   }
+
+  // const [openDonate, setOpenDonate] = React.useState(false);
+
+  // useEffect(() => {
+  //   setOpenDonate(true);
+  // }, [openDonate]);
+
+  // const handleOpenDonate = (props) => {
+  //   console.log(props);
+  //   console.log("openDate status", openDonate);
+  //   setOpenDonate(true);
+  //   console.log("openDate status2", openDonate);
+  // };
+
+  // const handleCloseDonate = () => {
+  //   setOpenDonate(false);
+  // };
 
   const handleSearch = (e) => {
     const keyword = e.target.value;
