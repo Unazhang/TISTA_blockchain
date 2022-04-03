@@ -17,6 +17,7 @@ export function AuthProvider({ children }) {
     const user = userCredential.user;
 
     if (user) {
+      // enter user data to database
       axios
         .post("http://localhost:4000/app/signup", {
           displayName: user.displayName,
@@ -24,10 +25,13 @@ export function AuthProvider({ children }) {
           email: user.email,
         })
         .then((response) => {
+          console.log("Created the user in database.");
           console.log(response);
+        }).catch((err)=>{
+          console.log(err);
+          console.log("Failed to create user in database.");
         });
     }
-
     return user;
   }
 
