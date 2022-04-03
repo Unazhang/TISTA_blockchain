@@ -13,24 +13,25 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   async function signup(email, password) {
-    const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+    const userCredential = await auth.createUserWithEmailAndPassword(
+      email,
+      password
+    );
     const user = userCredential.user;
 
     if (user) {
       // enter user data to database
-      axios
-        .post("http://localhost:4000/app/signup", {
+      try {
+        const response = await axios.post("http://localhost:4000/app/signup", {
           displayName: user.displayName,
           uid: user.uid,
           email: user.email,
-        })
-        .then((response) => {
-          console.log("Created the user in database.");
-          console.log(response);
-        }).catch((err)=>{
-          console.log(err);
-          console.log("Failed to create user in database.");
         });
+
+        console.log(response.data.data.role);
+      } catch (err) {
+        console.log(err);
+      }
     }
     return user;
   }
