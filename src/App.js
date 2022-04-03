@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 // import ReactDOM from "react-dom";
 import { BrowserRouter as Switch, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import { FAQ } from "./pages";
-import ShowBalance from "./pages/Balance/components/ShowBalance";
+// import ShowBalance from "./pages/Balance/components/ShowBalance";
 import RequestDonation from "./pages/RequestDonation/RequestDonation";
 import CommunityPage from "./pages/Donation/CommunityPage";
 import Login from "./pages/Login/Login";
@@ -19,25 +19,14 @@ import Requester from "./pages/Roles/Requester";
 import Donor from "./pages/Roles/Donor";
 
 import { useAuth } from "./contexts/AuthContext";
-import axios from "axios";
 
 function App() {
-  const [role, setRole] = useState("vendor");
-  const { currentUser } = useAuth();
+  const { role } = useAuth();
+  // const role = "vendor";
 
-  const getRole = async () => {
-    await axios
-      .post("http://localhost:4000/app/role", {
-        uid: currentUser.uid,
-      })
-      .then((response) => {
-        setRole(response.data);
-      });
-  };
-
-  if (currentUser) {
-    getRole();
-  }
+  // useEffect(()=>{
+  //   console.log("role changed", role);
+  // }, [role]);
 
   return (
     <div>

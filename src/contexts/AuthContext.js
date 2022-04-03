@@ -11,6 +11,7 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
+  const [role, setRole] = useState("vendor");
 
   async function signup(email, password) {
     const userCredential = await auth.createUserWithEmailAndPassword(
@@ -28,7 +29,7 @@ export function AuthProvider({ children }) {
           email: user.email,
         });
 
-        console.log(response.data.data.role);
+        updateRole(response.data.data.role);
       } catch (err) {
         console.log(err);
       }
@@ -36,8 +37,27 @@ export function AuthProvider({ children }) {
     return user;
   }
 
-  function login(email, password) {
-    return auth.signInWithEmailAndPassword(email, password);
+  async function login(email, password) {
+    const userCredential = await auth.signInWithEmailAndPassword(
+      email,
+      password
+    );
+    const user = userCredential.user;
+
+    if (user) {
+      try {
+        const response = await axios.post("http://localhost:4000/app/role", {
+          uid: user.uid,
+        });
+        const currentRole = response.data;
+
+        updateRole(currentRole);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    return user;
   }
 
   function logout() {
@@ -56,6 +76,11 @@ export function AuthProvider({ children }) {
     return currentUser.updatePassword(password);
   }
 
+  function updateRole(role) {
+    setRole(role);
+    // console.log(role);
+  }
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
@@ -64,8 +89,14 @@ export function AuthProvider({ children }) {
     return unsubscribe;
   }, []);
 
+  // catch role change for debugging
+  // useEffect(() => {
+  //   console.log(role);
+  // }, [role]);
+
   const value = {
     currentUser,
+    role,
     login,
     signup,
     logout,
