@@ -60,7 +60,7 @@ router.post("/signup", async (req, res) => {
     uid: req.body.uid,
     email: req.body.email,
     blockchainAddress: req.body.blockchainAddress,
-    role: req.body.role
+    role: req.body.role,
   });
 
   signedUpUser
@@ -79,7 +79,7 @@ router.post("/signup", async (req, res) => {
 });
 
 //TODO change according to new user schema
-router.post("/donate", async (req, res) => {
+router.post("/make-a-donation", async (req, res) => {
   requesttable.findOneAndUpdate(
     { blockchainAddress: req.body.receiver },
     { $inc: { currentAmount: req.body.amount } },
@@ -88,7 +88,7 @@ router.post("/donate", async (req, res) => {
       if (err) {
         res.send(err);
       } else {
-        console.log("Current Amount Updated", result);
+        console.log("Current Amount Updated+++++++++++", result);
       }
     }
   );
@@ -100,7 +100,7 @@ router.post("/donate", async (req, res) => {
         res.send(err);
       } else {
         res.send(result);
-        console.log("User Donation Record Updated");
+        console.log("User Donation Record Updated================");
       }
     }
   );

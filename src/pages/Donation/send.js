@@ -54,6 +54,7 @@ class Send extends Component {
     const accounts = await web3.eth.getAccounts();
     this.setState({ account: accounts[0] });
     const XYZAddress = "0x8b0070828f11247Ed1f479927df558a199342239"; // Replace DAI Address Here
+    // const ETH_address = "0x2170ed0880ac9a755fd29b2688956bd959f933f8";
     const daiTokenMock = new web3.eth.Contract(XYZ.abi, XYZAddress);
 
     this.setState({ daiTokenMock: daiTokenMock });
@@ -76,10 +77,10 @@ class Send extends Component {
       .transfer(recipient, amount)
       .send({ from: this.state.account })
       .on("transactionHash", () => {
-        console.log("donate", recipient, this.amountRef.value);
+        console.log("make-a-donation", recipient, this.amountRef.value);
         if (this.props.isDonation) {
           axios
-            .post("http://localhost:4000/app/donate", {
+            .post("http://localhost:4000/app/make-a-donation", {
               receiver: recipient,
               amount: this.amountRef.value,
               frequency: "Once",
@@ -97,7 +98,7 @@ class Send extends Component {
       this.setState({
         helperText: "",
         error: false,
-        amountUSD: event.target.value * 3583, // 1 ETH = 3583 USD
+        amountUSD: event.target.value * 0.25, // 1 ETH = 0.25 USD
       });
     } else {
       this.setState({ helperText: "Invalid format", error: true });
@@ -122,7 +123,6 @@ class Send extends Component {
       >
         <div className="form-group mr-sm-2">
           <Grid warp="nowrap">
-            <Typography>ETH</Typography>
             <TextField
               variant="outlined"
               helperText={this.state.helperText}
@@ -130,11 +130,11 @@ class Send extends Component {
               error={this.state.error}
               required
               id="amount"
-              label="Amount (ETH)"
+              label="Amount (XYZ Token)"
               inputRef={(element) => (this.amountRef = element)}
-              style={{ width: 100 }}
+              style={{ width: 150 }}
             />
-            <Typography>= {amountUSD} USD</Typography>
+            XYZ Token = {amountUSD} USD
           </Grid>
           <Typography>Send to vendor: {this.state.vendor_name}</Typography>
         </div>
