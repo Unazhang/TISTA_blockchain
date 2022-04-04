@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 // import ReactDOM from "react-dom";
 import { BrowserRouter as Switch, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
@@ -22,11 +22,7 @@ import { useAuth } from "./contexts/AuthContext";
 
 function App() {
   const { role } = useAuth();
-  // const role = "vendor";
-
-  // useEffect(()=>{
-  //   console.log("role changed", role);
-  // }, [role]);
+  console.log(role);
 
   return (
     <div>
@@ -37,7 +33,7 @@ function App() {
           <Route path="/onboard" component={Onboard} />
           <PrivateRoute>
             <MainLayout>
-              {role === "vendor" && (
+              {role === "Vendor" && (
                 <Vendor>
                   <Route exact path="/" component={HomePage} />
                   <Route exact path="/faq" component={FAQ} />
@@ -47,7 +43,7 @@ function App() {
                   <Route exact path="/profile" component={Profile} />
                 </Vendor>
               )}
-              {role === "requester" && (
+              {role === "Requester" && (
                 <Requester>
                   <Route exact path="/" component={HomePage} />
                   <Route exact path="/faq" component={FAQ} />
@@ -57,7 +53,7 @@ function App() {
                   <Route exact path="/profile" component={Profile} />
                 </Requester>
               )}
-              {role === "donor" && (
+              {role === "Donor" && (
                 <Donor>
                   <Route exact path="/" component={HomePage} />
                   <Route exact path="/faq" component={FAQ} />

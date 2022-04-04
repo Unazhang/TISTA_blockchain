@@ -14,7 +14,7 @@ const userTemplate = new mongoose.Schema({
     donateTo: [String], // this is a series of uids
     role: {
         type: String,
-        default: "donor"
+        default: "Donor"
     }
 })
 

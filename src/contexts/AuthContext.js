@@ -13,7 +13,7 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [role, setRole] = useState("vendor");
 
-  async function signup(email, password) {
+  async function signup(email, password, roleSelected) {
     const userCredential = await auth.createUserWithEmailAndPassword(
       email,
       password
@@ -22,11 +22,13 @@ export function AuthProvider({ children }) {
 
     if (user) {
       // enter user data to database
+      console.log(roleSelected);
       try {
         const response = await axios.post("http://localhost:4000/app/signup", {
           displayName: user.displayName,
           uid: user.uid,
           email: user.email,
+          role: roleSelected
         });
 
         updateRole(response.data.data.role);
@@ -90,9 +92,9 @@ export function AuthProvider({ children }) {
   }, []);
 
   // catch role change for debugging
-  // useEffect(() => {
-  //   console.log(role);
-  // }, [role]);
+  useEffect(() => {
+    console.log(role);
+  }, [role]);
 
   const value = {
     currentUser,
