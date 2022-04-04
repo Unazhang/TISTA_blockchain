@@ -13,7 +13,20 @@ import { Component } from "react";
 import XYZ from "../Balance/abis/XYZ.json";
 import { Table } from "@material-ui/core";
 
-class DonattionFlowHistory extends Component {
+class DonationFlowHistory extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      account: "",
+      daiTokenMock: null,
+      balance: 0,
+      transactions: [],
+      seen: false,
+    };
+
+    this.transfer = this.transfer.bind(this);
+  }
+
   async componentWillMount() {
     await this.loadWeb3();
     await this.loadBlockchainData();
@@ -58,18 +71,6 @@ class DonattionFlowHistory extends Component {
       .send({ from: this.state.account });
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      account: "",
-      daiTokenMock: null,
-      balance: 0,
-      transactions: [],
-      seen: false,
-    };
-
-    this.transfer = this.transfer.bind(this);
-  }
   render() {
     return (
       <Table aria-label="simple table">
@@ -103,4 +104,4 @@ class DonattionFlowHistory extends Component {
   }
 }
 
-export default DonattionFlowHistory;
+export default DonationFlowHistory;

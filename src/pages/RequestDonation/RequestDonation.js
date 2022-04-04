@@ -138,7 +138,7 @@ export default function RequestDonationForm(props) {
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Target Amount (ETH)</Form.Label>
+            <Form.Label>Target Amount (XYZ Token)</Form.Label>
             <Form.Control
               type="number"
               name="target_amount"
