@@ -22,7 +22,7 @@ import { useAuth } from "./contexts/AuthContext";
 
 function App() {
   const { role } = useAuth();
-  console.log(role);
+  // console.log(role);
 
   return (
     <div>

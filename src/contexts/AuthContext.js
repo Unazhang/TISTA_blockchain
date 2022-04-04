@@ -20,13 +20,12 @@ export function AuthProvider({ children }) {
       const userCredential = await auth.createUserWithEmailAndPassword(
         email,
         password
-        );
+      );
       user = userCredential.user;
     } catch (err) {
       console.log(err);
     }
     console.log("after signup");
-    
 
     if (user) {
       // enter user data to database
@@ -36,10 +35,10 @@ export function AuthProvider({ children }) {
           displayName: user.displayName,
           uid: user.uid,
           email: user.email,
-          role: roleSelected
+          role: roleSelected,
         });
 
-        updateRole(response.data.data.role);
+        setRole(response.data.data.role);
       } catch (err) {
         console.log(err);
       }
@@ -47,27 +46,10 @@ export function AuthProvider({ children }) {
     return user;
   }
 
-  async function login(email, password) {
-    const userCredential = await auth.signInWithEmailAndPassword(
-      email,
-      password
-    );
-    const user = userCredential.user;
-
-    if (user) {
-      try {
-        const response = await axios.post("http://localhost:4000/app/role", {
-          uid: user.uid,
-        });
-        const currentRole = response.data;
-
-        updateRole(currentRole);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-
-    return user;
+  function login(email, password) {
+    return auth.signInWithEmailAndPassword(email, password).catch((error) => {
+      console.log(error);
+    });
   }
 
   function logout() {
@@ -86,19 +68,39 @@ export function AuthProvider({ children }) {
     return currentUser.updatePassword(password);
   }
 
-  function updateRole(role) {
-    setRole(role);
-    // console.log(role);
+  async function updateRole(user) {
+    // setRole(role);
+    if (user) {
+      try {
+        const response = await axios.post("http://localhost:4000/app/role", {
+          uid: user.uid,
+        });
+        const currentRole = response.data;
+
+        // console.log(currentRole);
+        setRole(currentRole);
+      } catch (err) {
+        console.log(err);
+      }
+    }
   }
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
       setLoading(false);
+      if (user != null) {
+        updateRole(user);
+      }
     });
     return unsubscribe;
   }, []);
 
+  // useEffect(()=> {
+  //   if (currentUser) {
+  //     updateRole();
+  //   }
+  // }, [currentUser])
   // catch role change for debugging
   // useEffect(() => {
   //   console.log(role);
