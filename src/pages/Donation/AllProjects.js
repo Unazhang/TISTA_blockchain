@@ -236,7 +236,7 @@ export default function AllProjects() {
               address={events[i].blockchainAddress}
               content={events[i].description}
               request_id={events[i]._id}
-              blockchain_address={events[i].address}
+              blockchainAddress={events[i].address}
               current_amount={events[i].current_amount}
               target_amount={events[i].target_amount}
               requester_name={events[i].requester_name}

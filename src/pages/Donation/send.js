@@ -12,6 +12,8 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { donationStore } from "./DonationStore";
 import { Typography, Grid } from "@material-ui/core";
+import { Route, Redirect } from "react-router";
+import CommunityPage from "./CommunityPage";
 
 class Send extends Component {
   constructor(props) {
@@ -23,9 +25,10 @@ class Send extends Component {
       transactions: [],
       helperText: "",
       vendor_name: props.vendor_name,
-      blockchain_address: props.blockchain_address,
+      blockchainAddress: props.blockchainAddress,
       amoutUSD: 0,
       donor_name: "Anonymous",
+      isUpdated: false,
     };
 
     console.log("props inside Send.js", props);
@@ -87,7 +90,12 @@ class Send extends Component {
               amount: this.amountRef.value,
               donor_name: this.state.donor_name,
             })
-            .then(() => (donationStore.isUpdate = true));
+            .then(() => (donationStore.isUpdate = true))
+            .then(() =>
+              this.setState({
+                isUpdated: true,
+              })
+            );
         }
       });
   }
@@ -118,51 +126,56 @@ class Send extends Component {
     }
   }
 
+  handleSubmit(event) {
+    event.preventDefault();
+    const recipient = this.state.blockchainAddress;
+    const amount = window.web3.utils.toWei(this.amountRef.value, "Ether");
+    this.transfer(recipient, amount);
+  }
+
   render() {
     let amountUSD = this.state.amountUSD;
+    let isUpdated = this.state.isUpdated;
 
-    return (
-      <Form
-        onSubmit={(event) => {
-          // event.preventDefault();
-          const recipient = this.state.blockchain_address;
-          const amount = window.web3.utils.toWei(this.amountRef.value, "Ether");
-          this.transfer(recipient, amount);
-        }}
-      >
-        <div className="form-group mr-sm-2">
-          <Grid warp="nowrap">
+    if (isUpdated) {
+      return <Redirect to="/donation" />;
+    } else {
+      return (
+        <Form onSubmit={this.handleSubmit.bind(this)}>
+          <div className="form-group mr-sm-2">
+            <Grid warp="nowrap">
+              <TextField
+                variant="outlined"
+                helperText={this.state.helperText}
+                onChange={this.onChange.bind(this)}
+                error={this.state.error}
+                required
+                id="amount"
+                label="Amount (XYZ Token)"
+                inputRef={(element) => (this.amountRef = element)}
+                style={{ width: 150 }}
+              />
+              XYZ Token = {amountUSD} USD
+            </Grid>
             <TextField
               variant="outlined"
               helperText={this.state.helperText}
-              onChange={this.onChange.bind(this)}
+              onChange={this.handleNameChange.bind(this)}
               error={this.state.error}
               required
-              id="amount"
-              label="Amount (XYZ Token)"
-              inputRef={(element) => (this.amountRef = element)}
-              style={{ width: 150 }}
+              id="donor_name"
+              label="Your Name:"
+              placeholder="Anonymous"
+              style={{ width: 200 }}
             />
-            XYZ Token = {amountUSD} USD
-          </Grid>
-          <TextField
-            variant="outlined"
-            helperText={this.state.helperText}
-            onChange={this.handleNameChange.bind(this)}
-            error={this.state.error}
-            required
-            id="donor_name"
-            label="Your Name:"
-            placeholder="Anonymous"
-            style={{ width: 200 }}
-          />
-          <Typography>Send to vendor: {this.state.vendor_name}</Typography>
-        </div>
-        <Button variant="contained" color="primary" type="submit">
-          Send
-        </Button>
-      </Form>
-    );
+            <Typography>Send to vendor: {this.state.vendor_name}</Typography>
+          </div>
+          <Button variant="contained" color="primary" type="submit">
+            Send
+          </Button>
+        </Form>
+      );
+    }
   }
 }
 

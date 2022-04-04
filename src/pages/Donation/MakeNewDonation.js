@@ -34,7 +34,7 @@ export default function MakeNewDonation() {
   // params to pass to send donation form
   let props = {
     isDonation: true,
-    blockchain_address: data.blockchain_address,
+    blockchainAddress: data.blockchainAddress,
     vendor_name: data.vendor_name,
 
     donation_history: data.donation_history,
@@ -101,7 +101,7 @@ export default function MakeNewDonation() {
               <Typography>{data.description}</Typography>
               <Typography variant="h6">Third Party Vendor</Typography>
               <Typography>
-                Blockchain Address: {data.blockchain_address}
+                Blockchain Address: {data.blockchainAddress}
               </Typography>
               <Typography variant="h6">Progress</Typography>
               <Typography>Goal: {data.target_amount} XYZ Token</Typography>

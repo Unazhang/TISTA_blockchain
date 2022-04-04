@@ -35,7 +35,7 @@ export default function DonationPopOver(props) {
     console.log("inside donate", props);
     const data = {
       request_id: props.request_id,
-      blockchain_address: props.address,
+      blockchainAddress: props.address,
       current_amount: props.current_amount,
       target_amount: props.target_amount,
       requester_name: props.requester_name,
