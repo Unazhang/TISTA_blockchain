@@ -39,7 +39,7 @@ const requestTemplate = new mongoose.Schema({
   },
   blockchainAddress: {
     type: String,
-    default: "0xb68c9015543802b72D0DF7fe14B5714200e17520", // test
+    default: "0xd8128c10Cc383797E875DBA2cD3405f07F83d26C", // test - vendor 1
   },
 
   date: {

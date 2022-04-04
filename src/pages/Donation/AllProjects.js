@@ -240,6 +240,7 @@ export default function AllProjects() {
               req_title={events[i].title}
               description={events[i].description}
               donation_history={events[i].donation_history}
+              vendor_name={events[i].vendor_name}
             />
           </CardActions>
         </Card>

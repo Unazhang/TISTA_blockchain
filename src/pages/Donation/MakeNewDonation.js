@@ -15,21 +15,20 @@ export default function MakeNewDonation() {
 
   // const address = props;
   const location = useLocation();
-  console.log("obj", location.state);
   const data = location.state;
-  console.log("data", data, data.req_title);
-  const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-  }));
+
+  // params to pass to send donation form
+  let props = {
+    isDonation: true,
+    blockchain_address: data.blockchain_address,
+    vendor_name: data.vendor_name,
+  };
+
   return (
     <div>
       <Box sx={{ width: "100%" }}>
         <Grid container spacing={2} alignItems="flex-end" wrap="nowrap">
-          <Grid item xs={20}>
+          <Grid item xs={15}>
             <Card>
               <CardHeader title={data.req_title} />
               <Typography>
@@ -48,27 +47,14 @@ export default function MakeNewDonation() {
               <Typography>{data.donation_history}</Typography>
             </Card>
           </Grid>
-          <Grid item xs={8}>
-            <Card>
-              <Send isDonation />
+          <Grid item xs={10}>
+            <Card style={{ backgroundColor: "#e3f2fd" }}>
+              <CardHeader title="Donate" />
+              <Send {...props} />
             </Card>
           </Grid>
         </Grid>
       </Box>
-      {/* <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid item xs={6}>
-          <Item>1</Item>
-        </Grid>
-        <Grid item xs={6}>
-          <Item>2</Item>
-        </Grid>
-        <Grid item xs={6}>
-          <Item>3</Item>
-        </Grid>
-        <Grid item xs={6}>
-          <Item>4</Item>
-        </Grid>
-      </Grid> */}
     </div>
   );
 }
