@@ -188,11 +188,17 @@ router.get("/addresses", async (req, res) => {
 });
 
 router.post("/role", async (req, res) => {
+  // console.log("query role");
+  // users.find({ uid: req.body.uid })
   users.findOne({ uid: req.body.uid }, function(err, result) {
     if (err) {
       res.send(err);
     } else {
-      res.send(result.role);
+      if (result) {
+        res.send(result.role);
+      } else {
+        res.send("No user found.");
+      }
     }
   });
 });

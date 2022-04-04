@@ -11,10 +11,10 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
-  const [role, setRole] = useState("Vendor");
+  const [role, setRole] = useState();
 
   async function signup(email, password, roleSelected) {
-    console.log("in signup");
+    // console.log("in signup");
     let user = null;
     try {
       const userCredential = await auth.createUserWithEmailAndPassword(
@@ -25,11 +25,12 @@ export function AuthProvider({ children }) {
     } catch (err) {
       console.log(err);
     }
-    console.log("after signup");
+    // console.log("after signup");
 
     if (user) {
+      // console.log(user);
       // enter user data to database
-      console.log(roleSelected);
+      // console.log(roleSelected);
       try {
         const response = await axios.post("http://localhost:4000/app/signup", {
           displayName: user.displayName,
@@ -37,7 +38,7 @@ export function AuthProvider({ children }) {
           email: user.email,
           role: roleSelected,
         });
-
+        // console.log(response);
         setRole(response.data.data.role);
       } catch (err) {
         console.log(err);
