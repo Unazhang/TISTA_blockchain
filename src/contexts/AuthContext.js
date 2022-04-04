@@ -11,14 +11,22 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
-  const [role, setRole] = useState("vendor");
+  const [role, setRole] = useState("Vendor");
 
   async function signup(email, password, roleSelected) {
-    const userCredential = await auth.createUserWithEmailAndPassword(
-      email,
-      password
-    );
-    const user = userCredential.user;
+    console.log("in signup");
+    let user = null;
+    try {
+      const userCredential = await auth.createUserWithEmailAndPassword(
+        email,
+        password
+        );
+      user = userCredential.user;
+    } catch (err) {
+      console.log(err);
+    }
+    console.log("after signup");
+    
 
     if (user) {
       // enter user data to database
