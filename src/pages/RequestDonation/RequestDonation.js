@@ -19,8 +19,8 @@ export default function RequestDonationForm(props) {
   const [title, setTitle] = useState("");
   const [description, setDesc] = useState("");
   const [target_amount, setAmount] = useState(0);
-  // requestor and vendor info
-  const [requestor_name, setReqName] = useState("");
+  // requester and vendor info
+  const [requester_name, setReqName] = useState("");
   const [vendor_name, setVendorName] = useState("");
   const [vendor_email, setVendorEmail] = useState("");
 
@@ -34,7 +34,7 @@ export default function RequestDonationForm(props) {
     sendEmailToVendor(e);
     let data = {
       user_email: user_email,
-      requestor_name: requestor_name,
+      requester_name: requester_name,
       country: country,
       category: category,
       title: title,
@@ -138,7 +138,7 @@ export default function RequestDonationForm(props) {
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label>Target Amount (in XYZ token)</Form.Label>
+            <Form.Label>Target Amount (ETH)</Form.Label>
             <Form.Control
               type="number"
               name="target_amount"
@@ -149,7 +149,7 @@ export default function RequestDonationForm(props) {
             <Form.Label>What's your name?</Form.Label>
             <Form.Control
               type="text"
-              name="requestor_name"
+              name="requester_name"
               onChange={(e) => setReqName(e.target.value)}
             />
           </Form.Group>

@@ -11,8 +11,26 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { donationStore } from "./DonationStore";
+import { Typography, Grid } from "@material-ui/core";
 
 class Send extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      account: "",
+      daiTokenMock: null,
+      balance: 0,
+      transactions: [],
+      helperText: "",
+      vendor_name: props.vendor_name,
+      blockchain_address: props.blockchain_address,
+      amoutUSD: 0,
+    };
+
+    console.log("props inside Send.js", props);
+    this.transfer = this.transfer.bind(this);
+  }
+
   async componentWillMount() {
     await this.loadWeb3();
     await this.loadBlockchainData();
@@ -73,76 +91,54 @@ class Send extends Component {
       });
   }
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      account: "",
-      daiTokenMock: null,
-      balance: 0,
-      transactions: [],
-      helperText: "",
-    };
-
-    this.transfer = this.transfer.bind(this);
-  }
   onChange(event) {
     if (event.target.value.length > 0) {
-      this.setState({ helperText: "", error: false });
+      console.log(event.target.value);
+      this.setState({
+        helperText: "",
+        error: false,
+        amountUSD: event.target.value * 3583, // 1 ETH = 3583 USD
+      });
     } else {
       this.setState({ helperText: "Invalid format", error: true });
     }
   }
+
+  handlePreview = () => {
+    console.log("inside handlePreview", this.state.amoutUSD);
+  };
+
   render() {
+    let amountUSD = this.state.amountUSD;
+
     return (
       <Form
         onSubmit={(event) => {
           event.preventDefault();
-          const recipient = this.recipientRef.value;
+          const recipient = this.state.blockchain_address;
           const amount = window.web3.utils.toWei(this.amountRef.value, "Ether");
           this.transfer(recipient, amount);
         }}
       >
         <div className="form-group mr-sm-2">
-          <TextField
-            variant="outlined"
-            helperText={this.state.helperText}
-            onChange={this.onChange.bind(this)}
-            error={this.state.error}
-            required
-            id="recipient"
-            label="Recipient Address"
-            inputRef={(element) => (this.recipientRef = element)}
-          />
-          <TextField
-            variant="outlined"
-            helperText={this.state.helperText}
-            onChange={this.onChange.bind(this)}
-            error={this.state.error}
-            required
-            id="amount"
-            label="Amount"
-            inputRef={(element) => (this.amountRef = element)}
-          />
-          <ButtonGroup
-            color="primary"
-            aria-label="outlined primary button group"
-          >
-            <Button>One Time Transfer</Button>
-            <Button>Weekly</Button>
-            <Button>Monthly</Button>
-          </ButtonGroup>
-          <FormControl variant="outlined">
-            <InputLabel id="demo-simple-select-label">
-              Pay With Account
-            </InputLabel>
-            <Select>
-              <MenuItem value={10}>Account1</MenuItem>
-              <MenuItem value={20}>Account2</MenuItem>
-              <MenuItem value={30}>Account3</MenuItem>
-            </Select>
-          </FormControl>
+          <Grid warp="nowrap">
+            <Typography>ETH</Typography>
+            <TextField
+              variant="outlined"
+              helperText={this.state.helperText}
+              onChange={this.onChange.bind(this)}
+              error={this.state.error}
+              required
+              id="amount"
+              label="Amount (ETH)"
+              inputRef={(element) => (this.amountRef = element)}
+              style={{ width: 100 }}
+            />
+            <Typography>= {amountUSD} USD</Typography>
+          </Grid>
+          <Typography>Send to vendor: {this.state.vendor_name}</Typography>
         </div>
-        <Button variant="contained" type="submit">
+        <Button variant="contained" color="primary" type="submit">
           Send
         </Button>
       </Form>

@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Popover from "@material-ui/core/Popover";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
+import { Link, useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   typography: {
@@ -27,8 +28,27 @@ export default function DonationPopOver(props) {
   const id = open ? "simple-popover" : undefined;
 
   // handle donate button
+  const history = useHistory();
+
   const handleClickDonate = (props) => {
+    const request_id = props.request_id;
     console.log("inside donate", props);
+    const data = {
+      request_id: props.request_id,
+      blockchain_address: props.address,
+      current_amount: props.current_amount,
+      target_amount: props.target_amount,
+      requester_name: props.requester_name,
+      req_title: props.req_title,
+      description: props.description,
+      donation_history: props.donation_history,
+      vendor_name: props.vendor_name,
+    };
+    console.log(data);
+    history.push({
+      pathname: "/make-a-donation",
+      state: data,
+    });
   };
 
   return (
@@ -68,8 +88,8 @@ export default function DonationPopOver(props) {
         aria-describedby={id}
         variant="contained"
         color="primary"
-        onClick={(props) => {
-          handleClickDonate(props.address);
+        onClick={() => {
+          handleClickDonate(props);
         }}
       >
         Donate

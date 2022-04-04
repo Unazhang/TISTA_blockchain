@@ -58,29 +58,7 @@ export default function CommunityPage() {
   return (
     <>
       <div className="donationMain">
-        <div className="donationBlock">
-          <AllProjects />
-        </div>
-        {/* <div className="donationBlock" style={{ marginTop: "2%" }}>
-          <div>
-            <Controls.Button
-              text="Donate222"
-              variant="contained"
-              style={{ backgroundColor: "#194db0", fontSize: "1.5vw" }}
-              className={classes.newButton}
-              onClick={() => {
-                setOpenDonate(true);
-              }}
-            />
-          </div>
-        </div>
-        <Popup
-          title="New Donation"
-          open={openPopup}
-          handleClose={setOpenDonate}
-        >
-          <Send isDonation />
-        </Popup> */}
+        <AllProjects />
       </div>
     </>
   );

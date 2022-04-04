@@ -39,6 +39,7 @@ import DonationAccordion from "./DonationAccordion";
 import "./Donation.css";
 import DonationPopOver from "./DonationPopOver";
 import Popover from "@material-ui/core/Popover";
+import Modal from "@mui/material/Modal";
 
 const Data = [
   { name: "Help Kids" },
@@ -166,6 +167,7 @@ export default function AllProjects() {
     fetchDonations();
     fetchDonatedAddress();
   }, [null]);
+
   for (let i = 0; i < events.length; i++) {
     arr.push(
       <Grid item xs={12} sm={6}>
@@ -211,6 +213,15 @@ export default function AllProjects() {
             >
               {events[i].description}
             </Typography>
+            {/* test _id */}
+            <Typography
+              noWrap
+              variant="body2"
+              color="textSecondary"
+              component="p"
+            >
+              {events[i]._id}
+            </Typography>
           </CardContent>
           <CardActions>
             <DonationPopOver
@@ -221,13 +232,38 @@ export default function AllProjects() {
               }
               address={events[i].blockchainAddress}
               content={events[i].description}
+              request_id={events[i]._id}
+              blockchain_address={events[i].address}
+              current_amount={events[i].current_amount}
+              target_amount={events[i].target_amount}
+              requester_name={events[i].requester_name}
+              req_title={events[i].title}
+              description={events[i].description}
+              donation_history={events[i].donation_history}
+              vendor_name={events[i].vendor_name}
             />
           </CardActions>
         </Card>
-        <Button>Testttt</Button>
       </Grid>
     );
   }
+
+  // const [openDonate, setOpenDonate] = React.useState(false);
+
+  // useEffect(() => {
+  //   setOpenDonate(true);
+  // }, [openDonate]);
+
+  // const handleOpenDonate = (props) => {
+  //   console.log(props);
+  //   console.log("openDate status", openDonate);
+  //   setOpenDonate(true);
+  //   console.log("openDate status2", openDonate);
+  // };
+
+  // const handleCloseDonate = () => {
+  //   setOpenDonate(false);
+  // };
 
   const handleSearch = (e) => {
     const keyword = e.target.value;

@@ -12,12 +12,12 @@ import Profile from "./pages/Profile/Profile";
 import Onboard from "./pages/Onboard";
 import "bootstrap/dist/css/bootstrap.min.css";
 import PrivateRoute from "./pages/PrivateRoute";
-import HomePage from "./pages/Home/Homepage"
+import HomePage from "./pages/Home/Homepage";
 
 import Vendor from "./pages/Roles/Vendor";
 import Requester from "./pages/Roles/Requester";
 import Donor from "./pages/Roles/Donor";
-
+import MakeNewDonation from "./pages/Donation/MakeNewDonation";
 import { useAuth } from "./contexts/AuthContext";
 
 function App() {
@@ -26,7 +26,7 @@ function App() {
 
   return (
     <div>
-      <div className="w-100" style={{ maxWidth: "400px" }}>
+      <div width="100%">
         <Switch>
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
@@ -61,6 +61,11 @@ function App() {
                   <Route exact path="/request" component={RequestDonation} />
                   <Route path="/donation" component={CommunityPage} />
                   <Route exact path="/profile" component={Profile} />
+                  <Route
+                    exact
+                    path="/make-a-donation"
+                    component={MakeNewDonation}
+                  />
                 </Donor>
               )}
             </MainLayout>

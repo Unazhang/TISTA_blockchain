@@ -78,7 +78,6 @@ router.post("/signup", async (req, res) => {
     });
 });
 
-
 //TODO change according to new user schema
 router.post("/donate", async (req, res) => {
   requesttable.findOneAndUpdate(
@@ -134,7 +133,7 @@ router.post("/request", async (req, res) => {
   console.log("inside /request", req.body);
   const request = new requestTemplateCopy({
     user_email: req.body.user_email,
-    requestor_name: req.body.requestor_name,
+    requester_name: req.body.requester_name,
     country: req.body.country,
     category: req.body.category,
     title: req.body.title,
