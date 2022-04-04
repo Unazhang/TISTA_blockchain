@@ -92,9 +92,9 @@ export function AuthProvider({ children }) {
   }, []);
 
   // catch role change for debugging
-  useEffect(() => {
-    console.log(role);
-  }, [role]);
+  // useEffect(() => {
+  //   console.log(role);
+  // }, [role]);
 
   const value = {
     currentUser,
