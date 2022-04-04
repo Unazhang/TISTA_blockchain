@@ -60,6 +60,7 @@ router.post("/signup", async (req, res) => {
     uid: req.body.uid,
     email: req.body.email,
     blockchainAddress: req.body.blockchainAddress,
+    role: req.body.role
   });
 
   signedUpUser

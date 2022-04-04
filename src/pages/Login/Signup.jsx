@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Form, Button, Card, Alert } from "react-bootstrap";
+import { Form, Button, Card, Alert, ButtonGroup } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 
@@ -11,6 +11,7 @@ export default function SignUp() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
+  const [role, setRole] = useState();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -24,13 +25,20 @@ export default function SignUp() {
     try {
       setError("");
       setLoading(true);
-      await signup(emailRef.current.value, passwordRef.current.value)
+      console.log(role);
+      await signup(emailRef.current.value, passwordRef.current.value, role);
       history.push("/");
     } catch {
       setError("Failed to create an account");
     }
 
     setLoading(false);
+  }
+
+  //TODO add requirement for role selection
+  const handleClick = (e) => {
+    console.log(e.target.id);
+    setRole(e.target.id);
   }
 
   return (
@@ -62,6 +70,11 @@ export default function SignUp() {
                 required
               ></Form.Control>
             </Form.Group>
+            <ButtonGroup id="rolebuttons" className="form-group d-flex justify-content-between">
+              <Button className="mr-1" type="button" id="Donor" onClick={handleClick}>Donor</Button>
+              <Button className="mx-2" type="button" id="Requester" onClick={handleClick}>Requester</Button>
+              <Button className="ml-1" type="button" id="Vendor" onClick={handleClick}>Vendor</Button>
+            </ButtonGroup>
             <Button disabled={loading} className="w-100" type="submit">
               Sign Up
             </Button>

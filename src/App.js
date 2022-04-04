@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 // import ReactDOM from "react-dom";
 import { BrowserRouter as Switch, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import { FAQ } from "./pages";
-import ShowBalance from "./pages/Balance/components/ShowBalance";
+// import ShowBalance from "./pages/Balance/components/ShowBalance";
 import RequestDonation from "./pages/RequestDonation/RequestDonation";
 import CommunityPage from "./pages/Donation/CommunityPage";
 import Login from "./pages/Login/Login";
@@ -19,25 +19,10 @@ import Requester from "./pages/Roles/Requester";
 import Donor from "./pages/Roles/Donor";
 import MakeNewDonation from "./pages/Donation/MakeNewDonation";
 import { useAuth } from "./contexts/AuthContext";
-import axios from "axios";
 
 function App() {
-  const [role, setRole] = useState("vendor");
-  const { currentUser } = useAuth();
-
-  const getRole = async () => {
-    await axios
-      .post("http://localhost:4000/app/role", {
-        uid: currentUser.uid,
-      })
-      .then((response) => {
-        setRole(response.data);
-      });
-  };
-
-  if (currentUser) {
-    getRole();
-  }
+  const { role } = useAuth();
+  console.log(role);
 
   return (
     <div>
@@ -48,7 +33,7 @@ function App() {
           <Route path="/onboard" component={Onboard} />
           <PrivateRoute>
             <MainLayout>
-              {role === "vendor" && (
+              {role === "Vendor" && (
                 <Vendor>
                   <Route exact path="/" component={HomePage} />
                   <Route exact path="/faq" component={FAQ} />
@@ -58,7 +43,7 @@ function App() {
                   <Route exact path="/profile" component={Profile} />
                 </Vendor>
               )}
-              {role === "requester" && (
+              {role === "Requester" && (
                 <Requester>
                   <Route exact path="/" component={HomePage} />
                   <Route exact path="/faq" component={FAQ} />
@@ -68,7 +53,7 @@ function App() {
                   <Route exact path="/profile" component={Profile} />
                 </Requester>
               )}
-              {role === "donor" && (
+              {role === "Donor" && (
                 <Donor>
                   <Route exact path="/" component={HomePage} />
                   <Route exact path="/faq" component={FAQ} />
