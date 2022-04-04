@@ -36,7 +36,7 @@ export default function MakeNewDonation() {
     isDonation: true,
     blockchainAddress: data.blockchainAddress,
     vendor_name: data.vendor_name,
-
+    request_id: data.request_id,
     donation_history: data.donation_history,
   };
 

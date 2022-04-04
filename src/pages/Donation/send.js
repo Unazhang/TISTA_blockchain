@@ -26,6 +26,7 @@ class Send extends Component {
       helperText: "",
       vendor_name: props.vendor_name,
       blockchainAddress: props.blockchainAddress,
+      request_id: props.request_id,
       amoutUSD: 0,
       donor_name: "Anonymous",
       isUpdated: false,
@@ -89,6 +90,7 @@ class Send extends Component {
               receiver: recipient,
               amount: this.amountRef.value,
               donor_name: this.state.donor_name,
+              request_id: this.state.request_id,
             })
             .then(() => (donationStore.isUpdate = true))
             .then(() =>

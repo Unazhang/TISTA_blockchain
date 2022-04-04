@@ -83,10 +83,8 @@ router.post("/signup", async (req, res) => {
 //TODO change according to new user schema
 router.post("/make-a-donation", async (req, res) => {
   console.log("inside make-a-donation", req.body);
-  // const donated_on = Date.now;
-  const str = req.body.donor_name + "," + req.body.amount;
   requesttable.findOneAndUpdate(
-    { blockchainAddress: req.body.receiver },
+    { _id: req.body.request_id },
     { $inc: { current_amount: req.body.amount } },
     { overwrite: true },
     function(err, result) {
@@ -98,7 +96,7 @@ router.post("/make-a-donation", async (req, res) => {
     }
   );
   requesttable.findOneAndUpdate(
-    { blockchainAddress: req.body.receiver },
+    { _id: req.body.request_id },
     {
       $push: {
         donation_history: {
