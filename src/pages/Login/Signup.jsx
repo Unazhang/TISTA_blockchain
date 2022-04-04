@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Form, Button, Card, Alert } from "react-bootstrap";
+import { Form, Button, Card, Alert, ButtonGroup } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 
@@ -62,6 +62,11 @@ export default function SignUp() {
                 required
               ></Form.Control>
             </Form.Group>
+            <ButtonGroup id="rolebuttons" className="form-group d-flex justify-content-between">
+              <Button className="col-auto">Donor</Button>
+              <Button className="col-auto">Requester</Button>
+              <Button className="col-auto">Vendor</Button>
+            </ButtonGroup>
             <Button disabled={loading} className="w-100" type="submit">
               Sign Up
             </Button>
