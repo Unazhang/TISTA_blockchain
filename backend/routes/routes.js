@@ -102,7 +102,8 @@ router.post("/make-a-donation", async (req, res) => {
     {
       $push: {
         donation_history: {
-          donor_name: req.body.donor_name,
+          donor_name:
+            req.body.donor_name == "" ? "Anonymous" : req.body.donor_name,
           donated_amount: req.body.amount,
         },
       },

@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { useLocation } from "react-router-dom";
-import { Card, Button, Grid } from "@material-ui/core";
+import { Card, Button, Grid, TableContainer } from "@material-ui/core";
 import { CardHeader } from "@mui/material";
 import { Typography } from "@material-ui/core";
 import Send from "./send.js";
@@ -17,6 +17,11 @@ import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import MuiAccordion from "@mui/material/Accordion";
 import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
 
 export default function MakeNewDonation() {
   // post axios
@@ -57,16 +62,36 @@ export default function MakeNewDonation() {
   const id = open ? "simple-popover" : undefined;
 
   // display donation history
-  let arr = [];
+  function createData(id, donated_on, donor_name, donated_amount, amount_usd) {
+    return {
+      id,
+      donated_on,
+      donor_name,
+      donated_amount,
+      amount_usd,
+    };
+  }
+
+  let rows = [];
   for (let i = 0; i < props.donation_history.length; i++) {
-    arr.push(<div>{props.donation_history[i].donor_name}</div>);
+    // arr.push(<div>{props.donation_history[i].donor_name}</div>);
+    const amount_usd = props.donation_history[i].donated_amount * 0.25;
+    rows.push(
+      createData(
+        i,
+        props.donation_history[i].donated_on,
+        props.donation_history[i].donor_name,
+        props.donation_history[i].donated_amount,
+        amount_usd
+      )
+    );
   }
 
   return (
     <div>
       <Box sx={{ width: "100%" }}>
         <Grid container spacing={2} alignItems="flex-end" wrap="nowrap">
-          <Grid item xs={15}>
+          <Grid item md={8}>
             <Card>
               <CardHeader title={data.req_title} />
               <Typography>
@@ -83,11 +108,43 @@ export default function MakeNewDonation() {
               <Typography>
                 Amount Raised: {data.current_amount} XYZ Token
               </Typography>
-              <Typography variant="h6">Donation History</Typography>
-              <Card>{arr}</Card>
+            </Card>
+            <Card>
+              <CardHeader title="Donation History" />
+              <TableContainer component={Paper}>
+                <Table md={8} aira-label="Donation History">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Donated On</TableCell>
+                      <TableCell>Donor</TableCell>
+                      <TableCell>Amount Donated (XYZ Token)</TableCell>
+                      <TableCell>In USD</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {rows.map((row) => (
+                      <TableRow
+                        key={row.i}
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell component="th" scope="row">
+                          {row.donated_on}
+                        </TableCell>
+                        <TableCell align="right">{row.donor_name}</TableCell>
+                        <TableCell align="right">
+                          {row.donated_amount}
+                        </TableCell>
+                        <TableCell align="right">{row.amount_usd}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
             </Card>
           </Grid>
-          <Grid item xs={10}>
+          <Grid item md={8}>
             <div>
               <Button
                 aria-describedby={id}

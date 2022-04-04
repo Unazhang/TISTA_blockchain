@@ -124,7 +124,7 @@ class Send extends Component {
     return (
       <Form
         onSubmit={(event) => {
-          event.preventDefault();
+          // event.preventDefault();
           const recipient = this.state.blockchain_address;
           const amount = window.web3.utils.toWei(this.amountRef.value, "Ether");
           this.transfer(recipient, amount);

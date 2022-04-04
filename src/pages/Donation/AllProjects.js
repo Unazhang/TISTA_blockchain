@@ -195,7 +195,8 @@ export default function AllProjects() {
               color="textSecondary"
               component="p"
             >
-              {events[i].current_amount} raised of {events[i].target_amount}
+              {events[i].current_amount} raised of {events[i].target_amount} XYZ
+              Token
             </Typography>
             <Typography
               noWrap
@@ -211,6 +212,8 @@ export default function AllProjects() {
               color="textSecondary"
               component="p"
             >
+              {" "}
+              Description:
               {events[i].description}
             </Typography>
             {/* test _id */}
