@@ -19,6 +19,8 @@ const createToken = (id) => {
   });
 };
 
+const moment = require("moment");
+
 // router.post("/signup", async (req, res) => {
 //   console.log("inside /signup...");
 //   console.log("signup request body", req.body);
@@ -80,15 +82,37 @@ router.post("/signup", async (req, res) => {
 
 //TODO change according to new user schema
 router.post("/make-a-donation", async (req, res) => {
+  console.log("inside make-a-donation", req.body);
+  // const donated_on = Date.now;
+  const str = req.body.donor_name + "," + req.body.amount;
   requesttable.findOneAndUpdate(
     { blockchainAddress: req.body.receiver },
-    { $inc: { currentAmount: req.body.amount } },
+    { $inc: { current_amount: req.body.amount } },
     { overwrite: true },
     function(err, result) {
       if (err) {
         res.send(err);
       } else {
         console.log("Current Amount Updated+++++++++++", result);
+      }
+    }
+  );
+  requesttable.findOneAndUpdate(
+    { blockchainAddress: req.body.receiver },
+    {
+      $push: {
+        donation_history: {
+          donor_name: req.body.donor_name,
+          donated_amount: req.body.amount,
+        },
+      },
+    },
+    { overwrite: false },
+    function(err, result) {
+      if (err) {
+        res.send(err);
+      } else {
+        console.log("Current Amount Updated+++++++++++2222", result);
       }
     }
   );

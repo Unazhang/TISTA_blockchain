@@ -1,5 +1,18 @@
 const mongoose = require("mongoose");
 
+const donation_record = new mongoose.Schema({
+  donor_name: {
+    type: String,
+  },
+  donated_on: {
+    type: Date,
+    default: Date.now,
+  },
+  donated_amount: {
+    type: Number,
+  },
+});
+
 const requestTemplate = new mongoose.Schema({
   user_email: {
     type: String,
@@ -51,7 +64,7 @@ const requestTemplate = new mongoose.Schema({
     default: 0,
   },
   donation_history: {
-    type: [],
+    type: [donation_record],
   },
 });
 

@@ -21,8 +21,10 @@ import MakeNewDonation from "./pages/Donation/MakeNewDonation";
 import { useAuth } from "./contexts/AuthContext";
 
 function App() {
-  const { role } = useAuth();
-  console.log(role);
+  // const { role } = useAuth();
+  // console.log(role);
+
+  const role = "Donor";
 
   return (
     <div>

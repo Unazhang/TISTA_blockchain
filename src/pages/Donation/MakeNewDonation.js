@@ -31,6 +31,8 @@ export default function MakeNewDonation() {
     isDonation: true,
     blockchain_address: data.blockchain_address,
     vendor_name: data.vendor_name,
+
+    donation_history: data.donation_history,
   };
 
   // donation instruction control
@@ -54,6 +56,12 @@ export default function MakeNewDonation() {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
+  // display donation history
+  let arr = [];
+  for (let i = 0; i < props.donation_history.length; i++) {
+    arr.push(<div>{props.donation_history[i].donor_name}</div>);
+  }
+
   return (
     <div>
       <Box sx={{ width: "100%" }}>
@@ -76,7 +84,7 @@ export default function MakeNewDonation() {
                 Amount Raised: {data.current_amount} XYZ Token
               </Typography>
               <Typography variant="h6">Donation History</Typography>
-              <Typography>{data.donation_history}</Typography>
+              <Card>{arr}</Card>
             </Card>
           </Grid>
           <Grid item xs={10}>

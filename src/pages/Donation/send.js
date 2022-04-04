@@ -25,6 +25,7 @@ class Send extends Component {
       vendor_name: props.vendor_name,
       blockchain_address: props.blockchain_address,
       amoutUSD: 0,
+      donor_name: "Anonymous",
     };
 
     console.log("props inside Send.js", props);
@@ -58,6 +59,7 @@ class Send extends Component {
     const daiTokenMock = new web3.eth.Contract(XYZ.abi, XYZAddress);
 
     this.setState({ daiTokenMock: daiTokenMock });
+    console.log("daiTokenMock----------------------", daiTokenMock);
     const balance = await daiTokenMock.methods
       .balanceOf(this.state.account)
       .call();
@@ -83,9 +85,7 @@ class Send extends Component {
             .post("http://localhost:4000/app/make-a-donation", {
               receiver: recipient,
               amount: this.amountRef.value,
-              frequency: "Once",
-              payAccount: "account1",
-              userName: localStorage.getItem("userName"),
+              donor_name: this.state.donor_name,
             })
             .then(() => (donationStore.isUpdate = true));
         }
@@ -105,9 +105,18 @@ class Send extends Component {
     }
   }
 
-  handlePreview = () => {
-    console.log("inside handlePreview", this.state.amoutUSD);
-  };
+  handleNameChange(event) {
+    if (event.target.value.length > 0) {
+      console.log(event.target.value);
+      this.setState({
+        helperText: "",
+        error: false,
+        donor_name: event.target.value,
+      });
+    } else {
+      this.setState({ helperText: "Invalid input", error: true });
+    }
+  }
 
   render() {
     let amountUSD = this.state.amountUSD;
@@ -136,6 +145,17 @@ class Send extends Component {
             />
             XYZ Token = {amountUSD} USD
           </Grid>
+          <TextField
+            variant="outlined"
+            helperText={this.state.helperText}
+            onChange={this.handleNameChange.bind(this)}
+            error={this.state.error}
+            required
+            id="donor_name"
+            label="Your Name:"
+            placeholder="Anonymous"
+            style={{ width: 200 }}
+          />
           <Typography>Send to vendor: {this.state.vendor_name}</Typography>
         </div>
         <Button variant="contained" color="primary" type="submit">
