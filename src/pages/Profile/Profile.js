@@ -528,11 +528,11 @@ export default function Profile() {
                       <TableCell component="th" scope="row">
                         {row.created_on}
                       </TableCell>
-                      <TableCell align="right">{row.title}</TableCell>
-                      <TableCell align="right">{row.vendor}</TableCell>
-                      <TableCell align="right">{row.current_amount}</TableCell>
-                      <TableCell align="right">{row.target_amount}</TableCell>
-                      <TableCell align="right">{row.status}</TableCell>
+                      <TableCell align="left">{row.title}</TableCell>
+                      <TableCell align="left">{row.vendor}</TableCell>
+                      <TableCell align="left">{row.current_amount}</TableCell>
+                      <TableCell align="left">{row.target_amount}</TableCell>
+                      <TableCell align="left">{row.status}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -564,11 +564,11 @@ export default function Profile() {
                       }}
                     >
                       <TableCell component="th" scope="row">
-                        {row.created_on}
+                        {row.donated_on}
                       </TableCell>
-                      <TableCell align="right">{row.title}</TableCell>
-                      <TableCell align="right">{row.donated_amount}</TableCell>
-                      <TableCell align="right">{row.amountUSD}</TableCell>
+                      <TableCell align="left">{row.title}</TableCell>
+                      <TableCell align="left">{row.donated_amount}</TableCell>
+                      <TableCell align="left">{row.amountUSD}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
