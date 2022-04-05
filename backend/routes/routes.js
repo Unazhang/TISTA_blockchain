@@ -115,9 +115,20 @@ router.post("/make-a-donation", async (req, res) => {
       }
     }
   );
-  mytable.findOneAndUpdate(
-    { userName: req.body.userName },
-    { $addToSet: { donateTo: req.body.receiver } },
+  users.findOneAndUpdate(
+    { email: req.body.email },
+    {
+      $push: {
+        donateTo: {
+          donor_name:
+            req.body.donor_name == "" ? "Anonymous" : req.body.donor_name,
+          donated_amount: req.body.amount,
+          title: req.body.title,
+          amountUSD: req.body.amount * 0.25,
+        },
+      },
+    },
+    { overwrite: false },
     function(err, result) {
       if (err) {
         res.send(err);
@@ -206,6 +217,19 @@ router.get("/addresses", async (req, res) => {
       res.send(err);
     } else {
       res.send(result.donationAddress);
+    }
+  });
+});
+
+router.get("/find-donations-by-user", async (req, res) => {
+  const user_email = req.query.email;
+  console.log("inside find-donations-by-user", user_email);
+  users.findOne({ email: user_email }, function(err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+      console.log("my donations", result.donateTo);
+      res.send(result.donateTo);
     }
   });
 });

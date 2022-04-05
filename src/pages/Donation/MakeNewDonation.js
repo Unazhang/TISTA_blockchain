@@ -22,8 +22,12 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function MakeNewDonation() {
+  let { currentUser } = useAuth();
+  let user_email = currentUser.email;
+
   // post axios
   const API_BASE_URL = `http://localhost:4000`;
 
@@ -38,6 +42,8 @@ export default function MakeNewDonation() {
     vendor_name: data.vendor_name,
     request_id: data.request_id,
     donation_history: data.donation_history,
+    user_email: user_email,
+    title: data.req_title,
   };
 
   // donation instruction control

@@ -126,7 +126,7 @@ export default function AllProjects() {
       const result = await axios.get(`${API_BASE_URL}/app/donation`);
       setEvents(result.data);
     } catch (error) {
-      console.log("error");
+      console.log("cannot fetch all projects", error);
     }
   };
 

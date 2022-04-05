@@ -12,8 +12,9 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { donationStore } from "./DonationStore";
 import { Typography, Grid } from "@material-ui/core";
-import { Route, Redirect } from "react-router";
+// import { Route, Redirect } from "react-router";
 import CommunityPage from "./CommunityPage";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
 class Send extends Component {
   constructor(props) {
@@ -27,6 +28,8 @@ class Send extends Component {
       vendor_name: props.vendor_name,
       blockchainAddress: props.blockchainAddress,
       request_id: props.request_id,
+      user_email: props.user_email,
+      title: props.title,
       amoutUSD: 0,
       donor_name: "Anonymous",
       isUpdated: false,
@@ -79,27 +82,35 @@ class Send extends Component {
   }
 
   async transfer(recipient, amount) {
-    this.state.daiTokenMock.methods
-      .transfer(recipient, amount)
-      .send({ from: this.state.account })
-      .on("transactionHash", () => {
-        console.log("make-a-donation", recipient, this.amountRef.value);
-        if (this.props.isDonation) {
-          axios
-            .post("http://localhost:4000/app/make-a-donation", {
-              receiver: recipient,
-              amount: this.amountRef.value,
-              donor_name: this.state.donor_name,
-              request_id: this.state.request_id,
-            })
-            .then(() => (donationStore.isUpdate = true))
-            .then(() =>
-              this.setState({
-                isUpdated: true,
+    if (this.state.daiTokenMock == null) {
+      alert(
+        "Please log in your MetaMask before proceeding. Then refresh this page. "
+      );
+    } else {
+      this.state.daiTokenMock.methods
+        .transfer(recipient, amount)
+        .send({ from: this.state.account })
+        .on("transactionHash", () => {
+          console.log("make-a-donation", recipient, this.amountRef.value);
+          if (this.props.isDonation) {
+            axios
+              .post("http://localhost:4000/app/make-a-donation", {
+                receiver: recipient,
+                amount: this.amountRef.value,
+                donor_name: this.state.donor_name,
+                request_id: this.state.request_id,
+                email: this.state.user_email,
+                title: this.state.title,
               })
-            );
-        }
-      });
+              .then(() => (donationStore.isUpdate = true))
+              .then(() =>
+                this.setState({
+                  isUpdated: true,
+                })
+              );
+          }
+        });
+    }
   }
 
   onChange(event) {
@@ -139,8 +150,15 @@ class Send extends Component {
     let amountUSD = this.state.amountUSD;
     let isUpdated = this.state.isUpdated;
 
+    // TODO: redirect page after completing a new donation
     if (isUpdated) {
-      return <Redirect to="/donation" />;
+      return (
+        <Router>
+          <Route>
+            <Redirect to="/donation" component={CommunityPage} />
+          </Route>
+        </Router>
+      );
     } else {
       return (
         <Form onSubmit={this.handleSubmit.bind(this)}>
