@@ -189,10 +189,12 @@ class Send extends Component {
               style={{ width: 200 }}
             />
             <Typography>Send to vendor: {this.state.vendor_name}</Typography>
+            <div align="middle">
+              <Button variant="contained" color="primary" type="submit">
+                Send
+              </Button>
+            </div>
           </div>
-          <Button variant="contained" color="primary" type="submit">
-            Send
-          </Button>
         </Form>
       );
     }

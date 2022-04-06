@@ -23,6 +23,7 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useAuth } from "../../contexts/AuthContext";
+import DonationProgress from "./DonationProgress";
 
 export default function MakeNewDonation() {
   let { currentUser } = useAuth();
@@ -46,6 +47,11 @@ export default function MakeNewDonation() {
     title: data.req_title,
   };
 
+  let progressData = {
+    target_amount: data.target_amount,
+    current_amount: data.current_amount,
+    remaining_amount: data.target_amount - data.current_amount,
+  };
   // donation instruction control
 
   const [expanded, setExpanded] = React.useState();
@@ -96,25 +102,24 @@ export default function MakeNewDonation() {
   return (
     <div>
       <Box sx={{ width: "100%" }}>
-        <Grid container spacing={2} alignItems="flex-end" wrap="nowrap">
+        <Grid container wrap="nowrap">
           <Grid item md={8}>
-            <Card>
-              <CardHeader title={data.req_title} />
-              <Typography>
-                {data.requester_name} | Verified Requester
-              </Typography>
-              <Typography variant="h6">About</Typography>
-              <Typography>{data.description}</Typography>
-              <Typography variant="h6">Third Party Vendor</Typography>
-              <Typography>
-                Blockchain Address: {data.blockchainAddress}
-              </Typography>
-              <Typography variant="h6">Progress</Typography>
-              <Typography>Goal: {data.target_amount} XYZ Token</Typography>
-              <Typography>
-                Amount Raised: {data.current_amount} XYZ Token
-              </Typography>
-            </Card>
+            <Typography>{data.requester_name} | Verified Requester</Typography>
+            <br />
+            <Typography variant="h6">About</Typography>
+            <br />
+            <Typography>{data.description}</Typography>
+            <br />
+            <Typography variant="h6">Third Party Vendor</Typography>
+            <br />
+            <Typography>
+              Blockchain Address: {data.blockchainAddress}
+            </Typography>
+            <br />
+            <Typography variant="h6">Progress</Typography>
+            <br />
+            <DonationProgress {...progressData} />
+            <br />
             <Card>
               <CardHeader title="Donation History" />
               <TableContainer component={Paper}>
@@ -138,11 +143,9 @@ export default function MakeNewDonation() {
                         <TableCell component="th" scope="row">
                           {row.donated_on}
                         </TableCell>
-                        <TableCell align="right">{row.donor_name}</TableCell>
-                        <TableCell align="right">
-                          {row.donated_amount}
-                        </TableCell>
-                        <TableCell align="right">{row.amount_usd}</TableCell>
+                        <TableCell align="left">{row.donor_name}</TableCell>
+                        <TableCell align="left">{row.donated_amount}</TableCell>
+                        <TableCell align="left">{row.amount_usd}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -150,7 +153,7 @@ export default function MakeNewDonation() {
               </TableContainer>
             </Card>
           </Grid>
-          <Grid item md={8}>
+          <Grid item md={4}>
             <div>
               <Button
                 aria-describedby={id}
@@ -253,7 +256,11 @@ export default function MakeNewDonation() {
                 backgroundColor: "#e3f2fd",
               }}
             >
-              <CardHeader title="Donate" />
+              <CardHeader
+                title="Donate"
+                align="left"
+                titleTypographyProps={{ variant: "h4" }}
+              />
               <Send {...props} />
             </Card>
           </Grid>
