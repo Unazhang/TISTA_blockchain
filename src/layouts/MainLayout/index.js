@@ -44,6 +44,7 @@ import pholder from "../../pages/Profile/avatar.png";
 
 import BuySell from "../../pages/BuySell/BuySell.js";
 import { useAuth } from "../../contexts/AuthContext";
+import Tooltip from "@mui/material/Tooltip";
 
 const drawerWidth = 240;
 const styles = (theme) => ({
@@ -86,7 +87,7 @@ const styles = (theme) => ({
 });
 
 function MainLayout(props) {
-  const { classes, children} = props;
+  const { classes, children } = props;
   const [openPopup, setOpenDonate] = useState(false);
   const [openBuySell, setOpenBuySell] = useState(false);
   const [openUser, setOpenUser] = useState(false);
@@ -138,99 +139,23 @@ function MainLayout(props) {
               Request
             </NavLink>
           </div>
-          {/* <NavLink to="/login" handleClick={() => {authService.logOut();}} icon={HelpIcon}>
-            log out
-          </NavLink> */}
           <div style={{ display: "flex", flex: 1 }} />
-          {/* <Button variant="contained" className={classes.newButton}>Buy/Sell</Button> */}
-          {/* <Controls.Button
-            text="Buy/Sell"
-            variant="contained"
-            className={classes.newButton}
-            onClick={() => {
-              setOpenBuySell(true);
+          <Tooltip title="My Profile">
+            <IconButton component={Link} to="/profile">
+              <ProfileIcon style={{ fill: "white" }} />
+            </IconButton>
+          </Tooltip>
+          <Button
+            variant="text"
+            onClick={handleLogout}
+            style={{
+              color: "white",
             }}
-          /> */}
-          {/* <Controls.Button
-            text="SEND"
-            variant="contained"
-            className={classes.newButton}
-            onClick={() => {
-              setOpenDonate(true);
-            }}
-          /> */}
-          <IconButton>
-            <NotifIcon style={{ fill: "white" }} />
-          </IconButton>
-          <IconButton component={Link} onClick={handleopenUser}>
-            <ProfileIcon style={{ fill: "white" }} />
-          </IconButton>
-          <Dialog open={openUser}>
-            <div style={{ marginLeft: "250px" }}>
-              <Controls.ActionButton onClick={handleCloseUser}>
-                <CloseIcon />
-              </Controls.ActionButton>
-            </div>
-            <div style={{ marginLeft: "100px" }}>
-              <Avatar
-                alt="PlaceHolder"
-                src={pholder}
-                className={classes.large}
-              />
-            </div>
-            <div
-              style={{ marginLeft: "140px", fontFamily: "Lato", size: "24px" }}
-            >
-              <Typography variant="body1" component="div">
-                Lee
-              </Typography>
-            </div>
-            <br></br>
-            <div
-              style={{
-                marginLeft: "100px",
-                fontFamily: "Lato",
-                size: "16px",
-                color: "#B4B4B4",
-              }}
-            >
-              <Typography variant="body1" component="div" color="grey">
-                {userEmail}
-              </Typography>
-            </div>
-            <div>
-              <div style={{ fontFamily: "Lato", size: "18px", align: "left" }}>
-                <NavLink to="/profile" icon={TransIcon}>
-                  Settings
-                </NavLink>
-              </div>
-              <div style={{ fontFamily: "Lato", size: "18px", align: "left" }}>
-                <NavLink to="/faq" icon={TransIcon}>
-                  Help
-                </NavLink>
-              </div>{" "}
-              <div>
-                <Button
-                  variant="link"
-                  onClick={handleLogout}
-                  // style={{ fontFamily: "Lato", size: "18px", align: "middle" }}
-                >
-                  Log Out
-                </Button>
-              </div>
-            </div>
-          </Dialog>
+          >
+            Log Out
+          </Button>
         </Toolbar>
       </AppBar>
-
-      {/* <Popup title="Send" open={openPopup} handleClose={setOpenDonate}>
-        <Send />
-      </Popup> */}
-
-      {/* <Popup title="Buy/Sell" open={openBuySell} handleClose={setOpenBuySell}>
-        <BuySell />
-      </Popup> */}
-
       <main className={classes.content}>
         <div className={classes.toolbar} />
         {children}

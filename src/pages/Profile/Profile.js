@@ -256,28 +256,11 @@ export default function Profile() {
     <div>
       <div
         style={{
-          display: "inline-block",
-          fontFamily: "Lato",
-          size: "24px",
-          ineHeight: "29px",
-          lineHeight: "100%",
-          verticalAlign: "top",
-        }}
-      >
-        <Typography variant="h6" id="tableTitle" component="div">
-          Settings
-        </Typography>{" "}
-      </div>
-      <div
-        style={{
           color: "#000000",
           fontFamily: "Lato",
           size: "24px",
         }}
       >
-        <Typography variant="h6" component="div">
-          Lee's Profile
-        </Typography>
         <div style={{ display: "inline-block" }}>
           <Avatar alt="PlaceHolder" src={pholder} className={classes.large} />
         </div>
@@ -289,45 +272,11 @@ export default function Profile() {
             marginLeft: "110px",
           }}
         >
-          <Typography variant="body1" component="div">
-            Change/Upload Profile Picture
+          <Typography variant="h6" component="div">
+            Currently logged in as: {user_email}
           </Typography>
-          <div
-            style={{
-              display: "inline-block",
-              marginLeft: "100px",
-              marginTop: "-500px",
-              fontFamily: "Lato",
-              size: "14px",
-            }}
-          >
-            <label htmlFor="contained-button-file">
-              <Input
-                accept="image/*"
-                id="contained-button-file"
-                multiple
-                type="file"
-              />
-              <Button
-                size="large"
-                variant="contained"
-                component="span"
-                style={{
-                  color: "primary",
-                  display: "inline-block",
-                  width: "120px",
-                  height: "32px",
-                  marginLeft: "-100px",
-                  marginTop: "20px",
-                  fontFamily: "Lato",
-                  size: "10px",
-                  align: "center",
-                }}
-              >
-                upload
-              </Button>
-            </label>
-          </div>
+          <br />
+          <br />
         </div>
       </div>
       <div className={classes.root}>
@@ -341,12 +290,59 @@ export default function Profile() {
             <Tab label="My Request" {...a11yProps(1)} />
             <Tab label="My Donation" {...a11yProps(2)} />
             <Tab label="My Validation" {...a11yProps(3)} />
-            {/* <Tab label="Contact" {...a11yProps(2)} /> */}
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>
           <br></br>
           <br></br>
+          <div
+            style={{
+              fontFamily: "Lato",
+              size: "18px",
+              marginTop: "-70px",
+              marginLeft: "110px",
+            }}
+          >
+            <Typography variant="body1" component="div">
+              Change/Upload Profile Picture
+            </Typography>
+            <div
+              style={{
+                display: "inline-block",
+                // marginLeft: "100px",
+                marginTop: "-500px",
+                fontFamily: "Lato",
+                size: "14px",
+              }}
+            >
+              <label htmlFor="contained-button-file">
+                <Input
+                  accept="image/*"
+                  id="contained-button-file"
+                  multiple
+                  type="file"
+                />
+                <Button
+                  size="large"
+                  variant="contained"
+                  component="span"
+                  style={{
+                    color: "primary",
+                    display: "inline-block",
+                    width: "120px",
+                    height: "32px",
+                    marginLeft: "-100px",
+                    marginTop: "20px",
+                    fontFamily: "Lato",
+                    size: "10px",
+                    align: "center",
+                  }}
+                >
+                  upload
+                </Button>
+              </label>
+            </div>
+          </div>
           <div
             style={{
               display: "inline-block",

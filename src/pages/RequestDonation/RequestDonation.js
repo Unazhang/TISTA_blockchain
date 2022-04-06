@@ -6,7 +6,8 @@ import emailjs from "emailjs-com";
 import axios from "axios";
 import { donationStore } from "../Donation/DonationStore";
 import { useAuth } from "../../contexts/AuthContext";
-import { Form, Button, Select, Card } from "react-bootstrap";
+import { Form, Select, Card } from "react-bootstrap";
+import Button from "@material-ui/core/Button";
 
 export default function RequestDonationForm(props) {
   // const { addOrEdit, recordForEdit } = props;
@@ -95,6 +96,7 @@ export default function RequestDonationForm(props) {
               as="select"
               onChange={(e) => setCountry(e.target.value)}
               width="100%"
+              disabled={true}
             >
               <option value="US">United States</option>
             </Form.Control>
@@ -176,7 +178,7 @@ export default function RequestDonationForm(props) {
           <Form.Group>
             {/* <Controls.Button type="submit" text="Notify Vendor" /> */}
             {/* <Controls.Button type="submit" text="Submit" /> */}
-            <Button variant="primary" type="submit">
+            <Button variant="contained" color="primary" type="submit">
               Submit and Notify Vendor
             </Button>
           </Form.Group>
