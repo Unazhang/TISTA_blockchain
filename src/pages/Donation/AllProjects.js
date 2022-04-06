@@ -40,6 +40,7 @@ import "./Donation.css";
 import DonationPopOver from "./DonationPopOver";
 import Popover from "@material-ui/core/Popover";
 import Modal from "@mui/material/Modal";
+import DonationProgress from "./DonationProgress";
 
 const Data = [
   { name: "Help Kids" },
@@ -130,25 +131,25 @@ export default function AllProjects() {
     }
   };
 
-  const fetchDonatedAddress = async () => {
-    try {
-      const result = await axios
-        .get(`${API_BASE_URL}/app/donatedAddress`, {
-          userName: localStorage.getItem("userName"),
-        })
-        .then((res) =>
-          console.log(
-            "donatiedAddress",
-            localStorage.getItem("userName"),
-            res,
-            localStorage.getItem("userName")
-          )
-        );
-      // setEvents(result.data);
-    } catch (error) {
-      console.log("error");
-    }
-  };
+  // const fetchDonatedAddress = async () => {
+  //   try {
+  //     const result = await axios
+  //       .get(`${API_BASE_URL}/app/donatedAddress`, {
+  //         userName: localStorage.getItem("userName"),
+  //       })
+  //       .then((res) =>
+  //         console.log(
+  //           "donatiedAddress",
+  //           localStorage.getItem("userName"),
+  //           res,
+  //           localStorage.getItem("userName")
+  //         )
+  //       );
+  //     // setEvents(result.data);
+  //   } catch (error) {
+  //     console.log("error");
+  //   }
+  // };
 
   reaction(
     () => donationStore.isUpdate,
@@ -156,7 +157,7 @@ export default function AllProjects() {
       if (isUpdate) {
         donationStore.isUpdate = false;
         await fetchDonations();
-        await fetchDonatedAddress();
+        // await fetchDonatedAddress();
       } else {
         console.log("autorun !false");
       }
@@ -165,16 +166,22 @@ export default function AllProjects() {
 
   useEffect(() => {
     fetchDonations();
-    fetchDonatedAddress();
+    // fetchDonatedAddress();
   }, [null]);
 
   for (let i = 0; i < events.length; i++) {
+    const progressData = {
+      current_amount: events[i].current_amount,
+      target_amount: events[i].target_amount,
+      remaining_amount: events[i].target_amount - events[i].current_amount,
+      chartHeight: 150,
+    };
     arr.push(
-      <Grid item xs={12} sm={6}>
-        <Card variant="outlined" style={{ height: "25vh" }}>
+      <Grid item xs={40} sm={6}>
+        <Card variant="outlined" style={{ height: "50vh" }}>
           <CardContent
             style={{
-              height: "18vh",
+              height: "40vh",
               ordWrap: "break-word",
               display: "block",
               overflow: "hidden",
@@ -189,41 +196,20 @@ export default function AllProjects() {
             >
               {events[i].title}
             </Typography>
+            <Card style={{ height: "auto", width: "auto" }}>
+              <DonationProgress {...progressData} />
+            </Card>
             <Typography
+              nowrap
+              className={classes.heading}
               noWrap
               variant="body2"
               color="textSecondary"
-              component="p"
+              // component="p"
             >
-              {events[i].current_amount} raised of {events[i].target_amount} XYZ
-              Token
-            </Typography>
-            <Typography
-              noWrap
-              variant="body2"
-              color="textSecondary"
-              component="p"
-            >
-              Blockchain Address: {events[i].blockchainAddress}
-            </Typography>
-            <Typography
-              noWrap
-              variant="body2"
-              color="textSecondary"
-              component="p"
-            >
-              {" "}
-              Description:
+              <br />
+              <b>Description: </b>
               {events[i].description}
-            </Typography>
-            {/* test _id */}
-            <Typography
-              noWrap
-              variant="body2"
-              color="textSecondary"
-              component="p"
-            >
-              {events[i]._id}
             </Typography>
           </CardContent>
           <CardActions>
@@ -288,35 +274,25 @@ export default function AllProjects() {
 
   return (
     <div className={classes.root}>
-      <TabPanel value={value} index={0}>
-        <Toolbar>
-          <Controls.Input
-            label="Search"
-            className={classes.searchInput}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Search />
-                </InputAdornment>
-              ),
-            }}
-            onChange={handleSearch}
-          />
-        </Toolbar>
-        <div style={{ maxHeight: "55vh", overflow: "auto" }}>
-          <Grid container spacing={3}>
-            {arr}
-          </Grid>
-        </div>
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <Typography variant="h6" id="tableTitle" component="div">
-          Donation History
-        </Typography>
-        <div style={{ maxHeight: "58vh", overflow: "auto" }}>
-          <DonationAccordion />
-        </div>
-      </TabPanel>
+      <Toolbar>
+        <Controls.Input
+          label="Search"
+          className={classes.searchInput}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Search />
+              </InputAdornment>
+            ),
+          }}
+          onChange={handleSearch}
+        />
+      </Toolbar>
+      <div style={{ maxHeight: "55vh", overflow: "auto" }}>
+        <Grid container spacing={3}>
+          {arr}
+        </Grid>
+      </div>
     </div>
   );
 }
