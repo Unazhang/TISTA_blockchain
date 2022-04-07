@@ -19,7 +19,7 @@ import Requester from "./pages/Roles/Requester";
 import Donor from "./pages/Roles/Donor";
 import MakeNewDonation from "./pages/Donation/MakeNewDonation";
 import { useAuth } from "./contexts/AuthContext";
-
+import UploadImage from "./pages/RequestDonation/UploadImage";
 function App() {
   // const { role } = useAuth();
   // console.log(role);
@@ -28,7 +28,9 @@ function App() {
 
   return (
     <div>
-      <div width="100%">
+      <UploadImage />
+
+      {/* <div width="100%">
         <Switch>
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
@@ -73,7 +75,7 @@ function App() {
             </MainLayout>
           </PrivateRoute>
         </Switch>
-      </div>
+      </div> */}
     </div>
   );
 }

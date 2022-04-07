@@ -80,6 +80,10 @@ router.post("/signup", async (req, res) => {
     });
 });
 
+router.post("/uploadImage", async (req, res) => {
+  console.log("inside upload image", req.body);
+});
+
 //TODO change according to new user schema
 router.post("/make-a-donation", async (req, res) => {
   console.log("inside make-a-donation", req.body);
