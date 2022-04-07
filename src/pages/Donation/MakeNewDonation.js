@@ -51,7 +51,6 @@ export default function MakeNewDonation() {
     target_amount: data.target_amount,
     current_amount: data.current_amount,
     remaining_amount: data.target_amount - data.current_amount,
-    chartHeight: 200,
   };
   // donation instruction control
 
@@ -103,7 +102,7 @@ export default function MakeNewDonation() {
   return (
     <div>
       <Box sx={{ width: "100%" }}>
-        <Grid container wrap="nowrap" spacing={2}>
+        <Grid container wrap="nowrap">
           <Grid item md={8}>
             <Typography>{data.requester_name} | Verified Requester</Typography>
             <br />

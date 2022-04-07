@@ -6,7 +6,6 @@ class DonationProgress extends Component {
     super(props);
 
     this.state = {
-      chartHeight: props.chartHeight,
       series: [
         {
           name: "Total Raised",
@@ -85,7 +84,7 @@ class DonationProgress extends Component {
           options={this.state.options}
           series={this.state.series}
           type="bar"
-          height={this.state.chartHeight}
+          height={200}
         />
       </div>
     );
