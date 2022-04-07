@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Grid } from "@material-ui/core";
+import { FormLabel, Grid } from "@material-ui/core";
 import Controls from "../../controls/Controls";
 import UploadButtons from "../Donation/upload";
 import emailjs from "emailjs-com";
@@ -24,6 +24,7 @@ export default function RequestDonationForm(props) {
   const [requester_name, setReqName] = useState("");
   const [vendor_name, setVendorName] = useState("");
   const [vendor_email, setVendorEmail] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
 
   let { currentUser } = useAuth();
   let user_email = currentUser.email;
@@ -43,6 +44,7 @@ export default function RequestDonationForm(props) {
       target_amount: target_amount,
       vendor_name: vendor_name,
       vendor_email: vendor_email,
+      imageUrl: imageUrl,
     };
 
     console.log("data", data);
@@ -90,6 +92,13 @@ export default function RequestDonationForm(props) {
     <div>
       <Card style={{ width: "50rem" }} border="light">
         <Form onSubmit={handleSubmit}>
+          <Form.Group>
+            <FormLabel>Add Image</FormLabel>
+            <Form.Control
+              type="text"
+              onChange={(e) => setImageUrl(e.target.value)}
+            />
+          </Form.Group>
           <Form.Group>
             <Form.Label>Where do you live?</Form.Label>
             <Form.Control

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
@@ -123,6 +123,8 @@ export default function Profile() {
 
   const [submit, setSubmit] = useState(false);
 
+  const [avatarUrl, setAvatarUrl] = useState("");
+
   const handleSearch = (e) => {
     const keyword = e.target.value;
     console.log("input is ", keyword);
@@ -151,7 +153,9 @@ export default function Profile() {
   const handleChange = (event, newValue) => {
     console.log("newValue", newValue);
     setValue(newValue); // set tab index
-    if (newValue == 1) {
+    if (newValue == 0) {
+      fetchProfile();
+    } else if (newValue == 1) {
       fetchRequests();
     } else if (newValue == 2) {
       fetchDonationsByUser();
@@ -252,8 +256,31 @@ export default function Profile() {
       )
     );
   }
+  // get user avatar
+  // get user object
+  const fetchProfile = async () => {
+    console.log("hiiii");
+    await axios
+      .get(`${API_BASE_URL}/app/user`, { params: { user_email: user_email } })
+      .catch((err) => {
+        console.log(err);
+      })
+      .then((res) => {
+        console.log("avatar response", res);
+        setAvatarUrl(res.data);
+      });
+  };
+
+  useEffect(() => {
+    fetchProfile();
+  }, []);
+
   return (
     <div>
+      <Card>
+        {/* <ShowImage url={avatarUrl} /> */}
+        <img src={avatarUrl} />
+      </Card>
       <div
         style={{
           color: "#000000",
@@ -261,9 +288,9 @@ export default function Profile() {
           size: "24px",
         }}
       >
-        <div style={{ display: "inline-block" }}>
-          <Avatar alt="PlaceHolder" src={pholder} className={classes.large} />
-        </div>
+        {/* <div style={{ display: "inline-block" }}> */}
+        {/* <Avatar alt="PlaceHolder" src={pholder} className={classes.large} /> */}
+        {/* </div> */}
         <div
           style={{
             fontFamily: "Lato",

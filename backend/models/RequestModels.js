@@ -66,6 +66,9 @@ const requestTemplate = new mongoose.Schema({
   donation_history: {
     type: [donation_record],
   },
+  imageUrl: {
+    type: String,
+  },
 });
 
 // SET DEFAULT AS AMOUNT

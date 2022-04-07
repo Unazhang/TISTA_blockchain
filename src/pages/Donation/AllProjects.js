@@ -181,6 +181,8 @@ export default function AllProjects() {
               whiteSpace: "normal",
             }}
           >
+            <img src={events[i].imageUrl} />
+            {/* <ShowImage url={events[i].imageUrl} /> */}
             <Typography
               id="title"
               gutterBottom

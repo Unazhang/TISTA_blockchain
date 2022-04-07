@@ -179,6 +179,7 @@ router.post("/request", async (req, res) => {
     target_amount: req.body.target_amount,
     vendor_name: req.body.vendor_name,
     vendor_email: req.body.vendor_email,
+    imageUrl: req.body.imageUrl,
   });
   request
     .save()
@@ -248,4 +249,14 @@ router.post("/role", async (req, res) => {
   });
 });
 
+router.get("/user", async (req, res) => {
+  console.log("inside /user", req.query);
+  users.findOne({ email: req.query.user_email }, function(err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result.avatarUrl);
+    }
+  });
+});
 module.exports = router;
