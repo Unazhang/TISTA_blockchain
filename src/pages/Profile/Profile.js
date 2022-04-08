@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
-import { makeStyles } from "@material-ui/core";
+import { FormControl, makeStyles } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import UploadButtons from "../Donation/upload";
 import Card from "@material-ui/core/Card";
@@ -155,6 +155,7 @@ export default function Profile() {
     setValue(newValue); // set tab index
     if (newValue == 0) {
       fetchProfile();
+      fetchRequests();
     } else if (newValue == 1) {
       fetchRequests();
     } else if (newValue == 2) {
@@ -257,10 +258,11 @@ export default function Profile() {
     );
   }
   // get user avatar
-  // get user object
   const fetchProfile = async () => {
     await axios
-      .get(`${API_BASE_URL}/app/user`, { params: { user_email: user_email } })
+      .get(`${API_BASE_URL}/app/user`, {
+        params: { user_email: user_email },
+      })
       .catch((err) => {
         console.log(err);
       })
@@ -271,6 +273,7 @@ export default function Profile() {
 
   useEffect(() => {
     fetchProfile();
+    fetchRequests();
   }, []);
 
   const handleAvatarSubmit = async () => {
@@ -287,6 +290,129 @@ export default function Profile() {
         setAvatarUrl(avatarUrl);
       });
   };
+
+  // get vendor's related projects
+
+  const [blockchainAddress, setBlockchainAddress] = useState("");
+  const [requestId, setRequestId] = useState("");
+
+  const handleBlockchainAddressSubmit = async (e) => {
+    e.preventDefault();
+    const data = {
+      blockchainAddress,
+      _id: requestId,
+    };
+    console.log("handleBlockchainAddressSubmit", data);
+    await axios
+      .post(`${API_BASE_URL}/app/update-blockchain-address`, data)
+      .catch((err) => {
+        console.log(err);
+      })
+      .then((res) => {
+        console.log(res);
+      });
+  };
+
+  let arr = [];
+  for (let i = 0; i < events.length; i++) {
+    if (
+      events[i].vendor_email === user_email &&
+      events[i].blockchainAddress.length === 0
+    ) {
+      arr.push(
+        <Grid item xs={12} sm={6}>
+          <Card>
+            <Grid container>
+              <Grid item style={{ width: "50%", backgroundSize: "contained" }}>
+                <img src={events[i].imageUrl} width="100%" height="100%" />
+              </Grid>
+              <Grid item style={{ width: "50%", height: "100%" }}>
+                <Card variant="outlined" style={{ height: "100%" }}>
+                  <CardContent
+                    style={{
+                      height: "80%",
+                      ordWrap: "break-word",
+                      display: "block",
+                      overflow: "hidden",
+                      whiteSpace: "normal",
+                    }}
+                  >
+                    <Typography
+                      id="title"
+                      gutterBottom
+                      variant="h6"
+                      style={{ fontSize: "2vh", color: "red" }}
+                    >
+                      {events[i].title} project is waiting for your info......
+                    </Typography>
+                    <Typography
+                      id="title"
+                      gutterBottom
+                      variant="h6"
+                      style={{ fontSize: "2vh" }}
+                    >
+                      Requester: {events[i].requester_name}
+                    </Typography>
+                    <Typography
+                      noWrap
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
+                    >
+                      Target Amount:
+                      {events[i].target_amount} XYZ Token
+                    </Typography>
+                    <Typography
+                      noWrap
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
+                    >
+                      {" "}
+                      Description:
+                      {events[i].description}
+                    </Typography>
+                    <br />
+                    <Form onSubmit={handleBlockchainAddressSubmit}>
+                      <Form.Group>
+                        <Form.Control
+                          type="text"
+                          placeholder="Enter your blockchain address: "
+                          onChange={(e) => {
+                            setBlockchainAddress(e.target.value);
+                            setRequestId(events[i]._id);
+                          }}
+                          style={{ width: "98%" }}
+                        ></Form.Control>
+                      </Form.Group>
+                      <Form.Group>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          type="submit"
+                        >
+                          Submit
+                        </Button>
+                      </Form.Group>
+                    </Form>
+                  </CardContent>
+                  <CardActions
+                    style={{
+                      height: "80%",
+                      ordWrap: "break-word",
+                      display: "block",
+                      overflow: "hidden",
+                      whiteSpace: "normal",
+                    }}
+                  ></CardActions>
+                </Card>
+              </Grid>
+            </Grid>
+          </Card>
+        </Grid>
+      );
+    }
+  }
 
   return (
     <div>
@@ -325,13 +451,20 @@ export default function Profile() {
       >
         <AppBar
           position="static"
-          style={{ backgroundColor: "#e3f2fd", color: "black" }}
+          style={{
+            backgroundColor: "#e3f2fd",
+            color: "black",
+          }}
         >
           <Tabs
             value={value}
             onChange={handleChange}
             aria-label="simple tabs example"
-            TabIndicatorProps={{ style: { backgroundColor: "black" } }}
+            TabIndicatorProps={{
+              style: {
+                backgroundColor: "black",
+              },
+            }}
           >
             <Tab label="Setting" {...a11yProps(0)} />
             <Tab label="My Request" {...a11yProps(1)} />
@@ -372,7 +505,11 @@ export default function Profile() {
               Update Blockchain Address (Vendor Only)
             </Typography>
           </div>
-
+          {/* TODO */}
+          <div>
+            <h3>++++++++</h3>
+            {arr}
+          </div>
           <div
             style={{
               borderRadius: "13px",

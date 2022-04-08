@@ -276,4 +276,20 @@ router.post("/change-avatar", async (req, res) => {
   );
 });
 
+router.post("/update-blockchain-address", async (req, res) => {
+  console.log("update-blockchain-address", req.body);
+  requesttable.findOneAndUpdate(
+    { _id: req.body._id },
+    { $set: { blockchainAddress: req.body.blockchainAddress } },
+    { overwrite: true },
+    function(err, result) {
+      if (err) {
+        res.send(err);
+      } else {
+        console.log("success++", result);
+      }
+    }
+  );
+});
+
 module.exports = router;
