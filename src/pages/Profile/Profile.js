@@ -505,135 +505,7 @@ export default function Profile() {
               Update Blockchain Address (Vendor Only)
             </Typography>
           </div>
-          {/* TODO */}
-          <div>
-            <h3>++++++++</h3>
-            {arr}
-          </div>
-          <div
-            style={{
-              borderRadius: "13px",
-              lineHeight: "19px",
-              lineHeight: "100%",
-              width: "805px",
-              height: "80px",
-            }}
-          >
-            <br></br>
-
-            <Card className={classes.paymentCcard}>
-              <CardContent>
-                <div
-                  style={{
-                    display: "inline-block",
-                    fontFamily: "Lato",
-                    fontStyle: "Bold",
-                    size: "16px",
-                    color: "#4E4E4E",
-                  }}
-                >
-                  <Typography variant="body1" component="div">
-                    email123@email.com
-                  </Typography>
-                </div>
-                <div
-                  style={{
-                    display: "inline-block",
-                    fontFamily: "Lato",
-                    fontStyle: "Bold",
-                    size: "16px",
-                    color: "#7EA6F4",
-                    marginLeft: "20px",
-                  }}
-                >
-                  <Typography variant="body1" component="div">
-                    Verified Vendor
-                  </Typography>
-                </div>
-                <div
-                  style={{
-                    display: "inline-block",
-                    marginLeft: "350px",
-                  }}
-                >
-                  <IconButton>
-                    <RemoveIcon />
-                  </IconButton>
-                </div>
-                <div
-                  style={{
-                    display: "inline-block",
-                    fontFamily: "Lato",
-                    size: "14px",
-                    color: "#4E4E4E",
-                  }}
-                >
-                  <Typography variant="body1" component="div">
-                    0x98BfA478D7e25f4A424c8f1E96A190368D118b22
-                  </Typography>
-                </div>
-              </CardContent>
-            </Card>
-
-            <br></br>
-            <br></br>
-
-            <Card className={classes.paymentCard}>
-              <CardContent>
-                <div
-                  style={{
-                    display: "inline-block",
-                    fontFamily: "Lato",
-                    fontStyle: "Bold",
-                    size: "16px",
-                    color: "#4E4E4E",
-                  }}
-                >
-                  <Typography variant="body1" component="div">
-                    email123@email.com
-                  </Typography>
-                </div>
-                <div
-                  style={{
-                    display: "inline-block",
-                    fontFamily: "Lato",
-                    fontStyle: "Bold",
-                    size: "16px",
-                    color: "#7EA6F4",
-                    marginLeft: "20px",
-                  }}
-                >
-                  <Typography variant="body1" component="div">
-                    Verified Receiver
-                  </Typography>
-                </div>
-                <div
-                  style={{
-                    display: "inline-block",
-                    marginLeft: "342px",
-                  }}
-                >
-                  <IconButton>
-                    <RemoveIcon />
-                  </IconButton>
-                </div>
-                <div
-                  style={{
-                    display: "inline-block",
-                    fontFamily: "Lato",
-                    size: "14px",
-                    color: "#4E4E4E",
-                  }}
-                >
-                  <Typography variant="body1" component="div">
-                    0x98BfA478D7e25f4A424c8f1E96A190368D118b22
-                  </Typography>
-                </div>
-              </CardContent>
-            </Card>
-            <br></br>
-            <br></br>
-          </div>
+          <div>{arr}</div>
         </TabPanel>
         <TabPanel value={value} index={1}>
           <Card>
@@ -980,6 +852,130 @@ export default function Profile() {
                       >
                         Submit
                       </Button>
+                      <br></br>
+                      <br></br>
+                    </div>
+                    <div
+                      style={{
+                        borderRadius: "13px",
+                        lineHeight: "19px",
+                        lineHeight: "100%",
+                        width: "805px",
+                        height: "80px",
+                      }}
+                    >
+                      <br></br>
+
+                      <Card className={classes.paymentCcard}>
+                        <CardContent>
+                          <div
+                            style={{
+                              display: "inline-block",
+                              fontFamily: "Lato",
+                              fontStyle: "Bold",
+                              size: "16px",
+                              color: "#4E4E4E",
+                            }}
+                          >
+                            <Typography variant="body1" component="div">
+                              email123@email.com
+                            </Typography>
+                          </div>
+                          <div
+                            style={{
+                              display: "inline-block",
+                              fontFamily: "Lato",
+                              fontStyle: "Bold",
+                              size: "16px",
+                              color: "#7EA6F4",
+                              marginLeft: "20px",
+                            }}
+                          >
+                            <Typography variant="body1" component="div">
+                              Verified Vendor
+                            </Typography>
+                          </div>
+                          <div
+                            style={{
+                              display: "inline-block",
+                              marginLeft: "350px",
+                            }}
+                          >
+                            <IconButton>
+                              <RemoveIcon />
+                            </IconButton>
+                          </div>
+                          <div
+                            style={{
+                              display: "inline-block",
+                              fontFamily: "Lato",
+                              size: "14px",
+                              color: "#4E4E4E",
+                            }}
+                          >
+                            <Typography variant="body1" component="div">
+                              0x98BfA478D7e25f4A424c8f1E96A190368D118b22
+                            </Typography>
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                      <br></br>
+                      <br></br>
+
+                      <Card className={classes.paymentCard}>
+                        <CardContent>
+                          <div
+                            style={{
+                              display: "inline-block",
+                              fontFamily: "Lato",
+                              fontStyle: "Bold",
+                              size: "16px",
+                              color: "#4E4E4E",
+                            }}
+                          >
+                            <Typography variant="body1" component="div">
+                              email123@email.com
+                            </Typography>
+                          </div>
+                          <div
+                            style={{
+                              display: "inline-block",
+                              fontFamily: "Lato",
+                              fontStyle: "Bold",
+                              size: "16px",
+                              color: "#7EA6F4",
+                              marginLeft: "20px",
+                            }}
+                          >
+                            <Typography variant="body1" component="div">
+                              Verified Receiver
+                            </Typography>
+                          </div>
+                          <div
+                            style={{
+                              display: "inline-block",
+                              marginLeft: "342px",
+                            }}
+                          >
+                            <IconButton>
+                              <RemoveIcon />
+                            </IconButton>
+                          </div>
+                          <div
+                            style={{
+                              display: "inline-block",
+                              fontFamily: "Lato",
+                              size: "14px",
+                              color: "#4E4E4E",
+                            }}
+                          >
+                            <Typography variant="body1" component="div">
+                              0x98BfA478D7e25f4A424c8f1E96A190368D118b22
+                            </Typography>
+                          </div>
+                        </CardContent>
+                      </Card>
                       <br></br>
                       <br></br>
                     </div>
