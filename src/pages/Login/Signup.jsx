@@ -11,7 +11,7 @@ export default function SignUp() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
-  const [role, setRole] = useState();
+  const [role, setRole] = useState("Donor");
 
   async function handleSubmit(e) {
     e.preventDefault();
