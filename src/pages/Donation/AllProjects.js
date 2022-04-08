@@ -171,83 +171,99 @@ export default function AllProjects() {
   for (let i = 0; i < events.length; i++) {
     arr.push(
       <Grid item xs={12} sm={6}>
-        <Card variant="outlined" style={{ height: "25vh" }}>
-          <CardContent
-            style={{
-              height: "18vh",
-              ordWrap: "break-word",
-              display: "block",
-              overflow: "hidden",
-              whiteSpace: "normal",
-            }}
-          >
-            <img src={events[i].imageUrl} />
-            {/* <ShowImage url={events[i].imageUrl} /> */}
-            <Typography
-              id="title"
-              gutterBottom
-              variant="h6"
-              style={{ fontSize: "2.5vh" }}
-            >
-              {events[i].title}
-            </Typography>
-            <Typography
-              noWrap
-              variant="body2"
-              color="textSecondary"
-              component="p"
-            >
-              {events[i].current_amount} raised of {events[i].target_amount} XYZ
-              Token
-            </Typography>
-            <Typography
-              noWrap
-              variant="body2"
-              color="textSecondary"
-              component="p"
-            >
-              Blockchain Address: {events[i].blockchainAddress}
-            </Typography>
-            <Typography
-              noWrap
-              variant="body2"
-              color="textSecondary"
-              component="p"
-            >
-              {" "}
-              Description:
-              {events[i].description}
-            </Typography>
-            {/* test _id */}
-            <Typography
-              noWrap
-              variant="body2"
-              color="textSecondary"
-              component="p"
-            >
-              {events[i]._id}
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <DonationPopOver
-              amount={
-                events[i].current_amount +
-                " raised of " +
-                events[i].target_amount
-              }
-              address={events[i].blockchainAddress}
-              content={events[i].description}
-              request_id={events[i]._id}
-              blockchainAddress={events[i].address}
-              current_amount={events[i].current_amount}
-              target_amount={events[i].target_amount}
-              requester_name={events[i].requester_name}
-              req_title={events[i].title}
-              description={events[i].description}
-              donation_history={events[i].donation_history}
-              vendor_name={events[i].vendor_name}
-            />
-          </CardActions>
+        <Card>
+          <Grid container>
+            <Grid item style={{ width: "50%", backgroundSize: "contained" }}>
+              <img src={events[i].imageUrl} width="100%" height="100%" />
+            </Grid>
+            <Grid item style={{ width: "50%" }}>
+              <Card variant="outlined" style={{ height: "35vh" }}>
+                <CardContent
+                  style={{
+                    height: "80%",
+                    ordWrap: "break-word",
+                    display: "block",
+                    overflow: "hidden",
+                    whiteSpace: "normal",
+                  }}
+                >
+                  {/* <ShowImage url={events[i].imageUrl} /> */}
+                  <Typography
+                    id="title"
+                    gutterBottom
+                    variant="h6"
+                    style={{ fontSize: "2.5vh" }}
+                  >
+                    {events[i].title}
+                  </Typography>
+                  <Typography
+                    noWrap
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                  >
+                    <b>{events[i].current_amount} raised</b> of{" "}
+                    {events[i].target_amount} XYZ Token
+                  </Typography>
+                  <Typography
+                    noWrap
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                  >
+                    Blockchain Address: {events[i].blockchainAddress}
+                  </Typography>
+                  <Typography
+                    noWrap
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                  >
+                    {" "}
+                    Description:
+                    {events[i].description}
+                  </Typography>
+                  {/* test _id */}
+                  <Typography
+                    noWrap
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                  >
+                    {events[i]._id}
+                  </Typography>
+                </CardContent>
+                <CardActions
+                  style={{
+                    height: "80%",
+                    ordWrap: "break-word",
+                    display: "block",
+                    overflow: "hidden",
+                    whiteSpace: "normal",
+                  }}
+                >
+                  <DonationPopOver
+                    amount={
+                      events[i].current_amount +
+                      " raised of " +
+                      events[i].target_amount
+                    }
+                    address={events[i].blockchainAddress}
+                    content={events[i].description}
+                    request_id={events[i]._id}
+                    blockchainAddress={events[i].address}
+                    current_amount={events[i].current_amount}
+                    target_amount={events[i].target_amount}
+                    requester_name={events[i].requester_name}
+                    req_title={events[i].title}
+                    description={events[i].description}
+                    donation_history={events[i].donation_history}
+                    vendor_name={events[i].vendor_name}
+                  />
+                </CardActions>
+              </Card>
+            </Grid>
+          </Grid>
         </Card>
       </Grid>
     );
@@ -305,8 +321,8 @@ export default function AllProjects() {
             onChange={handleSearch}
           />
         </Toolbar>
-        <div style={{ maxHeight: "55vh", overflow: "auto" }}>
-          <Grid container spacing={3}>
+        <div style={{ maxHeight: "200vh", overflow: "auto" }}>
+          <Grid container spacing={2}>
             {arr}
           </Grid>
         </div>

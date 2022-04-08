@@ -68,6 +68,8 @@ const requestTemplate = new mongoose.Schema({
   },
   imageUrl: {
     type: String,
+    default:
+      "https://storage.googleapis.com/proudcity/sanrafaelca/uploads/2020/04/donate-image.png",
   },
 });
 

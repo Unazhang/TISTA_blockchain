@@ -259,4 +259,21 @@ router.get("/user", async (req, res) => {
     }
   });
 });
+
+router.post("/change-avatar", async (req, res) => {
+  console.log("inside change avatar", req.body);
+  users.findOneAndUpdate(
+    { email: req.body.user_email },
+    { $set: { avatarUrl: req.body.avatarUrl } },
+    { overwrite: true },
+    function(err, result) {
+      if (err) {
+        res.send(err);
+      } else {
+        console.log("success", result);
+      }
+    }
+  );
+});
+
 module.exports = router;

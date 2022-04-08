@@ -39,7 +39,7 @@ import {
   // makeStyles,
 } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
-import pholder from "../../pages/Profile/avatar.png";
+// import pholder from "../../pages/Profile/avatar.png";
 // https://material-ui.com/demos/drawers/#full-height-navigation
 
 import BuySell from "../../pages/BuySell/BuySell.js";

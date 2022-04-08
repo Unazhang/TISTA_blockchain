@@ -9,7 +9,6 @@ import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
-import pholder from "./avatar.png";
 import UploadButtons from "../Donation/upload";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -34,6 +33,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { CardHeader } from "@mui/material";
 import { TableContainer } from "@material-ui/core";
+import { Form, FormLabel } from "react-bootstrap";
 
 const Data = [
   { name: "Jack", status: "Verified Vendor" },
@@ -259,14 +259,12 @@ export default function Profile() {
   // get user avatar
   // get user object
   const fetchProfile = async () => {
-    console.log("hiiii");
     await axios
       .get(`${API_BASE_URL}/app/user`, { params: { user_email: user_email } })
       .catch((err) => {
         console.log(err);
       })
       .then((res) => {
-        console.log("avatar response", res);
         setAvatarUrl(res.data);
       });
   };
@@ -275,22 +273,32 @@ export default function Profile() {
     fetchProfile();
   }, []);
 
+  const handleAvatarSubmit = async () => {
+    await axios
+      .post(`${API_BASE_URL}/app/change-avatar`, {
+        user_email: user_email,
+        avatarUrl: avatarUrl,
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .then((res) => {
+        console.log("avatar change response", res);
+        setAvatarUrl(avatarUrl);
+      });
+  };
+
   return (
     <div>
-      <Card>
-        {/* <ShowImage url={avatarUrl} /> */}
-        <img src={avatarUrl} />
-      </Card>
       <div
         style={{
           color: "#000000",
           fontFamily: "Lato",
           size: "24px",
+          marginLeft: "5px",
         }}
       >
-        {/* <div style={{ display: "inline-block" }}> */}
-        {/* <Avatar alt="PlaceHolder" src={pholder} className={classes.large} /> */}
-        {/* </div> */}
+        <Avatar alt="PlaceHolder" src={avatarUrl} className={classes.large} />
         <div
           style={{
             fontFamily: "Lato",
@@ -306,7 +314,15 @@ export default function Profile() {
           <br />
         </div>
       </div>
-      <div className={classes.root}>
+      {/* <div className={classes.root}> */}
+      <div
+        style={{
+          color: "#000000",
+          fontFamily: "Lato",
+          size: "24px",
+          marginLeft: "5px",
+        }}
+      >
         <AppBar position="static">
           <Tabs
             value={value}
@@ -320,56 +336,21 @@ export default function Profile() {
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>
-          <br></br>
-          <br></br>
-          <div
-            style={{
-              fontFamily: "Lato",
-              size: "18px",
-              marginTop: "-70px",
-              marginLeft: "110px",
-            }}
-          >
-            <Typography variant="body1" component="div">
-              Change/Upload Profile Picture
-            </Typography>
-            <div
-              style={{
-                display: "inline-block",
-                // marginLeft: "100px",
-                marginTop: "-500px",
-                fontFamily: "Lato",
-                size: "14px",
-              }}
-            >
-              <label htmlFor="contained-button-file">
-                <Input
-                  accept="image/*"
-                  id="contained-button-file"
-                  multiple
-                  type="file"
-                />
-                <Button
-                  size="large"
-                  variant="contained"
-                  component="span"
-                  style={{
-                    color: "primary",
-                    display: "inline-block",
-                    width: "120px",
-                    height: "32px",
-                    marginLeft: "-100px",
-                    marginTop: "20px",
-                    fontFamily: "Lato",
-                    size: "10px",
-                    align: "center",
-                  }}
-                >
-                  upload
-                </Button>
-              </label>
-            </div>
-          </div>
+          <Form onSubmit={handleAvatarSubmit}>
+            <Form.Group>
+              <FormLabel> Enter new avatar url:</FormLabel>
+              <Form.Control
+                type="text"
+                onChange={(e) => setAvatarUrl(e.target.value)}
+                style={{ width: 550 }}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Button variant="outlined" color="primary" type="submit">
+                Change Profile Picture
+              </Button>
+            </Form.Group>
+          </Form>
           <div
             style={{
               display: "inline-block",
@@ -630,13 +611,7 @@ export default function Profile() {
                             marginLeft: "20px",
                             marginTop: "10px",
                           }}
-                        >
-                          <Avatar
-                            alt="PlaceHolder"
-                            src={pholder}
-                            className={classes.medium}
-                          />
-                        </div>
+                        ></div>
                         <div
                           style={{
                             marginLeft: "100px",
