@@ -19,6 +19,8 @@ const createToken = (id) => {
   });
 };
 
+const moment = require("moment");
+
 // router.post("/signup", async (req, res) => {
 //   console.log("inside /signup...");
 //   console.log("signup request body", req.body);
@@ -78,11 +80,16 @@ router.post("/signup", async (req, res) => {
     });
 });
 
+router.post("/uploadImage", async (req, res) => {
+  console.log("inside upload image", req.body);
+});
+
 //TODO change according to new user schema
 router.post("/make-a-donation", async (req, res) => {
+  console.log("inside make-a-donation", req.body);
   requesttable.findOneAndUpdate(
-    { blockchainAddress: req.body.receiver },
-    { $inc: { currentAmount: req.body.amount } },
+    { _id: req.body.request_id },
+    { $inc: { current_amount: req.body.amount } },
     { overwrite: true },
     function(err, result) {
       if (err) {
@@ -92,9 +99,40 @@ router.post("/make-a-donation", async (req, res) => {
       }
     }
   );
-  mytable.findOneAndUpdate(
-    { userName: req.body.userName },
-    { $addToSet: { donateTo: req.body.receiver } },
+  requesttable.findOneAndUpdate(
+    { _id: req.body.request_id },
+    {
+      $push: {
+        donation_history: {
+          donor_name:
+            req.body.donor_name == "" ? "Anonymous" : req.body.donor_name,
+          donated_amount: req.body.amount,
+        },
+      },
+    },
+    { overwrite: false },
+    function(err, result) {
+      if (err) {
+        res.send(err);
+      } else {
+        console.log("Current Amount Updated+++++++++++2222", result);
+      }
+    }
+  );
+  users.findOneAndUpdate(
+    { email: req.body.email },
+    {
+      $push: {
+        donateTo: {
+          donor_name:
+            req.body.donor_name == "" ? "Anonymous" : req.body.donor_name,
+          donated_amount: req.body.amount,
+          title: req.body.title,
+          amountUSD: req.body.amount * 0.25,
+        },
+      },
+    },
+    { overwrite: false },
     function(err, result) {
       if (err) {
         res.send(err);
@@ -141,6 +179,7 @@ router.post("/request", async (req, res) => {
     target_amount: req.body.target_amount,
     vendor_name: req.body.vendor_name,
     vendor_email: req.body.vendor_email,
+    imageUrl: req.body.imageUrl,
   });
   request
     .save()
@@ -187,6 +226,19 @@ router.get("/addresses", async (req, res) => {
   });
 });
 
+router.get("/find-donations-by-user", async (req, res) => {
+  const user_email = req.query.email;
+  console.log("inside find-donations-by-user", user_email);
+  users.findOne({ email: user_email }, function(err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+      console.log("my donations", result.donateTo);
+      res.send(result.donateTo);
+    }
+  });
+});
+
 router.post("/role", async (req, res) => {
   // console.log("query role");
   // users.find({ uid: req.body.uid })
@@ -201,6 +253,49 @@ router.post("/role", async (req, res) => {
       }
     }
   });
+});
+
+router.get("/user", async (req, res) => {
+  console.log("inside /user", req.query);
+  users.findOne({ email: req.query.user_email }, function(err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result.avatarUrl);
+    }
+  });
+});
+
+router.post("/change-avatar", async (req, res) => {
+  console.log("inside change avatar", req.body);
+  users.findOneAndUpdate(
+    { email: req.body.user_email },
+    { $set: { avatarUrl: req.body.avatarUrl } },
+    { overwrite: true },
+    function(err, result) {
+      if (err) {
+        res.send(err);
+      } else {
+        console.log("success", result);
+      }
+    }
+  );
+});
+
+router.post("/update-blockchain-address", async (req, res) => {
+  console.log("update-blockchain-address", req.body);
+  requesttable.findOneAndUpdate(
+    { _id: req.body._id },
+    { $set: { blockchainAddress: req.body.blockchainAddress } },
+    { overwrite: true },
+    function(err, result) {
+      if (err) {
+        res.send(err);
+      } else {
+        console.log("success++", result);
+      }
+    }
+  );
 });
 
 module.exports = router;

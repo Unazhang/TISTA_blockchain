@@ -19,13 +19,15 @@ import Requester from "./pages/Roles/Requester";
 import Donor from "./pages/Roles/Donor";
 import MakeNewDonation from "./pages/Donation/MakeNewDonation";
 import { useAuth } from "./contexts/AuthContext";
-
+import UploadImage from "./pages/RequestDonation/UploadImage";
 function App() {
   const { role } = useAuth();
   // console.log(role);
 
   return (
     <div>
+      {/* <UploadImage /> */}
+      {/* <RequestDonation /> */}
       <div width="100%">
         <Switch>
           <Route path="/signup" component={Signup} />

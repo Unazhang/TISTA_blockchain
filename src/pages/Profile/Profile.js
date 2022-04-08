@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
@@ -7,9 +7,8 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
-import { makeStyles } from "@material-ui/core";
+import { FormControl, makeStyles } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
-import pholder from "./avatar.png";
 import UploadButtons from "../Donation/upload";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -24,6 +23,17 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import { styled } from "@mui/material/styles";
 import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import axios from "axios";
+import { useAuth } from "../../contexts/AuthContext";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import { CardHeader } from "@mui/material";
+import { TableContainer } from "@material-ui/core";
+import { Form, FormLabel } from "react-bootstrap";
 
 const Data = [
   { name: "Jack", status: "Verified Vendor" },
@@ -102,6 +112,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Profile() {
+  let { currentUser } = useAuth();
+  let user_email = currentUser.email;
+
   const [name, setName] = useState("");
   const [found, setFound] = useState(Data);
 
@@ -109,6 +122,8 @@ export default function Profile() {
   const [value, setValue] = React.useState(0);
 
   const [submit, setSubmit] = useState(false);
+
+  const [avatarUrl, setAvatarUrl] = useState("");
 
   const handleSearch = (e) => {
     const keyword = e.target.value;
@@ -124,10 +139,6 @@ export default function Profile() {
     }
     setName(keyword);
   };
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
   const handleSubmit = (event) => {
     setSubmit(!submit);
   };
@@ -136,99 +147,352 @@ export default function Profile() {
     display: "none",
   });
 
+  // tab content -- My Request
+  const API_BASE_URL = `http://localhost:4000`;
+
+  const handleChange = (event, newValue) => {
+    console.log("newValue", newValue);
+    setValue(newValue); // set tab index
+    if (newValue == 0) {
+      fetchProfile();
+      fetchRequests();
+    } else if (newValue == 1) {
+      fetchRequests();
+    } else if (newValue == 2) {
+      fetchDonationsByUser();
+    }
+  };
+
+  const [events, setEvents] = useState([]);
+
+  const fetchRequests = async () => {
+    try {
+      const result = await axios.get(`${API_BASE_URL}/app/donation`);
+      setEvents(result.data);
+    } catch (error) {
+      console.log("cannot fetch all projects", error);
+    }
+  };
+
+  // display request history
+
+  function createData(
+    id,
+    created_on,
+    title,
+    vendor,
+    current_amount,
+    target_amount,
+    status
+  ) {
+    return {
+      id,
+      created_on,
+      title,
+      vendor,
+      current_amount,
+      target_amount,
+      status,
+    };
+  }
+  let rows_req = [];
+  for (let i = 0; i < events.length; i++) {
+    if (events[i].user_email === user_email) {
+      // const amount_usd = events[i].donated_amount * 0.25;
+      rows_req.push(
+        createData(
+          i,
+          events[i].date,
+          events[i].title,
+          events[i].vendor_name,
+          events[i].current_amount,
+          events[i].target_amount,
+          "Verified"
+        )
+      );
+    }
+  }
+
+  // tab content -- My Donation
+
+  const [myDonations, setMyDonations] = useState([]);
+
+  const fetchDonationsByUser = async () => {
+    try {
+      const result = await axios.get(
+        `${API_BASE_URL}/app/find-donations-by-user`,
+        {
+          params: {
+            email: user_email,
+          },
+        }
+      );
+      console.log("result.data", result.data);
+      setMyDonations(result.data);
+    } catch (error) {
+      console.log("cannot fetch donation records by user", error);
+    }
+  };
+
+  // display my donation history
+
+  function createDonations(id, donated_on, title, donated_amount, amountUSD) {
+    return {
+      id,
+      donated_on,
+      title,
+      donated_amount,
+      amountUSD,
+    };
+  }
+  let rows_don = [];
+  for (let i = 0; i < myDonations.length; i++) {
+    rows_don.push(
+      createDonations(
+        i,
+        myDonations[i].donated_on,
+        myDonations[i].title,
+        myDonations[i].donated_amount,
+        myDonations[i].amountUSD
+      )
+    );
+  }
+  // get user avatar
+  const fetchProfile = async () => {
+    await axios
+      .get(`${API_BASE_URL}/app/user`, {
+        params: { user_email: user_email },
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .then((res) => {
+        setAvatarUrl(res.data);
+      });
+  };
+
+  useEffect(() => {
+    fetchProfile();
+    fetchRequests();
+  }, []);
+
+  const handleAvatarSubmit = async () => {
+    await axios
+      .post(`${API_BASE_URL}/app/change-avatar`, {
+        user_email: user_email,
+        avatarUrl: avatarUrl,
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .then((res) => {
+        console.log("avatar change response", res);
+        setAvatarUrl(avatarUrl);
+      });
+  };
+
+  // get vendor's related projects
+
+  const [blockchainAddress, setBlockchainAddress] = useState("");
+  const [requestId, setRequestId] = useState("");
+
+  const handleBlockchainAddressSubmit = async (e) => {
+    e.preventDefault();
+    const data = {
+      blockchainAddress,
+      _id: requestId,
+    };
+    console.log("handleBlockchainAddressSubmit", data);
+    await axios
+      .post(`${API_BASE_URL}/app/update-blockchain-address`, data)
+      .catch((err) => {
+        console.log(err);
+      })
+      .then((res) => {
+        console.log(res);
+      });
+  };
+
+  let arr = [];
+  for (let i = 0; i < events.length; i++) {
+    if (
+      events[i].vendor_email === user_email &&
+      events[i].blockchainAddress.length === 0
+    ) {
+      arr.push(
+        <Grid item xs={12} sm={6}>
+          <Card>
+            <Grid container>
+              <Grid item style={{ width: "50%", backgroundSize: "contained" }}>
+                <img src={events[i].imageUrl} width="100%" height="100%" />
+              </Grid>
+              <Grid item style={{ width: "50%", height: "100%" }}>
+                <Card variant="outlined" style={{ height: "100%" }}>
+                  <CardContent
+                    style={{
+                      height: "80%",
+                      ordWrap: "break-word",
+                      display: "block",
+                      overflow: "hidden",
+                      whiteSpace: "normal",
+                    }}
+                  >
+                    <Typography
+                      id="title"
+                      gutterBottom
+                      variant="h6"
+                      style={{ fontSize: "2vh", color: "red" }}
+                    >
+                      {events[i].title} project is waiting for your info......
+                    </Typography>
+                    <Typography
+                      id="title"
+                      gutterBottom
+                      variant="h6"
+                      style={{ fontSize: "2vh" }}
+                    >
+                      Requester: {events[i].requester_name}
+                    </Typography>
+                    <Typography
+                      noWrap
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
+                    >
+                      Target Amount:
+                      {events[i].target_amount} XYZ Token
+                    </Typography>
+                    <Typography
+                      noWrap
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
+                    >
+                      {" "}
+                      Description:
+                      {events[i].description}
+                    </Typography>
+                    <br />
+                    <Form onSubmit={handleBlockchainAddressSubmit}>
+                      <Form.Group>
+                        <Form.Control
+                          type="text"
+                          placeholder="Enter your blockchain address: "
+                          onChange={(e) => {
+                            setBlockchainAddress(e.target.value);
+                            setRequestId(events[i]._id);
+                          }}
+                          style={{ width: "98%" }}
+                        ></Form.Control>
+                      </Form.Group>
+                      <Form.Group>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          type="submit"
+                        >
+                          Submit
+                        </Button>
+                      </Form.Group>
+                    </Form>
+                  </CardContent>
+                  <CardActions
+                    style={{
+                      height: "80%",
+                      ordWrap: "break-word",
+                      display: "block",
+                      overflow: "hidden",
+                      whiteSpace: "normal",
+                    }}
+                  ></CardActions>
+                </Card>
+              </Grid>
+            </Grid>
+          </Card>
+        </Grid>
+      );
+    }
+  }
+
   return (
     <div>
       <div
         style={{
-          display: "inline-block",
+          color: "#000000",
           fontFamily: "Lato",
           size: "24px",
-          ineHeight: "29px",
-          lineHeight: "100%",
-          verticalAlign: "top",
+          marginLeft: "5px",
         }}
       >
-        <Typography variant="h6" id="tableTitle" component="div">
-          Settings
-        </Typography>{" "}
+        <Avatar alt="PlaceHolder" src={avatarUrl} className={classes.large} />
+        <div
+          style={{
+            fontFamily: "Lato",
+            size: "18px",
+            marginTop: "-70px",
+            marginLeft: "110px",
+          }}
+        >
+          <Typography variant="h6" component="div">
+            Currently logged in as: {user_email}
+          </Typography>
+          <br />
+          <br />
+        </div>
       </div>
-
-      <div className={classes.root}>
-        <AppBar position="static">
+      {/* <div className={classes.root}> */}
+      <div
+        style={{
+          color: "#000000",
+          fontFamily: "Lato",
+          size: "24px",
+          marginLeft: "5px",
+        }}
+      >
+        <AppBar
+          position="static"
+          style={{
+            backgroundColor: "#e3f2fd",
+            color: "black",
+          }}
+        >
           <Tabs
             value={value}
             onChange={handleChange}
             aria-label="simple tabs example"
+            TabIndicatorProps={{
+              style: {
+                backgroundColor: "black",
+              },
+            }}
           >
-            <Tab label="Profile" {...a11yProps(0)} />
-            <Tab label="Validation" {...a11yProps(1)} />
-            <Tab label="Contact" {...a11yProps(2)} />
+            <Tab label="Setting" {...a11yProps(0)} />
+            <Tab label="My Request" {...a11yProps(1)} />
+            <Tab label="My Donation" {...a11yProps(2)} />
+            <Tab label="My Validation" {...a11yProps(3)} />
           </Tabs>
         </AppBar>
-
         <TabPanel value={value} index={0}>
-          <div style={{ color: "#000000", fontFamily: "Lato", size: "24px" }}>
-            <Typography variant="h6" component="div">
-              Lee's Profile
-            </Typography>
-            <div style={{ display: "inline-block" }}>
-              <Avatar
-                alt="PlaceHolder"
-                src={pholder}
-                className={classes.large}
+          <Typography variant="h6" component="div">
+            Update Personal Information
+          </Typography>
+          <br />
+          <Form onSubmit={handleAvatarSubmit}>
+            <Form.Group>
+              <Form.Control
+                type="text"
+                placeholder="Enter new avatar url:"
+                onChange={(e) => setAvatarUrl(e.target.value)}
+                style={{ width: 550 }}
               />
-            </div>
-            <div
-              style={{
-                fontFamily: "Lato",
-                size: "18px",
-                marginTop: "-70px",
-                marginLeft: "110px",
-              }}
-            >
-              <Typography variant="body1" component="div">
-                Change/Upload Profile Picture
-              </Typography>
-              <div
-                style={{
-                  display: "inline-block",
-                  marginLeft: "100px",
-                  marginTop: "-500px",
-                  fontFamily: "Lato",
-                  size: "14px",
-                }}
-              >
-                <label htmlFor="contained-button-file">
-                  <Input
-                    accept="image/*"
-                    id="contained-button-file"
-                    multiple
-                    type="file"
-                  />
-                  <Button
-                    size="large"
-                    variant="contained"
-                    component="span"
-                    style={{
-                      color: "primary",
-                      display: "inline-block",
-                      width: "120px",
-                      height: "32px",
-                      marginLeft: "-100px",
-                      marginTop: "20px",
-                      fontFamily: "Lato",
-                      size: "10px",
-                      align: "center",
-                    }}
-                  >
-                    upload
-                  </Button>
-                </label>
-              </div>
-            </div>
-          </div>
-          <br></br>
-          <br></br>
+            </Form.Group>
+            <Form.Group>
+              <Button variant="outlined" color="primary" type="submit">
+                Change Profile Picture
+              </Button>
+            </Form.Group>
+          </Form>
+          <br />
           <div
             style={{
               display: "inline-block",
@@ -238,142 +502,88 @@ export default function Profile() {
             }}
           >
             <Typography variant="h6" component="div">
-              Payment Method
+              Update Blockchain Address (Vendor Only)
             </Typography>
           </div>
-
-          <div
-            style={{
-              display: "inline-block",
-              fontFamily: "Lato",
-              size: "16px",
-              Align: "center",
-              marginLeft: "20px",
-              lineHeight: "19px",
-              lineHeight: "100%",
-              lineClamp: "165px",
-            }}
-          >
-            <Button variant="contained" color="primary">
-              Add A Payment Method
-            </Button>
-          </div>
-
-          <div
-            style={{
-              borderRadius: "13px",
-              lineHeight: "19px",
-              lineHeight: "100%",
-              width: "805px",
-              height: "80px",
-            }}
-          >
-            <br></br>
-
-            <Card className={classes.paymentCcard}>
-              <CardContent>
-                <div
-                  style={{
-                    display: "inline-block",
-                    fontFamily: "Lato",
-                    fontStyle: "Bold",
-                    size: "16px",
-                    color: "#4E4E4E",
-                  }}
-                >
-                  <Typography variant="body1" component="div">
-                    email123@email.com
-                  </Typography>
-                </div>
-                <div
-                  style={{
-                    display: "inline-block",
-                    fontFamily: "Lato",
-                    fontStyle: "Bold",
-                    size: "16px",
-                    color: "#7EA6F4",
-                    marginLeft: "20px",
-                  }}
-                >
-                  <Typography variant="body1" component="div">
-                    Verified Vendor
-                  </Typography>
-                </div>
-                <div style={{ display: "inline-block", marginLeft: "350px" }}>
-                  <IconButton>
-                    <RemoveIcon />
-                  </IconButton>
-                </div>
-                <div
-                  style={{
-                    display: "inline-block",
-                    fontFamily: "Lato",
-                    size: "14px",
-                    color: "#4E4E4E",
-                  }}
-                >
-                  <Typography variant="body1" component="div">
-                    0x98BfA478D7e25f4A424c8f1E96A190368D118b22
-                  </Typography>
-                </div>
-              </CardContent>
-            </Card>
-
-            <br></br>
-            <br></br>
-
-            <Card className={classes.paymentCard}>
-              <CardContent>
-                <div
-                  style={{
-                    display: "inline-block",
-                    fontFamily: "Lato",
-                    fontStyle: "Bold",
-                    size: "16px",
-                    color: "#4E4E4E",
-                  }}
-                >
-                  <Typography variant="body1" component="div">
-                    email123@email.com
-                  </Typography>
-                </div>
-                <div
-                  style={{
-                    display: "inline-block",
-                    fontFamily: "Lato",
-                    fontStyle: "Bold",
-                    size: "16px",
-                    color: "#7EA6F4",
-                    marginLeft: "20px",
-                  }}
-                >
-                  <Typography variant="body1" component="div">
-                    Verified Receiver
-                  </Typography>
-                </div>
-                <div style={{ display: "inline-block", marginLeft: "342px" }}>
-                  <IconButton>
-                    <RemoveIcon />
-                  </IconButton>
-                </div>
-                <div
-                  style={{
-                    display: "inline-block",
-                    fontFamily: "Lato",
-                    size: "14px",
-                    color: "#4E4E4E",
-                  }}
-                >
-                  <Typography variant="body1" component="div">
-                    0x98BfA478D7e25f4A424c8f1E96A190368D118b22
-                  </Typography>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+          <div>{arr}</div>
         </TabPanel>
-
         <TabPanel value={value} index={1}>
+          <Card>
+            <CardHeader title="Donation History" />
+            <TableContainer component={Paper}>
+              <Table md={8} aira-label="Donation History">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Created On</TableCell>
+                    <TableCell>Title</TableCell>
+                    <TableCell>Vendor</TableCell>
+                    <TableCell>Amount Raised (XYZ Token)</TableCell>
+                    <TableCell>Target Amount (XYZ Token)</TableCell>
+                    <TableCell>Status</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows_req.map((row) => (
+                    <TableRow
+                      key={row.i}
+                      sx={{
+                        "&:last-child td, &:last-child th": {
+                          border: 0,
+                        },
+                      }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {row.created_on}
+                      </TableCell>
+                      <TableCell align="left">{row.title}</TableCell>
+                      <TableCell align="left">{row.vendor}</TableCell>
+                      <TableCell align="left">{row.current_amount}</TableCell>
+                      <TableCell align="left">{row.target_amount}</TableCell>
+                      <TableCell align="left">{row.status}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Card>
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          <Card>
+            <CardHeader title="Donation History" />
+            <TableContainer component={Paper}>
+              <Table md={8} aira-label="Donation History">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Donated On</TableCell>
+                    <TableCell>Title</TableCell>
+                    <TableCell>Amount Donated (XYZ Token)</TableCell>
+                    <TableCell>In USD</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows_don.map((row) => (
+                    <TableRow
+                      key={row.i}
+                      sx={{
+                        "&:last-child td, &:last-child th": {
+                          border: 0,
+                        },
+                      }}
+                    >
+                      <TableCell component="th" scope="row">
+                        {row.donated_on}
+                      </TableCell>
+                      <TableCell align="left">{row.title}</TableCell>
+                      <TableCell align="left">{row.donated_amount}</TableCell>
+                      <TableCell align="left">{row.amountUSD}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Card>
+        </TabPanel>
+        <TabPanel value={value} index={3}>
           <div>
             <div>
               {submit ? (
@@ -404,13 +614,7 @@ export default function Profile() {
                             marginLeft: "20px",
                             marginTop: "10px",
                           }}
-                        >
-                          <Avatar
-                            alt="PlaceHolder"
-                            src={pholder}
-                            className={classes.medium}
-                          />
-                        </div>
+                        ></div>
                         <div
                           style={{
                             marginLeft: "100px",
@@ -436,7 +640,10 @@ export default function Profile() {
                           </Typography>
                         </div>
                         <div
-                          style={{ marginLeft: "500px", marginTop: "-35px" }}
+                          style={{
+                            marginLeft: "500px",
+                            marginTop: "-35px",
+                          }}
                         >
                           <IconButton>
                             <RemoveIcon />
@@ -504,7 +711,12 @@ export default function Profile() {
                           marginTop: "-128px",
                         }}
                       >
-                        <div style={{ marginLeft: "12px", marginTop: "5px" }}>
+                        <div
+                          style={{
+                            marginLeft: "12px",
+                            marginTop: "5px",
+                          }}
+                        >
                           Add File
                         </div>
                       </Button>
@@ -553,7 +765,7 @@ export default function Profile() {
                         // id="standard-multiline-static"
                         // label="Multiline"
                         multiline
-                        rows={10}
+                        rows_req={10}
                         label="Brief statement of your reason for validation"
                         id="Type in here"
                         defaultValue="Type in here"
@@ -574,7 +786,9 @@ export default function Profile() {
                         sx={{
                           display: "flex",
                           alignItems: "center",
-                          "& > :not(style)": { m: 1 },
+                          "& > :not(style)": {
+                            m: 1,
+                          },
                           width: 800,
                           maxWidth: "100%",
                         }}
@@ -599,7 +813,12 @@ export default function Profile() {
                             marginTop: "70px",
                           }}
                         >
-                          <div style={{ marginLeft: "12px", marginTop: "5px" }}>
+                          <div
+                            style={{
+                              marginLeft: "12px",
+                              marginTop: "5px",
+                            }}
+                          >
                             Add File
                           </div>
                         </Button>
@@ -636,95 +855,135 @@ export default function Profile() {
                       <br></br>
                       <br></br>
                     </div>
+                    <div
+                      style={{
+                        borderRadius: "13px",
+                        lineHeight: "19px",
+                        lineHeight: "100%",
+                        width: "805px",
+                        height: "80px",
+                      }}
+                    >
+                      <br></br>
+
+                      <Card className={classes.paymentCcard}>
+                        <CardContent>
+                          <div
+                            style={{
+                              display: "inline-block",
+                              fontFamily: "Lato",
+                              fontStyle: "Bold",
+                              size: "16px",
+                              color: "#4E4E4E",
+                            }}
+                          >
+                            <Typography variant="body1" component="div">
+                              email123@email.com
+                            </Typography>
+                          </div>
+                          <div
+                            style={{
+                              display: "inline-block",
+                              fontFamily: "Lato",
+                              fontStyle: "Bold",
+                              size: "16px",
+                              color: "#7EA6F4",
+                              marginLeft: "20px",
+                            }}
+                          >
+                            <Typography variant="body1" component="div">
+                              Verified Vendor
+                            </Typography>
+                          </div>
+                          <div
+                            style={{
+                              display: "inline-block",
+                              marginLeft: "350px",
+                            }}
+                          >
+                            <IconButton>
+                              <RemoveIcon />
+                            </IconButton>
+                          </div>
+                          <div
+                            style={{
+                              display: "inline-block",
+                              fontFamily: "Lato",
+                              size: "14px",
+                              color: "#4E4E4E",
+                            }}
+                          >
+                            <Typography variant="body1" component="div">
+                              0x98BfA478D7e25f4A424c8f1E96A190368D118b22
+                            </Typography>
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                      <br></br>
+                      <br></br>
+
+                      <Card className={classes.paymentCard}>
+                        <CardContent>
+                          <div
+                            style={{
+                              display: "inline-block",
+                              fontFamily: "Lato",
+                              fontStyle: "Bold",
+                              size: "16px",
+                              color: "#4E4E4E",
+                            }}
+                          >
+                            <Typography variant="body1" component="div">
+                              email123@email.com
+                            </Typography>
+                          </div>
+                          <div
+                            style={{
+                              display: "inline-block",
+                              fontFamily: "Lato",
+                              fontStyle: "Bold",
+                              size: "16px",
+                              color: "#7EA6F4",
+                              marginLeft: "20px",
+                            }}
+                          >
+                            <Typography variant="body1" component="div">
+                              Verified Receiver
+                            </Typography>
+                          </div>
+                          <div
+                            style={{
+                              display: "inline-block",
+                              marginLeft: "342px",
+                            }}
+                          >
+                            <IconButton>
+                              <RemoveIcon />
+                            </IconButton>
+                          </div>
+                          <div
+                            style={{
+                              display: "inline-block",
+                              fontFamily: "Lato",
+                              size: "14px",
+                              color: "#4E4E4E",
+                            }}
+                          >
+                            <Typography variant="body1" component="div">
+                              0x98BfA478D7e25f4A424c8f1E96A190368D118b22
+                            </Typography>
+                          </div>
+                        </CardContent>
+                      </Card>
+                      <br></br>
+                      <br></br>
+                    </div>
                   </div>
                 </div>
               )}
             </div>
           </div>
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          <Toolbar>
-            <Controls.Input
-              label="Search"
-              className={classes.searchInput}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Search />
-                  </InputAdornment>
-                ),
-              }}
-              onChange={handleSearch}
-            />
-          </Toolbar>
-          <Grid container spacing={3}>
-            {/* {arr} */}
-            {found && found.length > 0 ? (
-              found.map((d) => (
-                <Grid item xs={12} sm={12}>
-                  <div
-                    style={{
-                      width: "805px",
-                      height: "80px",
-                      borderRadius: "13px",
-                      marginLeft: "20px",
-                    }}
-                  >
-                    <Card variant="outlined">
-                      <CardActionArea>
-                        <CardContent>
-                          <Typography
-                            id="title"
-                            gutterBottom
-                            variant="h5"
-                            component="h2"
-                          >
-                            {d.name}
-                          </Typography>
-                          <Typography
-                            variant="body2"
-                            color="textSecondary"
-                            component="p"
-                          >
-                            {d.status}
-                          </Typography>
-                        </CardContent>
-                      </CardActionArea>
-                    </Card>
-                  </div>
-                </Grid>
-              ))
-            ) : (
-              <Grid item xs={12} sm={6}>
-                <Card variant="outlined">
-                  <CardActionArea>
-                    <CardContent>
-                      <Typography
-                        id="title"
-                        gutterBottom
-                        variant="h5"
-                        component="h2"
-                      >
-                        No Result
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                      >
-                        Placeholder
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                  <CardActions>
-                    <Button size="small" color="primary">
-                      Learn More
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            )}
-          </Grid>
         </TabPanel>
       </div>
     </div>

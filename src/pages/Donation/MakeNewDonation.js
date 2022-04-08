@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { useLocation } from "react-router-dom";
-import { Card, Button, Grid } from "@material-ui/core";
+import { Card, Button, Grid, TableContainer } from "@material-ui/core";
 import { CardHeader } from "@mui/material";
 import { Typography } from "@material-ui/core";
 import Send from "./send.js";
@@ -17,8 +17,18 @@ import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import MuiAccordion from "@mui/material/Accordion";
 import MuiAccordionSummary from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import { useAuth } from "../../contexts/AuthContext";
+import DonationProgress from "./DonationProgress";
 
 export default function MakeNewDonation() {
+  let { currentUser } = useAuth();
+  let user_email = currentUser.email;
+
   // post axios
   const API_BASE_URL = `http://localhost:4000`;
 
@@ -29,10 +39,19 @@ export default function MakeNewDonation() {
   // params to pass to send donation form
   let props = {
     isDonation: true,
-    blockchain_address: data.blockchain_address,
+    blockchainAddress: data.blockchainAddress,
     vendor_name: data.vendor_name,
+    request_id: data.request_id,
+    donation_history: data.donation_history,
+    user_email: user_email,
+    title: data.req_title,
   };
 
+  let progressData = {
+    target_amount: data.target_amount,
+    current_amount: data.current_amount,
+    remaining_amount: data.target_amount - data.current_amount,
+  };
   // donation instruction control
 
   const [expanded, setExpanded] = React.useState();
@@ -54,32 +73,87 @@ export default function MakeNewDonation() {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
+  // display donation history
+  function createData(id, donated_on, donor_name, donated_amount, amount_usd) {
+    return {
+      id,
+      donated_on,
+      donor_name,
+      donated_amount,
+      amount_usd,
+    };
+  }
+
+  let rows = [];
+  for (let i = 0; i < props.donation_history.length; i++) {
+    // arr.push(<div>{props.donation_history[i].donor_name}</div>);
+    const amount_usd = props.donation_history[i].donated_amount * 0.25;
+    rows.push(
+      createData(
+        i,
+        props.donation_history[i].donated_on,
+        props.donation_history[i].donor_name,
+        props.donation_history[i].donated_amount,
+        amount_usd
+      )
+    );
+  }
+
   return (
     <div>
       <Box sx={{ width: "100%" }}>
-        <Grid container spacing={2} alignItems="flex-end" wrap="nowrap">
-          <Grid item xs={15}>
+        <Grid container wrap="nowrap">
+          <Grid item md={8}>
+            <Typography>{data.requester_name} | Verified Requester</Typography>
+            <br />
+            <Typography variant="h6">About</Typography>
+            <br />
+            <Typography>{data.description}</Typography>
+            <br />
+            <Typography variant="h6">Third Party Vendor</Typography>
+            <br />
+            <Typography>
+              Blockchain Address: {data.blockchainAddress}
+            </Typography>
+            <br />
+            <Typography variant="h6">Progress</Typography>
+            <br />
+            <DonationProgress {...progressData} />
+            <br />
             <Card>
-              <CardHeader title={data.req_title} />
-              <Typography>
-                {data.requester_name} | Verified Requester
-              </Typography>
-              <Typography variant="h6">About</Typography>
-              <Typography>{data.description}</Typography>
-              <Typography variant="h6">Third Party Vendor</Typography>
-              <Typography>
-                Blockchain Address: {data.blockchain_address}
-              </Typography>
-              <Typography variant="h6">Progress</Typography>
-              <Typography>Goal: {data.target_amount} XYZ Token</Typography>
-              <Typography>
-                Amount Raised: {data.current_amount} XYZ Token
-              </Typography>
-              <Typography variant="h6">Donation History</Typography>
-              <Typography>{data.donation_history}</Typography>
+              <CardHeader title="Donation History" />
+              <TableContainer component={Paper}>
+                <Table md={8} aira-label="Donation History">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Donated On</TableCell>
+                      <TableCell>Donor</TableCell>
+                      <TableCell>Amount Donated (XYZ Token)</TableCell>
+                      <TableCell>In USD</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {rows.map((row) => (
+                      <TableRow
+                        key={row.i}
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell component="th" scope="row">
+                          {row.donated_on}
+                        </TableCell>
+                        <TableCell align="left">{row.donor_name}</TableCell>
+                        <TableCell align="left">{row.donated_amount}</TableCell>
+                        <TableCell align="left">{row.amount_usd}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
             </Card>
           </Grid>
-          <Grid item xs={10}>
+          <Grid item md={4}>
             <div>
               <Button
                 aria-describedby={id}
@@ -182,7 +256,11 @@ export default function MakeNewDonation() {
                 backgroundColor: "#e3f2fd",
               }}
             >
-              <CardHeader title="Donate" />
+              <CardHeader
+                title="Donate"
+                align="left"
+                titleTypographyProps={{ variant: "h4" }}
+              />
               <Send {...props} />
             </Card>
           </Grid>
