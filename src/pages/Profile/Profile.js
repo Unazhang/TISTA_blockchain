@@ -323,11 +323,15 @@ export default function Profile() {
           marginLeft: "5px",
         }}
       >
-        <AppBar position="static">
+        <AppBar
+          position="static"
+          style={{ backgroundColor: "#e3f2fd", color: "black" }}
+        >
           <Tabs
             value={value}
             onChange={handleChange}
             aria-label="simple tabs example"
+            TabIndicatorProps={{ style: { backgroundColor: "black" } }}
           >
             <Tab label="Setting" {...a11yProps(0)} />
             <Tab label="My Request" {...a11yProps(1)} />
@@ -336,11 +340,15 @@ export default function Profile() {
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>
+          <Typography variant="h6" component="div">
+            Update Personal Information
+          </Typography>
+          <br />
           <Form onSubmit={handleAvatarSubmit}>
             <Form.Group>
-              <FormLabel> Enter new avatar url:</FormLabel>
               <Form.Control
                 type="text"
+                placeholder="Enter new avatar url:"
                 onChange={(e) => setAvatarUrl(e.target.value)}
                 style={{ width: 550 }}
               />
@@ -351,6 +359,7 @@ export default function Profile() {
               </Button>
             </Form.Group>
           </Form>
+          <br />
           <div
             style={{
               display: "inline-block",
@@ -360,25 +369,8 @@ export default function Profile() {
             }}
           >
             <Typography variant="h6" component="div">
-              Payment Method
+              Update Blockchain Address (Vendor Only)
             </Typography>
-          </div>
-
-          <div
-            style={{
-              display: "inline-block",
-              fontFamily: "Lato",
-              size: "16px",
-              Align: "center",
-              marginLeft: "20px",
-              lineHeight: "19px",
-              lineHeight: "100%",
-              lineClamp: "165px",
-            }}
-          >
-            <Button variant="contained" color="primary">
-              Add A Payment Method
-            </Button>
           </div>
 
           <div
@@ -502,6 +494,8 @@ export default function Profile() {
                 </div>
               </CardContent>
             </Card>
+            <br></br>
+            <br></br>
           </div>
         </TabPanel>
         <TabPanel value={value} index={1}>
