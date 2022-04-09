@@ -1,45 +1,21 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
 import CardActions from "@material-ui/core/CardActions";
-import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
 import { makeStyles, Toolbar, InputAdornment } from "@material-ui/core";
 import Controls from "../../controls/Controls";
 import { Search } from "@material-ui/icons";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { styled } from "@mui/material/styles";
-import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
-import MuiAccordion from "@mui/material/Accordion";
-import MuiAccordionSummary from "@mui/material/AccordionSummary";
-import MuiAccordionDetails from "@mui/material/AccordionDetails";
-import {
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-} from "@material-ui/core";
 import { reaction } from "mobx";
-import { observer } from "mobx-react-lite";
 import { donationStore } from "./DonationStore";
 import DonationAccordion from "./DonationAccordion";
 import "./Donation.css";
 import DonationPopOver from "./DonationPopOver";
-import Popover from "@material-ui/core/Popover";
-import Modal from "@mui/material/Modal";
+import DonationCards from "../../components/DonationCards";
 
 const Data = [
   { name: "Help Kids" },
@@ -73,18 +49,18 @@ function TabPanel(props) {
   );
 }
 
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
-};
+// TabPanel.propTypes = {
+//   children: PropTypes.node,
+//   index: PropTypes.any.isRequired,
+//   value: PropTypes.any.isRequired,
+// };
 
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
+// function a11yProps(index) {
+//   return {
+//     id: `simple-tab-${index}`,
+//     "aria-controls": `simple-tabpanel-${index}`,
+//   };
+// }
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -117,151 +93,6 @@ export default function AllProjects() {
     },
   });
 
-  let arr = [];
-  const [events, setEvents] = useState([]);
-  const API_BASE_URL = `http://localhost:4000`;
-
-  const fetchDonations = async () => {
-    try {
-      const result = await axios.get(`${API_BASE_URL}/app/donation`);
-      setEvents(result.data);
-    } catch (error) {
-      console.log("cannot fetch all projects", error);
-    }
-  };
-
-  const fetchDonatedAddress = async () => {
-    try {
-      const result = await axios
-        .get(`${API_BASE_URL}/app/donatedAddress`, {
-          userName: localStorage.getItem("userName"),
-        })
-        .then((res) =>
-          console.log(
-            "donatiedAddress",
-            localStorage.getItem("userName"),
-            res,
-            localStorage.getItem("userName")
-          )
-        );
-      // setEvents(result.data);
-    } catch (error) {
-      console.log("error");
-    }
-  };
-
-  reaction(
-    () => donationStore.isUpdate,
-    async (isUpdate) => {
-      if (isUpdate) {
-        donationStore.isUpdate = false;
-        await fetchDonations();
-        await fetchDonatedAddress();
-      } else {
-        console.log("autorun !false");
-      }
-    }
-  );
-
-  useEffect(() => {
-    fetchDonations();
-    fetchDonatedAddress();
-  }, [null]);
-
-  for (let i = 0; i < events.length; i++) {
-    if (events[i].blockchainAddress.length > 0) {
-      arr.push(
-        <Grid item xs={12} sm={6}>
-          <Card>
-            <Grid container>
-              <Grid item style={{ width: "50%", backgroundSize: "contained" }}>
-                <img src={events[i].imageUrl} width="100%" height="100%" />
-              </Grid>
-              <Grid item style={{ width: "50%" }}>
-                <Card variant="outlined" style={{ height: "100%" }}>
-                  <CardContent
-                    style={{
-                      height: "80%",
-                      ordWrap: "break-word",
-                      display: "block",
-                      overflow: "hidden",
-                      whiteSpace: "normal",
-                    }}
-                  >
-                    {/* <ShowImage url={events[i].imageUrl} /> */}
-                    <Typography
-                      id="title"
-                      gutterBottom
-                      variant="h6"
-                      style={{ fontSize: "2.5vh" }}
-                    >
-                      {events[i].title}
-                    </Typography>
-                    <Typography
-                      noWrap
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                    >
-                      <b>{events[i].current_amount} raised</b> of{" "}
-                      {events[i].target_amount} XYZ Token
-                    </Typography>
-                    <Typography
-                      noWrap
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                    >
-                      Blockchain Address: {events[i].blockchainAddress}
-                    </Typography>
-                    <Typography
-                      noWrap
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                    >
-                      {" "}
-                      Description:
-                      {events[i].description}
-                    </Typography>
-                  </CardContent>
-                  <CardActions
-                    style={{
-                      height: "80%",
-                      ordWrap: "break-word",
-                      display: "block",
-                      overflow: "hidden",
-                      whiteSpace: "normal",
-                    }}
-                  >
-                    <DonationPopOver
-                      amount={
-                        events[i].current_amount +
-                        " raised of " +
-                        events[i].target_amount
-                      }
-                      address={events[i].blockchainAddress}
-                      content={events[i].description}
-                      request_id={events[i]._id}
-                      blockchainAddress={events[i].address}
-                      current_amount={events[i].current_amount}
-                      target_amount={events[i].target_amount}
-                      requester_name={events[i].requester_name}
-                      req_title={events[i].title}
-                      description={events[i].description}
-                      donation_history={events[i].donation_history}
-                      vendor_name={events[i].vendor_name}
-                    />
-                  </CardActions>
-                </Card>
-              </Grid>
-            </Grid>
-          </Card>
-        </Grid>
-      );
-    }
-  }
-
   // const [openDonate, setOpenDonate] = React.useState(false);
 
   // useEffect(() => {
@@ -293,9 +124,9 @@ export default function AllProjects() {
     setName(keyword);
   };
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  // const handleChange = (event, newValue) => {
+  //   setValue(newValue);
+  // };
 
   return (
     <div className={classes.root}>
@@ -316,7 +147,7 @@ export default function AllProjects() {
         </Toolbar>
         <div style={{ maxHeight: "200vh", overflow: "auto" }}>
           <Grid container spacing={2}>
-            {arr}
+            <DonationCards />
           </Grid>
         </div>
       </TabPanel>
