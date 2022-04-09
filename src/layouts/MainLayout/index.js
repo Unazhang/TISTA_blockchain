@@ -29,6 +29,7 @@ import { useHistory } from "react-router-dom";
 // import ListItemText from "@material-ui/core/ListItemText";
 // import authService from "../../service/authService";
 import { Link } from "react-router-dom";
+import RequireRole from "../../pages/RequireRole";
 // import User from "../../pages/Profile/User";
 // import Profile from "../../pages/Profile/Profile";
 import CloseIcon from "@material-ui/icons/Close";
@@ -88,20 +89,20 @@ const styles = (theme) => ({
 
 function MainLayout(props) {
   const { classes, children } = props;
-  const [openPopup, setOpenDonate] = useState(false);
-  const [openBuySell, setOpenBuySell] = useState(false);
+  // const [openPopup, setOpenDonate] = useState(false);
+  // const [openBuySell, setOpenBuySell] = useState(false);
   const [openUser, setOpenUser] = useState(false);
   const his = () => {
     const history = useHistory();
     history.push("/login");
   };
-  const handleopenUser = () => {
-    setOpenUser(true);
-  };
+  // const handleopenUser = () => {
+  //   setOpenUser(true);
+  // };
 
-  const handleCloseUser = () => {
-    setOpenUser(false);
-  };
+  // const handleCloseUser = () => {
+  //   setOpenUser(false);
+  // };
 
   const userEmail = currentUser == null ? null : currentUser.email;
 
@@ -134,11 +135,13 @@ function MainLayout(props) {
               Community
             </NavLink>
           </div>
-          <div className={classes.navbutton}>
-            <NavLink to="/request" icon={RequestPageIcon}>
-              Request
-            </NavLink>
-          </div>
+          <RequireRole requiredRole={"Requester"}>
+            <div className={classes.navbutton}>
+              <NavLink to="/request" icon={RequestPageIcon}>
+                Request
+              </NavLink>
+            </div>
+          </RequireRole>
           <div style={{ display: "flex", flex: 1 }} />
           <Tooltip title="My Profile">
             <IconButton component={Link} to="/profile">
