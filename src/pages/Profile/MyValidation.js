@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { styled } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
 import {
   Typography,
   Card,
@@ -9,10 +9,11 @@ import {
   Button,
   TextField,
   makeStyles,
+  OutlinedInput,
 } from "@material-ui/core";
 import RemoveIcon from "@material-ui/icons/RemoveCircle";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
-import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
+// import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
 
 const useStyles = makeStyles((theme) => ({
   paymentCard: {
@@ -25,9 +26,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Input = styled('input')({
-    display: 'none',
-  });
+const Input = styled("input")({
+  display: "none",
+});
 
 function MyValidation() {
   const classes = useStyles();
@@ -161,7 +162,6 @@ function MyValidation() {
                   <HelpOutlineIcon></HelpOutlineIcon>
                 </Typography>
               </div>
-
               <div
                 style={{
                   width: "900px",
@@ -172,18 +172,29 @@ function MyValidation() {
                   stroke: "solid",
                 }}
               >
-                <TextField
+                <Typography variant="body1" component="div">
+                  Briefly state your reason for validation:
+                </Typography>
+                {/* <TextField
                   fullWidth
                   className={classes.textF}
                   // id="standard-multiline-static"
                   // label="Multiline"
                   multiline
+                  rows={5}
                   rows_req={10}
                   label="Brief statement of your reason for validation"
                   id="Type in here"
                   defaultValue="Type in here"
                   variant="filled"
-                />
+                /> */}
+                <OutlinedInput
+                  placeholder="Type in here"
+                  fullWidth
+                  className={classes.textF}
+                  multiline
+                  rows={5}
+                ></OutlinedInput>
               </div>
               <div>
                 <Box
@@ -199,12 +210,7 @@ function MyValidation() {
                 ></Box>
                 <br></br>
                 <label htmlFor="add-file">
-                  <Input
-                    accept="image/*"
-                    id="add-file"
-                    multiple
-                    type="file"
-                  />
+                  <Input accept="image/*" id="add-file" multiple type="file" />
                   <Button
                     size="large"
                     variant="contained"
@@ -227,7 +233,7 @@ function MyValidation() {
                     </div>
                   </Button>
 
-                  <div className="poster1">
+                  {/* <div className="poster1">
                     <div
                       style={{
                         display: "inline-block",
@@ -239,7 +245,7 @@ function MyValidation() {
                       <HorizontalRuleIcon></HorizontalRuleIcon>
                     </div>
                   </div>
-                  <div className="poster2"></div>
+                  <div className="poster2"></div> */}
                 </label>
                 <br></br>
                 <br></br>
