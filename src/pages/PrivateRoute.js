@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import axios from "axios";
+
 
 // wrapper for current route
 export default function PrivateRoute({ children }) {

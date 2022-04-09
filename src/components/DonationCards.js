@@ -14,9 +14,7 @@ function DonationCards({ cardNumber }) {
   const fetchDonations = async () => {
     try {
       const result = await axios.get(`${API_BASE_URL}/app/donation`);
-      console.log("got events");
       setEvents(result.data);
-      console.log("set events");
     } catch (error) {
       console.log("cannot fetch all projects", error);
     }
@@ -57,14 +55,12 @@ function DonationCards({ cardNumber }) {
 
   useEffect(() => {
     fetchDonations();
-    console.log(events);
     // fetchDonatedAddress();
   }, []);
 
   if (events.length !== 0) {
     const arrLength = cardNumber === 0 ? events.length : cardNumber;
     for (let i = 0; i < arrLength; i++) {
-      console.log(events[i]);
       if (events[i].blockchainAddress.length > 0) {
         arr.push(
           <Grid item xs={12} sm={6}>
