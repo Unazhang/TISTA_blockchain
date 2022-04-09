@@ -3,7 +3,11 @@ import { useAuth } from "../contexts/AuthContext";
 function RequireRole({ requiredRole, children }) {
   const { role } = useAuth();
 
-  return role === requiredRole ? { ...children } : null;
+  const access = requiredRole.some((item) => {
+    return item === role;
+  });
+
+  return access ? { ...children } : null;
 }
 
 export default RequireRole;

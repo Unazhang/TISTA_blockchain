@@ -135,7 +135,7 @@ function MainLayout(props) {
               Community
             </NavLink>
           </div>
-          <RequireRole requiredRole={"Requester"}>
+          <RequireRole requiredRole={["Requester", "Donor"]}>
             <div className={classes.navbutton}>
               <NavLink to="/request" icon={RequestPageIcon}>
                 Request
