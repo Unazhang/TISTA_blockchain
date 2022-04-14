@@ -316,99 +316,95 @@ export default function Profile() {
     ) {
       arr.push(
         <Grid item xs={12} sm={6}>
-          <Card>
-            <Grid container>
-              <Grid item style={{ width: "50%", backgroundSize: "contained" }}>
+          <Grid container spacing={2}>
+            <Grid item style={{ width: "50%", backgroundSize: "contained" }}>
+              <Card style={{ width: 380, margin: "auto", height: 300 }}>
                 <img
                   src={events[i].imageUrl}
                   width="100%"
                   height="100%"
                   alt=""
                 />
-              </Grid>
-              <Grid item style={{ width: "50%", height: "100%" }}>
-                <Card variant="outlined" style={{ height: "100%" }}>
-                  <CardContent
-                    style={{
-                      height: "80%",
-                      ordWrap: "break-word",
-                      display: "block",
-                      overflow: "hidden",
-                      whiteSpace: "normal",
-                    }}
-                  >
-                    <Typography
-                      id="title"
-                      gutterBottom
-                      variant="h6"
-                      style={{ fontSize: "2vh", color: "red" }}
-                    >
-                      {events[i].title} project is waiting for your info......
-                    </Typography>
-                    <Typography
-                      id="title"
-                      gutterBottom
-                      variant="h6"
-                      style={{ fontSize: "2vh" }}
-                    >
-                      Requester: {events[i].requester_name}
-                    </Typography>
-                    <Typography
-                      noWrap
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                    >
-                      Target Amount:
-                      {events[i].target_amount} XYZ Token
-                    </Typography>
-                    <Typography
-                      noWrap
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                    >
-                      {" "}
-                      Description:
-                      {events[i].description}
-                    </Typography>
-                    <br />
-                    <Form onSubmit={handleBlockchainAddressSubmit}>
-                      <Form.Group>
-                        <Form.Control
-                          type="text"
-                          placeholder="Enter your blockchain address: "
-                          onChange={(e) => {
-                            setBlockchainAddress(e.target.value);
-                            setRequestId(events[i]._id);
-                          }}
-                          style={{ width: "98%" }}
-                        ></Form.Control>
-                      </Form.Group>
-                      <Form.Group>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          type="submit"
-                        >
-                          Submit
-                        </Button>
-                      </Form.Group>
-                    </Form>
-                  </CardContent>
-                  <CardActions
-                    style={{
-                      height: "80%",
-                      ordWrap: "break-word",
-                      display: "block",
-                      overflow: "hidden",
-                      whiteSpace: "normal",
-                    }}
-                  ></CardActions>
-                </Card>
-              </Grid>
+              </Card>
             </Grid>
-          </Card>
+            <Grid item style={{ width: "50%", height: "100%" }}>
+              <Card variant="outlined" style={{ width: 400, height: "100%" }}>
+                <CardContent
+                  style={{
+                    height: "80%",
+                    ordWrap: "break-word",
+                    display: "block",
+                    overflow: "hidden",
+                    whiteSpace: "normal",
+                  }}
+                >
+                  <Typography
+                    id="title"
+                    gutterBottom
+                    variant="h6"
+                    style={{ fontSize: "2vh", color: "red" }}
+                  >
+                    {events[i].title} project is waiting for your info......
+                  </Typography>
+                  <Typography
+                    id="title"
+                    gutterBottom
+                    variant="h6"
+                    style={{ fontSize: "2vh" }}
+                  >
+                    Requester: {events[i].requester_name}
+                  </Typography>
+                  <Typography
+                    noWrap
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                  >
+                    Target Amount:
+                    {events[i].target_amount} XYZ Token
+                  </Typography>
+                  <Typography
+                    noWrap
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                  >
+                    {" "}
+                    Description:
+                    {events[i].description}
+                  </Typography>
+                  <br />
+                  <Form onSubmit={handleBlockchainAddressSubmit}>
+                    <Form.Group>
+                      <Form.Control
+                        type="text"
+                        placeholder="Enter your blockchain address: "
+                        onChange={(e) => {
+                          setBlockchainAddress(e.target.value);
+                          setRequestId(events[i]._id);
+                        }}
+                        style={{ width: "98%" }}
+                      ></Form.Control>
+                    </Form.Group>
+                    <Form.Group>
+                      <Button variant="contained" color="primary" type="submit">
+                        Submit
+                      </Button>
+                    </Form.Group>
+                  </Form>
+                </CardContent>
+                <CardActions
+                  style={{
+                    height: "80%",
+                    ordWrap: "break-word",
+                    display: "block",
+                    overflow: "hidden",
+                    whiteSpace: "normal",
+                  }}
+                ></CardActions>
+              </Card>
+            </Grid>
+          </Grid>
         </Grid>
       );
     }

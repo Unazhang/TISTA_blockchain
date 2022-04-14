@@ -56,7 +56,10 @@ export default function RequestDonationForm(props) {
       target_amount: target_amount,
       vendor_name: vendor_name,
       vendor_email: vendor_email,
-      imageUrl: imageUrl,
+      imageUrl:
+        imageUrl.length > 0
+          ? imageUrl
+          : "https://storage.googleapis.com/proudcity/sanrafaelca/uploads/2020/04/donate-image.png",
     };
 
     console.log("data", data);
