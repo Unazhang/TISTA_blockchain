@@ -14,7 +14,12 @@ import { donationStore } from "./DonationStore";
 import { Typography, Grid } from "@material-ui/core";
 // import { Route, Redirect } from "react-router";
 import CommunityPage from "./CommunityPage";
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 class Send extends Component {
   constructor(props) {
@@ -33,6 +38,7 @@ class Send extends Component {
       amoutUSD: 0,
       donor_name: "Anonymous",
       isUpdated: false,
+      redirectAlert: false,
     };
 
     console.log("props inside Send.js", props);
@@ -103,11 +109,7 @@ class Send extends Component {
                 title: this.state.title,
               })
               .then(() => (donationStore.isUpdate = true))
-              .then(() =>
-                this.setState({
-                  isUpdated: true,
-                })
-              );
+              .then(this.setState({ redirectAlert: true }));
           }
         });
     }
@@ -119,7 +121,7 @@ class Send extends Component {
       this.setState({
         helperText: "",
         error: false,
-        amountUSD: event.target.value * 0.25, // 1 ETH = 0.25 USD
+        amountUSD: event.target.value * 0.25, // 1 XYZ Token = 0.25 USD
       });
     } else {
       this.setState({ helperText: "Invalid format", error: true });
@@ -149,53 +151,75 @@ class Send extends Component {
   render() {
     let amountUSD = this.state.amountUSD;
     let isUpdated = this.state.isUpdated;
+    let redirectAlert = this.state.redirectAlert;
 
-    // TODO: redirect page after completing a new donation
     if (isUpdated) {
-      return (
-        <Router>
-          <Route>
-            <Redirect to="/donation" component={CommunityPage} />
-          </Route>
-        </Router>
-      );
+      return <Redirect to="/donation" component={CommunityPage} />;
     } else {
       return (
-        <Form onSubmit={this.handleSubmit.bind(this)}>
-          <div className="form-group mr-sm-2">
-            <Grid warp="nowrap">
+        <div>
+          {" "}
+          <Dialog
+            open={redirectAlert}
+            onClose={this.handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {"Your donation is on the way!"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Please close this window and you will be redirected to the
+                Community Page.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                onClick={() =>
+                  this.setState({ redirectAlert: false, isUpdated: true })
+                }
+              >
+                Close
+              </Button>
+            </DialogActions>
+          </Dialog>
+          <Form onSubmit={this.handleSubmit.bind(this)}>
+            <div className="form-group mr-sm-2">
+              <Grid warp="nowrap">
+                <TextField
+                  variant="outlined"
+                  helperText={this.state.helperText}
+                  onChange={this.onChange.bind(this)}
+                  error={this.state.error}
+                  required
+                  id="amount"
+                  label="Amount (XYZ Token)"
+                  inputRef={(element) => (this.amountRef = element)}
+                  style={{ width: 150 }}
+                />
+                XYZ Token = {amountUSD} USD
+              </Grid>
               <TextField
                 variant="outlined"
                 helperText={this.state.helperText}
-                onChange={this.onChange.bind(this)}
+                onChange={this.handleNameChange.bind(this)}
                 error={this.state.error}
                 required
-                id="amount"
-                label="Amount (XYZ Token)"
-                inputRef={(element) => (this.amountRef = element)}
-                style={{ width: 150 }}
+                id="donor_name"
+                label="Your Name:"
+                placeholder="Anonymous"
+                style={{ width: 200 }}
               />
-              XYZ Token = {amountUSD} USD
-            </Grid>
-            <TextField
-              variant="outlined"
-              helperText={this.state.helperText}
-              onChange={this.handleNameChange.bind(this)}
-              error={this.state.error}
-              required
-              id="donor_name"
-              label="Your Name:"
-              placeholder="Anonymous"
-              style={{ width: 200 }}
-            />
-            <Typography>Send to vendor: {this.state.vendor_name}</Typography>
-            <div align="middle">
-              <Button variant="contained" color="primary" type="submit">
-                Send
-              </Button>
+              <Typography>Send to vendor: {this.state.vendor_name}</Typography>
+              <div align="middle">
+                <Button variant="contained" color="primary" type="submit">
+                  Send
+                </Button>
+              </div>
             </div>
-          </div>
-        </Form>
+          </Form>
+        </div>
       );
     }
   }
