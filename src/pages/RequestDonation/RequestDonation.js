@@ -9,6 +9,12 @@ import { useAuth } from "../../contexts/AuthContext";
 import { Form, Select, Card } from "react-bootstrap";
 import Button from "@material-ui/core/Button";
 import Alert from "@mui/material/Alert";
+import { useHistory } from "react-router-dom";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 export default function RequestDonationForm(props) {
   // const { addOrEdit, recordForEdit } = props;
@@ -26,6 +32,11 @@ export default function RequestDonationForm(props) {
   const [vendor_name, setVendorName] = useState("");
   const [vendor_email, setVendorEmail] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+
+  // redirect
+  const [open, setOpen] = React.useState(false);
+
+  const history = useHistory();
 
   let { currentUser } = useAuth();
   let user_email = currentUser.email;
@@ -45,7 +56,10 @@ export default function RequestDonationForm(props) {
       target_amount: target_amount,
       vendor_name: vendor_name,
       vendor_email: vendor_email,
-      imageUrl: imageUrl,
+      imageUrl:
+        imageUrl.length > 0
+          ? imageUrl
+          : "https://storage.googleapis.com/proudcity/sanrafaelca/uploads/2020/04/donate-image.png",
     };
 
     console.log("data", data);
@@ -61,7 +75,10 @@ export default function RequestDonationForm(props) {
         .then((e) => {
           // send validation email to vendor
         })
-        .then(() => (donationStore.isUpdate = true));
+        .then(() => (donationStore.isUpdate = true))
+        .then(() => {
+          setOpen(true);
+        });
       // resetForm();
     }
   };
@@ -91,18 +108,47 @@ export default function RequestDonationForm(props) {
 
   return (
     <div>
+      <div>
+        <Dialog
+          open={open}
+          // onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Your request has been submitted. "}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              We have sent your vendor an email about your request. <br />
+              Please close this window and you will be redirected to the
+              Community Page.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={() => {
+                setOpen(false);
+                history.push("/donation");
+              }}
+            >
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
       <Grid container noWrap>
         <Grid item md={8}>
           <Card style={{ width: "50rem" }} border="light">
             <Form onSubmit={handleSubmit}>
               <h3>Tell us about yourself</h3>
+              <Alert severity="info">
+                Please note you must be a U.S. resident to request donation on
+                our website.{" "}
+              </Alert>
+              <br />
               <Form.Group>
                 <Form.Label>Where do you live?</Form.Label>
-                <Alert severity="info">
-                  Please note you must be a U.S. resident to request donation on
-                  our website.{" "}
-                </Alert>
-                <br />
                 <Form.Control
                   as="select"
                   onChange={(e) => setCountry(e.target.value)}
@@ -168,10 +214,11 @@ export default function RequestDonationForm(props) {
                 />
               </Form.Group>
               <Form.Group>
-                <FormLabel>Add Image</FormLabel>
+                <Form.Label>Add Image</Form.Label>
                 <Form.Control
                   type="text"
                   onChange={(e) => setImageUrl(e.target.value)}
+                  placeholder="Enter image url: "
                 />
               </Form.Group>
               <h3>Add third party vendor information</h3>
