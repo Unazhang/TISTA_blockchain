@@ -34,6 +34,7 @@ import { TableContainer } from "@material-ui/core";
 import { Form, FormLabel } from "react-bootstrap";
 
 import MyValidation from "./MyValidation";
+import RequireRole from "../RequireRole";
 
 const Data = [
   { name: "Jack", status: "Verified Vendor" },
@@ -489,19 +490,23 @@ export default function Profile() {
             </Form.Group>
           </Form>
           <br />
-          <div
-            style={{
-              display: "inline-block",
-              fontFamily: "Lato",
-              size: "20px",
-              fontStyle: "Bold",
-            }}
-          >
-            <Typography variant="h6" component="div">
-              Update Blockchain Address (Vendor Only)
-            </Typography>
-          </div>
-          <div>{arr}</div>
+          <RequireRole requiredRole={["Vendor"]}>
+            <div
+              style={{
+                display: "inline-block",
+                fontFamily: "Lato",
+                size: "20px",
+                fontStyle: "Bold",
+              }}
+            >
+              <Typography variant="h6" component="div">
+                Update Blockchain Address (Vendor Only)
+              </Typography>
+            </div>
+          </RequireRole>
+          <RequireRole requiredRole={["Vendor"]}>
+            <div>{arr}</div>
+          </RequireRole>
         </TabPanel>
         <TabPanel value={value} index={1}>
           <Card>
