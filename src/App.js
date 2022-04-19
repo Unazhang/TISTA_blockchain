@@ -2,24 +2,20 @@ import React from "react";
 // import ReactDOM from "react-dom";
 import { BrowserRouter as Switch, Route } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
-import { FAQ } from "./pages";
 // import ShowBalance from "./pages/Balance/components/ShowBalance";
 import RequestDonation from "./pages/RequestDonation/RequestDonation";
 import CommunityPage from "./pages/Donation/CommunityPage";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Login/Signup";
 import Profile from "./pages/Profile/Profile";
-import Onboard from "./pages/Onboard";
+
 import "bootstrap/dist/css/bootstrap.min.css";
-import PrivateRoute from "./pages/PrivateRoute";
+
 import HomePage from "./pages/Home/Homepage";
 
-import Vendor from "./pages/Roles/Vendor";
-import Requester from "./pages/Roles/Requester";
-import Donor from "./pages/Roles/Donor";
-import MakeNewDonation from "./pages/Donation/MakeNewDonation";
-import { useAuth } from "./contexts/AuthContext";
-import UploadImage from "./pages/RequestDonation/UploadImage";
+// import MakeNewDonation from "./pages/Donation/MakeNewDonation";
+
+// import UploadImage from "./pages/RequestDonation/UploadImage";
 function App() {
   // const { role } = useAuth();
   // console.log(role);
