@@ -4,6 +4,7 @@ import Popover from "@material-ui/core/Popover";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { Link, useHistory } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
 const useStyles = makeStyles((theme) => ({
   typography: {
@@ -29,26 +30,31 @@ export default function DonationPopOver(props) {
 
   // handle donate button
   const history = useHistory();
+  const { currentUser } = useAuth();
 
   const handleClickDonate = (props) => {
-    const request_id = props.request_id;
-    console.log("inside donate", props);
-    const data = {
-      request_id: props.request_id,
-      blockchainAddress: props.address,
-      current_amount: props.current_amount,
-      target_amount: props.target_amount,
-      requester_name: props.requester_name,
-      req_title: props.req_title,
-      description: props.description,
-      donation_history: props.donation_history,
-      vendor_name: props.vendor_name,
-    };
-    console.log(data);
-    history.push({
-      pathname: "/make-a-donation",
-      state: data,
-    });
+    if (!currentUser) {
+      history.push("/signup");
+    } else {
+      const request_id = props.request_id;
+      console.log("inside donate", props);
+      const data = {
+        request_id: props.request_id,
+        blockchainAddress: props.address,
+        current_amount: props.current_amount,
+        target_amount: props.target_amount,
+        requester_name: props.requester_name,
+        req_title: props.req_title,
+        description: props.description,
+        donation_history: props.donation_history,
+        vendor_name: props.vendor_name,
+      };
+      console.log(data);
+      history.push({
+        pathname: "/make-a-donation",
+        state: data,
+      });
+    }
   };
 
   return (
