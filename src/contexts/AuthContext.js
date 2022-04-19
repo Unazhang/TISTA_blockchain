@@ -11,7 +11,7 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
-  const [role, setRole] = useState();
+  const [role, setRole] = useState(null);
 
   async function signup(email, password, roleSelected) {
     // console.log("in signup");
@@ -53,8 +53,16 @@ export function AuthProvider({ children }) {
     });
   }
 
-  function logout() {
-    return auth.signOut();
+  async function logout() {
+    auth
+      .signOut()
+      .then(() => {
+        setRole(null);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
   }
 
   function resetPassword(email) {
@@ -88,6 +96,8 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
+      // console.log("state change");
+      // console.log(user);
       setCurrentUser(user);
       setLoading(false);
       if (user != null) {

@@ -3,23 +3,23 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
+// import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import ProfileIcon from "@material-ui/icons/AccountCircle";
-import NotifIcon from "@material-ui/icons/Notifications";
+// import NotifIcon from "@material-ui/icons/Notifications";
 // import Divider from "@material-ui/core/Divider";
 // https://material-ui.com/style/icons/
 import HomeIcon from "@material-ui/icons/Home";
 // import HelpIcon from "@material-ui/icons/HelpOutlined";
-import TransIcon from "@material-ui/icons/Payment";
+// import TransIcon from "@material-ui/icons/Payment";
 import VolunteerActivismRoundedIcon from "@mui/icons-material/VolunteerActivismRounded";
 import RequestPageIcon from "@mui/icons-material/RequestPage";
 import NavLink from "./NavLink";
 // import Navbar from "react-bootstrap/Navbar";
-import Send from "../../pages/Donation/send.js";
-import Controls from "../../controls/Controls";
-import Popup from "../../pages/Popup";
+// import Send from "../../pages/Donation/send.js";
+// import Controls from "../../controls/Controls";
+// import Popup from "../../pages/Popup";
 import { useHistory } from "react-router-dom";
 // import Drawer from "@material-ui/core/Drawer";
 // import List from "@material-ui/core/List";
@@ -32,20 +32,21 @@ import { Link } from "react-router-dom";
 import RequireRole from "../../pages/RequireRole";
 // import User from "../../pages/Profile/User";
 // import Profile from "../../pages/Profile/Profile";
-import CloseIcon from "@material-ui/icons/Close";
-import {
-  Dialog,
-  // DialogTitle,
-  // DialogContent,
-  // makeStyles,
-} from "@material-ui/core";
-import Avatar from "@material-ui/core/Avatar";
+// import CloseIcon from "@material-ui/icons/Close";
+// import {
+//   Dialog,
+//   // DialogTitle,
+//   // DialogContent,
+//   // makeStyles,
+// } from "@material-ui/core";
+// import Avatar from "@material-ui/core/Avatar";
 // import pholder from "../../pages/Profile/avatar.png";
 // https://material-ui.com/demos/drawers/#full-height-navigation
 
-import BuySell from "../../pages/BuySell/BuySell.js";
+// import BuySell from "../../pages/BuySell/BuySell.js";
 import { useAuth } from "../../contexts/AuthContext";
 import Tooltip from "@mui/material/Tooltip";
+import RequireNonAuth from "../../pages/RequireNonAuth";
 
 const drawerWidth = 240;
 const styles = (theme) => ({
@@ -92,10 +93,6 @@ function MainLayout(props) {
   // const [openPopup, setOpenDonate] = useState(false);
   // const [openBuySell, setOpenBuySell] = useState(false);
   const [openUser, setOpenUser] = useState(false);
-  const his = () => {
-    const history = useHistory();
-    history.push("/login");
-  };
   // const handleopenUser = () => {
   //   setOpenUser(true);
   // };
@@ -115,11 +112,19 @@ function MainLayout(props) {
     setError("");
     try {
       await logout();
-      history.push("/onboard");
+      history.push("/");
     } catch {
       setError("Failed to log out");
     }
   }
+
+  const handleSignup = () => {
+    history.push("/signup");
+  };
+
+  const handleSignin = () => {
+    history.push("/login");
+  };
 
   return (
     <div className={classes.root}>
@@ -143,20 +148,46 @@ function MainLayout(props) {
             </div>
           </RequireRole>
           <div style={{ display: "flex", flex: 1 }} />
-          <Tooltip title="My Profile">
-            <IconButton component={Link} to="/profile">
-              <ProfileIcon style={{ fill: "white" }} />
-            </IconButton>
-          </Tooltip>
-          <Button
-            variant="text"
-            onClick={handleLogout}
-            style={{
-              color: "white",
-            }}
-          >
-            Log Out
-          </Button>
+          <RequireRole requiredRole={["Donor", "Vendor", "Requester"]}>
+            <Tooltip title="My Profile">
+              <IconButton component={Link} to="/profile">
+                <ProfileIcon style={{ fill: "white" }} />
+              </IconButton>
+            </Tooltip>
+          </RequireRole>
+          <RequireRole requiredRole={["Donor", "Vendor", "Requester"]}>
+            <Button
+              variant="text"
+              onClick={handleLogout}
+              style={{
+                color: "white",
+              }}
+            >
+              Log Out
+            </Button>
+          </RequireRole>
+          <RequireNonAuth>
+            <Button
+              variant="text"
+              onClick={handleSignin}
+              style={{
+                color: "white",
+              }}
+            >
+              Log in
+            </Button>
+          </RequireNonAuth>
+          <RequireNonAuth>
+            <Button
+              variant="text"
+              onClick={handleSignup}
+              style={{
+                color: "white",
+              }}
+            >
+              Sign up
+            </Button>
+          </RequireNonAuth>
         </Toolbar>
       </AppBar>
       <main className={classes.content}>
