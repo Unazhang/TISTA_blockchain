@@ -48,6 +48,8 @@ export default function DonationPopOver(props) {
         description: props.description,
         donation_history: props.donation_history,
         vendor_name: props.vendor_name,
+        vendor_email:props.vendor_email,
+        requester_email:props.requester_email
       };
       console.log(data);
       history.push({

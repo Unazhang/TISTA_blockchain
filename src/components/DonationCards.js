@@ -152,10 +152,12 @@ function DonationCards({ cardNumber }) {
                       current_amount={events[i].current_amount}
                       target_amount={events[i].target_amount}
                       requester_name={events[i].requester_name}
+                      requester_email={events[i].user_email}
                       req_title={events[i].title}
                       description={events[i].description}
                       donation_history={events[i].donation_history}
                       vendor_name={events[i].vendor_name}
+                      vendor_email={events[i].vendor_email}
                     />
                   </CardActions>
                 </Card>

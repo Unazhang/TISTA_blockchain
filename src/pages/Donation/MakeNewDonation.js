@@ -99,6 +99,9 @@ export default function MakeNewDonation() {
     );
   }
 
+  const hideCardRequesterVendor =
+    data.requester_email === user_email || data.vendor_email === user_email;
+
   return (
     <div>
       <Box sx={{ width: "100%" }}>
@@ -153,117 +156,120 @@ export default function MakeNewDonation() {
               </TableContainer>
             </Card>
           </Grid>
-          <Grid item md={4}>
-            <div>
-              <Button
-                aria-describedby={id}
-                color="primary"
-                onClick={handleClick}
-              >
-                See instructions
-              </Button>
-              <Popover
-                id={id}
-                open={open}
-                anchorEl={anchorEl}
-                onClose={handleClose}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                PaperProps={{
-                  style: {
-                    width: "30vw",
-                    height: "30vh",
-                    overflow: "scroll",
-                  },
-                }}
-              >
-                <Accordion
-                  expanded={expanded === "panel1"}
-                  onChange={handleChangeInstr("panel1")}
-                >
-                  <AccordionSummary
-                    aria-controls="panel1d-content"
-                    id="panel1d-header"
+          {!hideCardRequesterVendor && (
+              <Grid item md={4}>
+                <div>
+                  <Button
+                    aria-describedby={id}
+                    color="primary"
+                    onClick={handleClick}
                   >
-                    <Typography>Step 1</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography>
-                      Install MetaMask wallet extension on your browser.
-                    </Typography>
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion
-                  expanded={expanded === "panel2"}
-                  onChange={handleChangeInstr("panel2")}
-                >
-                  <AccordionSummary
-                    aria-controls="panel2d-content"
-                    id="panel2d-header"
+                    See instructions
+                  </Button>
+                  <Popover
+                    id={id}
+                    open={open}
+                    anchorEl={anchorEl}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "left",
+                    }}
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "left",
+                    }}
+                    PaperProps={{
+                      style: {
+                        width: "30vw",
+                        height: "30vh",
+                        overflow: "scroll",
+                      },
+                    }}
                   >
-                    <Typography>Step 2</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography>
-                      If you don't enough balance in your MetaMask wallet, add
-                      balance first.
-                    </Typography>
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion
-                  expanded={expanded === "panel3"}
-                  onChange={handleChangeInstr("panel3")}
+                    <Accordion
+                      expanded={expanded === "panel1"}
+                      onChange={handleChangeInstr("panel1")}
+                    >
+                      <AccordionSummary
+                        aria-controls="panel1d-content"
+                        id="panel1d-header"
+                      >
+                        <Typography>Step 1</Typography>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <Typography>
+                          Install MetaMask wallet extension on your browser.
+                        </Typography>
+                      </AccordionDetails>
+                    </Accordion>
+                    <Accordion
+                      expanded={expanded === "panel2"}
+                      onChange={handleChangeInstr("panel2")}
+                    >
+                      <AccordionSummary
+                        aria-controls="panel2d-content"
+                        id="panel2d-header"
+                      >
+                        <Typography>Step 2</Typography>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <Typography>
+                          If you don't enough balance in your MetaMask wallet,
+                          add balance first.
+                        </Typography>
+                      </AccordionDetails>
+                    </Accordion>
+                    <Accordion
+                      expanded={expanded === "panel3"}
+                      onChange={handleChangeInstr("panel3")}
+                    >
+                      <AccordionSummary
+                        aria-controls="panel3d-content"
+                        id="panel3d-header"
+                      >
+                        <Typography>Step 3</Typography>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <Typography>
+                          Enter the amount in XYZ Token that you'd like to
+                          donate and click <b>Donate</b> button.
+                        </Typography>
+                      </AccordionDetails>
+                    </Accordion>
+                    <Accordion
+                      expanded={expanded === "panel4"}
+                      onChange={handleChangeInstr("panel4")}
+                    >
+                      <AccordionSummary
+                        aria-controls="panel4d-content"
+                        id="panel4d-header"
+                      >
+                        <Typography>Step 4</Typography>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <Typography>
+                          In the MetaMask pop-up window, confirm your
+                          transaction.{" "}
+                        </Typography>
+                      </AccordionDetails>
+                    </Accordion>
+                  </Popover>
+                </div>
+                <Card
+                  style={{
+                    backgroundColor: "#e3f2fd",
+                  }}
                 >
-                  <AccordionSummary
-                    aria-controls="panel3d-content"
-                    id="panel3d-header"
-                  >
-                    <Typography>Step 3</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography>
-                      Enter the amount in XYZ Token that you'd like to donate
-                      and click <b>Donate</b> button.
-                    </Typography>
-                  </AccordionDetails>
-                </Accordion>
-                <Accordion
-                  expanded={expanded === "panel4"}
-                  onChange={handleChangeInstr("panel4")}
-                >
-                  <AccordionSummary
-                    aria-controls="panel4d-content"
-                    id="panel4d-header"
-                  >
-                    <Typography>Step 4</Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography>
-                      In the MetaMask pop-up window, confirm your transaction.{" "}
-                    </Typography>
-                  </AccordionDetails>
-                </Accordion>
-              </Popover>
-            </div>
-            <Card
-              style={{
-                backgroundColor: "#e3f2fd",
-              }}
-            >
-              <CardHeader
-                title="Donate"
-                align="left"
-                titleTypographyProps={{ variant: "h4" }}
-              />
-              <Send {...props} />
-            </Card>
-          </Grid>
+                  <CardHeader
+                    title="Donate"
+                    align="left"
+                    titleTypographyProps={{ variant: "h4" }}
+                  />
+                  <Send {...props} />
+                </Card>
+              </Grid>
+            )}
         </Grid>
       </Box>
     </div>
