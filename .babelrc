@@ -1,6 +1,5 @@
 {
   "presets": ["es2015", "stage-2", "stage-3"],
-  "plugins": [
-    ["@babel/plugin-proposal-decorators", { "legacy": true }]
-  ]
+  "plugins": [["@babel/plugin-proposal-decorators", { "legacy": true }]],
+  "test": ["jest"]
 }
