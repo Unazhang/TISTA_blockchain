@@ -33,15 +33,9 @@ import { CardHeader } from "@mui/material";
 import { TableContainer } from "@material-ui/core";
 import { Form, FormLabel } from "react-bootstrap";
 
-import MyValidation from "./MyValidation";
+import ValidationForm from "./ValidationForm";
+import ValidationCards from "./ValidationCards";
 import RequireRole from "../RequireRole";
-
-const Data = [
-  { name: "Jack", status: "Verified Vendor" },
-  { name: "Lucy", status: "Verified Receiver" },
-  { name: "Lee", status: "Verified Receiver" },
-  { name: "Lucy", status: "Verified Receiver" },
-];
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -117,27 +111,27 @@ export default function Profile() {
   let user_email = currentUser.email;
 
   const [name, setName] = useState("");
-  const [found, setFound] = useState(Data);
+  // const [found, setFound] = useState(Data);
 
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
   const [avatarUrl, setAvatarUrl] = useState("");
 
-  const handleSearch = (e) => {
-    const keyword = e.target.value;
-    console.log("input is ", keyword);
-    if (keyword !== "") {
-      const results = Data.filter((d) => {
-        return d.name.toLowerCase().includes(keyword.toLowerCase());
-      });
+  // const handleSearch = (e) => {
+  //   const keyword = e.target.value;
+  //   console.log("input is ", keyword);
+  //   if (keyword !== "") {
+  //     const results = Data.filter((d) => {
+  //       return d.name.toLowerCase().includes(keyword.toLowerCase());
+  //     });
 
-      setFound(results);
-    } else {
-      setFound(Data);
-    }
-    setName(keyword);
-  };
+  //     setFound(results);
+  //   } else {
+  //     setFound(Data);
+  //   }
+  //   setName(keyword);
+  // };
 
   const Input = styled("input")({
     display: "none",
@@ -147,7 +141,7 @@ export default function Profile() {
   const API_BASE_URL = `http://localhost:4000`;
 
   const handleChange = (event, newValue) => {
-    console.log("newValue", newValue);
+    // console.log("newValue", newValue);
     setValue(newValue); // set tab index
     if (newValue == 0) {
       fetchProfile();
@@ -223,7 +217,7 @@ export default function Profile() {
           },
         }
       );
-      console.log("result.data", result.data);
+      // console.log("result.data", result.data);
       setMyDonations(result.data);
     } catch (error) {
       console.log("cannot fetch donation records by user", error);
@@ -463,52 +457,13 @@ export default function Profile() {
               },
             }}
           >
-            <Tab label="Setting" {...a11yProps(0)} />
-            <Tab label="My Request" {...a11yProps(1)} />
-            <Tab label="My Donation" {...a11yProps(2)} />
-            <Tab label="My Validation" {...a11yProps(3)} />
+            <Tab label="My Request" {...a11yProps(0)} />
+            <Tab label="My Donation" {...a11yProps(1)} />
+            <Tab label="My Validation" {...a11yProps(2)} />
+            <Tab label="Setting" {...a11yProps(3)} />
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0}>
-          <Typography variant="h6" component="div">
-            Update Personal Information
-          </Typography>
-          <br />
-          <Form onSubmit={handleAvatarSubmit}>
-            <Form.Group>
-              <Form.Control
-                type="text"
-                placeholder="Enter new avatar url:"
-                onChange={(e) => setAvatarUrl(e.target.value)}
-                style={{ width: 550 }}
-              />
-            </Form.Group>
-            <Form.Group>
-              <Button variant="outlined" color="primary" type="submit">
-                Change Profile Picture
-              </Button>
-            </Form.Group>
-          </Form>
-          <br />
-          <RequireRole requiredRole={["Vendor"]}>
-            <div
-              style={{
-                display: "inline-block",
-                fontFamily: "Lato",
-                size: "20px",
-                fontStyle: "Bold",
-              }}
-            >
-              <Typography variant="h6" component="div">
-                Update Blockchain Address (Vendor Only)
-              </Typography>
-            </div>
-          </RequireRole>
-          <RequireRole requiredRole={["Vendor"]}>
-            <div>{arr}</div>
-          </RequireRole>
-        </TabPanel>
-        <TabPanel value={value} index={1}>
           <Card>
             <CardHeader title="Donation History" />
             <TableContainer component={Paper}>
@@ -548,7 +503,7 @@ export default function Profile() {
             </TableContainer>
           </Card>
         </TabPanel>
-        <TabPanel value={value} index={2}>
+        <TabPanel value={value} index={1}>
           <Card>
             <CardHeader title="Donation History" />
             <TableContainer component={Paper}>
@@ -584,8 +539,47 @@ export default function Profile() {
             </TableContainer>
           </Card>
         </TabPanel>
+        <TabPanel value={value} index={2}>
+          <ValidationForm></ValidationForm>
+        </TabPanel>
         <TabPanel value={value} index={3}>
-          <MyValidation></MyValidation>
+          <Typography variant="h6" component="div">
+            Update Personal Information
+          </Typography>
+          <br />
+          <Form onSubmit={handleAvatarSubmit}>
+            <Form.Group>
+              <Form.Control
+                type="text"
+                placeholder="Enter new avatar url:"
+                onChange={(e) => setAvatarUrl(e.target.value)}
+                style={{ width: 550 }}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Button variant="outlined" color="primary" type="submit">
+                Change Profile Picture
+              </Button>
+            </Form.Group>
+          </Form>
+          <br />
+          <RequireRole requiredRole={["Vendor"]}>
+            <div
+              style={{
+                display: "inline-block",
+                fontFamily: "Lato",
+                size: "20px",
+                fontStyle: "Bold",
+              }}
+            >
+              <Typography variant="h6" component="div">
+                Update Blockchain Address (Vendor Only)
+              </Typography>
+            </div>
+          </RequireRole>
+          <RequireRole requiredRole={["Vendor"]}>
+            <div>{arr}</div>
+          </RequireRole>
         </TabPanel>
       </div>
     </div>
