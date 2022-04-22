@@ -107,10 +107,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Profile() {
-  let { currentUser } = useAuth();
+  let { currentUser, name } = useAuth();
   let user_email = currentUser.email;
 
-  const [name, setName] = useState("");
+  // const [name, setName] = useState("");
   // const [found, setFound] = useState(Data);
 
   const classes = useStyles();
@@ -147,9 +147,9 @@ export default function Profile() {
       fetchProfile();
       fetchRequests();
     } else if (newValue == 1) {
-      fetchRequests();
-    } else if (newValue == 2) {
       fetchDonationsByUser();
+    } else if (newValue == 2) {
+      // fetchRequests();
     }
   };
 
@@ -424,9 +424,15 @@ export default function Profile() {
             marginLeft: "110px",
           }}
         >
-          <Typography variant="h6" component="div">
-            Currently logged in as: {user_email}
-          </Typography>
+          {name == null ? (
+            <Typography variant="h6" component="div">
+              Currently logged in as: John Doe
+            </Typography>
+          ) : (
+            <Typography variant="h6" component="div">
+              Currently logged in as: {name}
+            </Typography>
+          )}
           <br />
           <br />
         </div>

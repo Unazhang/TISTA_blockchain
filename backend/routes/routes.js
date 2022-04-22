@@ -239,7 +239,7 @@ router.get("/find-donations-by-user", async (req, res) => {
   });
 });
 
-router.post("/role", async (req, res) => {
+router.post("/userdata", async (req, res) => {
   // console.log("query role");
   // users.find({ uid: req.body.uid })
   users.findOne({ uid: req.body.uid }, function(err, result) {
@@ -247,7 +247,7 @@ router.post("/role", async (req, res) => {
       res.send(err);
     } else {
       if (result) {
-        res.send(result.role);
+        res.send(result);
       } else {
         res.send("No user found.");
       }

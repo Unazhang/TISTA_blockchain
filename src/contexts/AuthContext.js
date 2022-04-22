@@ -12,8 +12,9 @@ export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
   const [role, setRole] = useState(null);
+  const [name, setName] = useState(null);
 
-  async function signup(email, password, roleSelected) {
+  async function signup(email, password, roleSelected, name) {
     // console.log("in signup");
     let user = null;
     try {
@@ -33,13 +34,14 @@ export function AuthProvider({ children }) {
       // console.log(roleSelected);
       try {
         const response = await axios.post("http://localhost:4000/app/signup", {
-          displayName: user.displayName,
+          displayName: name,
           uid: user.uid,
           email: user.email,
           role: roleSelected,
         });
         // console.log(response);
         setRole(response.data.data.role);
+        setName(name);
       } catch (err) {
         console.log(err);
       }
@@ -58,11 +60,11 @@ export function AuthProvider({ children }) {
       .signOut()
       .then(() => {
         setRole(null);
+        setName(null);
       })
       .catch((err) => {
         console.log(err);
       });
-
   }
 
   function resetPassword(email) {
@@ -77,17 +79,17 @@ export function AuthProvider({ children }) {
     return currentUser.updatePassword(password);
   }
 
-  async function updateRole(user) {
-    // setRole(role);
+  async function updateRoleAndName(user) {
     if (user) {
       try {
-        const response = await axios.post("http://localhost:4000/app/role", {
+        const response = await axios.post("http://localhost:4000/app/userdata", {
           uid: user.uid,
         });
-        const currentRole = response.data;
+        const currentRole = response.data.role;
 
         // console.log(currentRole);
         setRole(currentRole);
+        setName(response.data.displayName);
       } catch (err) {
         console.log(err);
       }
@@ -101,7 +103,7 @@ export function AuthProvider({ children }) {
       setCurrentUser(user);
       setLoading(false);
       if (user != null) {
-        updateRole(user);
+        updateRoleAndName(user);
       }
     });
     return unsubscribe;
@@ -120,6 +122,7 @@ export function AuthProvider({ children }) {
   const value = {
     currentUser,
     role,
+    name,
     login,
     signup,
     logout,
