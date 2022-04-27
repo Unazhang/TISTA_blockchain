@@ -1,0 +1,9 @@
+POST http://localhost:4000/app/validation
+Content-Type: application/json
+
+{
+    "description": "this is the description",
+    "role": "Donor",
+    "phoneNumber": "1234567",
+    "uid":"CXB5RGUMcNcreF9DFJmrpCs3lyv1"
+}

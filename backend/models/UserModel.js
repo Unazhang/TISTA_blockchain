@@ -19,6 +19,16 @@ const donation_record = new mongoose.Schema({
   },
 });
 
+const validationTemplate = new mongoose.Schema({
+  description: {
+    type: String,
+  },
+  role: {
+    type: String,
+    required: true,
+  },
+});
+
 const userTemplate = new mongoose.Schema({
   displayName: String,
   uid: {
@@ -29,6 +39,7 @@ const userTemplate = new mongoose.Schema({
     type: String,
     required: true,
   },
+  phoneNumber: Number,
   blockchainAddress: [String],
   donateTo: { type: [donation_record] },
   role: {
@@ -40,6 +51,7 @@ const userTemplate = new mongoose.Schema({
     default:
       "https://i0.wp.com/sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png?ssl=1",
   },
+  validations: [validationTemplate],
 });
 
 userTemplate.pre("save", function(next) {
