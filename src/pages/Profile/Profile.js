@@ -33,7 +33,7 @@ import { CardHeader } from "@mui/material";
 import { TableContainer } from "@material-ui/core";
 import { Form, FormLabel } from "react-bootstrap";
 
-import ValidationForm from "./ValidationForm";
+import MyValidation from "./MyValidation";
 import ValidationCards from "./ValidationCards";
 import RequireRole from "../RequireRole";
 
@@ -405,6 +405,8 @@ export default function Profile() {
     }
   }
 
+  console.log(user_email);
+
   return (
     <div>
       <div
@@ -546,7 +548,7 @@ export default function Profile() {
           </Card>
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <ValidationForm></ValidationForm>
+          <MyValidation uid={currentUser.uid}></MyValidation>
         </TabPanel>
         <TabPanel value={value} index={3}>
           <Typography variant="h6" component="div">
