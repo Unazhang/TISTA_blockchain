@@ -2,5 +2,5 @@ POST  http://localhost:4000/app/userdata
 Content-Type: application/json
 
 {
-    "uid": "CXB5RGUMcNcreF9DFJmrpCs3lyv1"
+    "uid": "ijz2F8dmDlYeAQhXGGgirGbkwJS2"
 }

@@ -267,7 +267,9 @@ router.post("/update-blockchain-address", async (req, res) => {
     }
   );
 });
-
+//TODO: change role to an array and reflect it on pages
+//TODO: if phone number exist, don't substitute
+//TODO: only add validation when that validation for that role doesn't exist
 router.post("/validation", async (req, res) => {
   console.log("inside /validate...");
   console.log("validate request body", req.body);
@@ -289,9 +291,23 @@ router.post("/validation", async (req, res) => {
       } else {
         res.send(result);
         console.log("User Validation Updated================");
+        console.log(result);
       }
     }
   );
+});
+
+/** Get all existing validations */
+router.get("/validation", async (req, res) => {
+  users.findOne({ uid: req.body.uid }, (err, result)=>{
+    if (err) {
+      res.send(err);
+    } else {
+      console.log("my validations", result.validations);
+      res.send(result.validations);
+    }
+  });
+
 });
 
 module.exports = router;
