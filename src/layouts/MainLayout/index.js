@@ -131,10 +131,8 @@ function MainLayout(props) {
   return (
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.appBar}>
-        {/* <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}> */}
-        {/* </Box> */}
         <Toolbar>
-          <img src="./tistalogo.png" className="img-fluid" width={125} height={35}></img>
+          <img src="./tistalogo.png" width={125} height={35}></img>
           <div style={{ display: "flex", flex: 1 }} />
           <div className={classes.navbutton}>
             <NavLink activeOnlyWhenExact to="/">
