@@ -36,6 +36,7 @@ import { Form, FormLabel } from "react-bootstrap";
 import MyValidation from "./MyValidation";
 import ValidationCards from "./ValidationCards";
 import RequireRole from "../RequireRole";
+import Moment from "react-moment";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -257,7 +258,13 @@ export default function Profile() {
         console.log(err);
       })
       .then((res) => {
-        setAvatarUrl(res.data);
+        if (res == null || res.data == null || res.data.length == 0) {
+          setAvatarUrl(
+            "https://i0.wp.com/sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png?ssl=1"
+          );
+        } else {
+          setAvatarUrl(res.data);
+        }
       });
   };
 
@@ -497,7 +504,9 @@ export default function Profile() {
                       }}
                     >
                       <TableCell component="th" scope="row">
-                        {row.created_on}
+                        <Moment format="MM/DD/YYYY, h:mm:ss A">
+                          {row.created_on}
+                        </Moment>
                       </TableCell>
                       <TableCell align="left">{row.title}</TableCell>
                       <TableCell align="left">{row.vendor}</TableCell>
@@ -535,7 +544,9 @@ export default function Profile() {
                       }}
                     >
                       <TableCell component="th" scope="row">
-                        {row.donated_on}
+                        <Moment format="MM/DD/YYYY, h:mm:ss A">
+                          {row.donated_on}
+                        </Moment>
                       </TableCell>
                       <TableCell align="left">{row.title}</TableCell>
                       <TableCell align="left">{row.donated_amount}</TableCell>
