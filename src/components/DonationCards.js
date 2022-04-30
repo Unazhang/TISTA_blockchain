@@ -4,7 +4,13 @@ import axios from "axios";
 import Typography from "@material-ui/core/Typography";
 import { reaction } from "mobx";
 import { donationStore } from "../pages/Donation/DonationStore";
-import { Grid, Card, CardContent, CardActions } from "@material-ui/core";
+import {
+  Grid,
+  Card,
+  CardContent,
+  CardActions,
+  CardMedia,
+} from "@material-ui/core";
 
 function DonationCards({ cardNumber }) {
   let arr = [];
@@ -63,82 +69,37 @@ function DonationCards({ cardNumber }) {
     for (let i = 0; i < arrLength; i++) {
       if (events[i].blockchainAddress.length > 0) {
         arr.push(
-          <Grid item xs={12} sm={6}>
-            <Grid container>
+          <Grid item xs={12} sm={6} alignContent={"center"}>
+            <Grid container alignContent={"center"}>
               <Grid
                 item
                 style={{
-                  width: "50%",
+                  width: "600px",
                   height: "100%",
                   backgroundSize: "contained",
                 }}
+                alignContent={"center"}
               >
-                <Card style={{ width: 300, margin: "auto", height: 200 }}>
-                  <img
-                    src={events[i].imageUrl}
-                    width="100%"
-                    height="100%"
-                    alt=""
+                {/* testtttt */}
+                <Card sx={{ maxWidth: 345 }}>
+                  <CardMedia
+                    component="img"
+                    height="250"
+                    image={events[i].imageUrl}
+                    alt={events[i].imageUrl}
                   />
-                </Card>
-              </Grid>
-              <Grid item style={{ width: "50%", height: "100%" }}>
-                <Card variant="outlined" style={{ width: 300, height: 200 }}>
-                  <CardContent
-                    style={{
-                      height: "80%",
-                      ordWrap: "break-word",
-                      display: "block",
-                      overflow: "hidden",
-                      whiteSpace: "normal",
-                    }}
-                  >
-                    {/* <ShowImage url={events[i].imageUrl} /> */}
-                    <Typography
-                      id="title"
-                      gutterBottom
-                      variant="h6"
-                      style={{ fontSize: "2.5vh" }}
-                    >
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
                       {events[i].title}
                     </Typography>
-                    <Typography
-                      noWrap
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                    >
-                      <b>{events[i].current_amount} raised</b> of{" "}
-                      {events[i].target_amount} XYZ Token
-                    </Typography>
-                    <Typography
-                      noWrap
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                    >
-                      Blockchain Address: {events[i].blockchainAddress}
-                    </Typography>
-                    <Typography
-                      noWrap
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                    >
-                      {" "}
-                      Description:
+                    <Typography variant="body2" color="text.secondary">
+                      <b>Description: </b>
                       {events[i].description}
                     </Typography>
                   </CardContent>
-                  <CardActions
-                    style={{
-                      height: "80%",
-                      ordWrap: "break-word",
-                      display: "block",
-                      overflow: "hidden",
-                      whiteSpace: "normal",
-                    }}
-                  >
+                  <CardActions>
+                    {/* <Button size="small">Share</Button>
+                    <Button size="small">Learn More</Button> */}
                     <DonationPopOver
                       amount={
                         events[i].current_amount +
@@ -161,6 +122,7 @@ function DonationCards({ cardNumber }) {
                     />
                   </CardActions>
                 </Card>
+                {/* testttt */}
               </Grid>
             </Grid>
           </Grid>

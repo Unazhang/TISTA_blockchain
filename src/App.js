@@ -14,7 +14,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import HomePage from "./pages/Home/Homepage";
 import MakeNewDonation from "./pages/Donation/MakeNewDonation";
 
-
 // import MakeNewDonation from "./pages/Donation/MakeNewDonation";
 
 // import UploadImage from "./pages/RequestDonation/UploadImage";
@@ -24,24 +23,18 @@ function App() {
 
   return (
     <div>
-      {/* <UploadImage /> */}
-      {/* <RequestDonation /> */}
       <div width="100%">
         <Switch>
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />
+          <Route exact path="/" component={HomePage} />
           <MainLayout>
-            <Route exact path="/" component={HomePage} />
             {/* <Route exact path="/faq" component={FAQ} />
             <Route exact path="/transaction" component={FAQ} /> */}
             <Route exact path="/request" component={RequestDonation} />
             <Route path="/donation" component={CommunityPage} />
             <Route exact path="/profile" component={Profile} />
-            <Route
-                    exact
-                    path="/make-a-donation"
-                    component={MakeNewDonation}
-                  />
+            <Route exact path="/make-a-donation" component={MakeNewDonation} />
           </MainLayout>
         </Switch>
       </div>

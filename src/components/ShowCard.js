@@ -11,7 +11,7 @@ import HomeTop from "../images/HomeTop.png";
 
 const styles = {
   media: {
-    height: "100%",
+    height: "80%",
     width: "100%",
     top: "20px",
     left: "20px",
@@ -37,7 +37,7 @@ const styles = {
     // backgroundColor: "white",
   },
   img: {
-    height: "25%",
+    height: "20%",
     width: "100%",
   },
 };
