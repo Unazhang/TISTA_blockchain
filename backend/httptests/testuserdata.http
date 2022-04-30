@@ -1,0 +1,6 @@
+POST  http://localhost:4000/app/userdata
+Content-Type: application/json
+
+{
+    "uid": "ijz2F8dmDlYeAQhXGGgirGbkwJS2"
+}

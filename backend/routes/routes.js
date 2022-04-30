@@ -1,15 +1,15 @@
 const { request } = require("express");
 const express = require("express");
 const router = express.Router();
-const signUpTemplateCopy = require("../models/SignUpModels");
 const userTemplate = require("../models/UserModel");
 const requestTemplateCopy = require("../models/RequestModels");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 
 const requesttable = mongoose.model("requesttable");
-const mytable = mongoose.model("mytable");
+// const mytable = mongoose.model("mytable");
 const users = mongoose.model("users");
+// const validation_records = mongoose.model("validation_records");
 const jwt = require("jsonwebtoken");
 
 const maxAge = 3 * 24 * 60 * 60; // 3 days to expire
@@ -20,38 +20,8 @@ const createToken = (id) => {
 };
 
 const moment = require("moment");
+const { findById } = require("../models/UserModel");
 
-// router.post("/signup", async (req, res) => {
-//   console.log("inside /signup...");
-//   console.log("signup request body", req.body);
-//   const saltPassword = await bcrypt.genSalt(10);
-//   const securePassword = await bcrypt.hash(req.body.password, saltPassword);
-
-//   // create new user in MongoDB database
-//   const signedUpUser = new signUpTemplateCopy({
-//     fullName: req.body.fullName,
-//     userName: req.body.userName,
-//     donationAddress: req.body.donationAddress,
-//     donateTo: req.body.donateTo,
-//     donateAddress: req.body.donateAddress,
-//     email: req.body.email,
-//     password: securePassword,
-//   });
-
-//   signedUpUser
-//     .save()
-//     .then((data) => {
-//       console.log("data", data);
-//       res.json({
-//         data,
-//         success: true,
-//       });
-//       // console.log("signedUpUser resp", res.json);
-//     })
-//     .catch((error) => {
-//       res.json(error);
-//     });
-// });
 router.post("/signup", async (req, res) => {
   console.log("inside /signup...");
   console.log("signup request body", req.body);
@@ -144,28 +114,28 @@ router.post("/make-a-donation", async (req, res) => {
   );
 });
 
-router.post("/login", async (req, res) => {
-  console.log("login", req.body);
-  mytable.findOne({ userName: req.body.userName }, function(err, result) {
-    if (err) {
-      console.log("error");
-      res.send(err);
-    } else {
-      if (result && bcrypt.compareSync(req.body.password, result.password)) {
-        // create jwt token based on db user _id
-        const jwt_token = createToken(result._id);
-        res.send({
-          userName: req.body.userName,
-          verified: true,
-          jwtToken: jwt_token,
-        });
-      } else {
-        console.log("unable");
-        res.send("Unable to verify");
-      }
-    }
-  });
-});
+// router.post("/login", async (req, res) => {
+//   console.log("login", req.body);
+//   mytable.findOne({ userName: req.body.userName }, function(err, result) {
+//     if (err) {
+//       console.log("error");
+//       res.send(err);
+//     } else {
+//       if (result && bcrypt.compareSync(req.body.password, result.password)) {
+//         // create jwt token based on db user _id
+//         const jwt_token = createToken(result._id);
+//         res.send({
+//           userName: req.body.userName,
+//           verified: true,
+//           jwtToken: jwt_token,
+//         });
+//       } else {
+//         console.log("unable");
+//         res.send("Unable to verify");
+//       }
+//     }
+//   });
+// });
 
 router.post("/request", async (req, res) => {
   console.log("inside /request", req.body);
@@ -239,7 +209,7 @@ router.get("/find-donations-by-user", async (req, res) => {
   });
 });
 
-router.post("/role", async (req, res) => {
+router.post("/userdata", async (req, res) => {
   // console.log("query role");
   // users.find({ uid: req.body.uid })
   users.findOne({ uid: req.body.uid }, function(err, result) {
@@ -247,7 +217,7 @@ router.post("/role", async (req, res) => {
       res.send(err);
     } else {
       if (result) {
-        res.send(result.role);
+        res.send(result);
       } else {
         res.send("No user found.");
       }
@@ -296,6 +266,48 @@ router.post("/update-blockchain-address", async (req, res) => {
       }
     }
   );
+});
+//TODO: change role to an array and reflect it on pages
+//TODO: if phone number exist, don't substitute
+//TODO: only add validation when that validation for that role doesn't exist
+router.post("/validation", async (req, res) => {
+  console.log("inside /validate...");
+  console.log("validate request body", req.body);
+
+  users.findOneAndUpdate(
+    { uid: req.body.uid },
+    {
+      phoneNumber: req.body.phoneNumber,
+      $push: {
+        validations: {
+          description: req.body.description,
+          role: req.body.role,
+        },
+      },
+    },
+    function(err, result) {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send(result);
+        console.log("User Validation Updated================");
+        console.log(result);
+      }
+    }
+  );
+});
+
+/** Get all existing validations */
+router.get("/validation", async (req, res) => {
+  users.findOne({ uid: req.body.uid }, (err, result)=>{
+    if (err) {
+      res.send(err);
+    } else {
+      console.log("my validations", result.validations);
+      res.send(result.validations);
+    }
+  });
+
 });
 
 module.exports = router;

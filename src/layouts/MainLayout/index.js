@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
+import { Box } from "@material-ui/core";
 // import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
@@ -126,28 +127,26 @@ function MainLayout(props) {
     history.push("/login");
   };
 
+  // icons: icon={HomeIcon} icon={VolunteerActivismRoundedIcon} icon={RequestPageIcon}
   return (
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
+          <img src="./tistalogo.png" width={125} height={35}></img>
+          <div style={{ display: "flex", flex: 1 }} />
           <div className={classes.navbutton}>
-            <NavLink activeOnlyWhenExact to="/" icon={HomeIcon}>
+            <NavLink activeOnlyWhenExact to="/">
               Home
             </NavLink>
           </div>
           <div className={classes.navbutton}>
-            <NavLink to="/donation" icon={VolunteerActivismRoundedIcon}>
-              Community
-            </NavLink>
+            <NavLink to="/donation">Community</NavLink>
           </div>
           <RequireRole requiredRole={["Requester", "Donor"]}>
             <div className={classes.navbutton}>
-              <NavLink to="/request" icon={RequestPageIcon}>
-                Request
-              </NavLink>
+              <NavLink to="/request">Request</NavLink>
             </div>
           </RequireRole>
-          <div style={{ display: "flex", flex: 1 }} />
           <RequireRole requiredRole={["Donor", "Vendor", "Requester"]}>
             <Tooltip title="My Profile">
               <IconButton component={Link} to="/profile">

@@ -33,7 +33,7 @@ import { CardHeader } from "@mui/material";
 import { TableContainer } from "@material-ui/core";
 import { Form, FormLabel } from "react-bootstrap";
 
-import ValidationForm from "./ValidationForm";
+import MyValidation from "./MyValidation";
 import ValidationCards from "./ValidationCards";
 import RequireRole from "../RequireRole";
 import Moment from "react-moment";
@@ -108,10 +108,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Profile() {
-  let { currentUser } = useAuth();
+  let { currentUser, name } = useAuth();
   let user_email = currentUser.email;
 
-  const [name, setName] = useState("");
+  // const [name, setName] = useState("");
   // const [found, setFound] = useState(Data);
 
   const classes = useStyles();
@@ -148,9 +148,9 @@ export default function Profile() {
       fetchProfile();
       fetchRequests();
     } else if (newValue == 1) {
-      fetchRequests();
-    } else if (newValue == 2) {
       fetchDonationsByUser();
+    } else if (newValue == 2) {
+      // fetchRequests();
     }
   };
 
@@ -406,6 +406,8 @@ export default function Profile() {
     }
   }
 
+  console.log(user_email);
+
   return (
     <div>
       <div
@@ -425,9 +427,15 @@ export default function Profile() {
             marginLeft: "110px",
           }}
         >
-          <Typography variant="h6" component="div">
-            Currently logged in as: {user_email}
-          </Typography>
+          {name == null ? (
+            <Typography variant="h6" component="div">
+              Currently logged in as: John Doe
+            </Typography>
+          ) : (
+            <Typography variant="h6" component="div">
+              Currently logged in as: {name}
+            </Typography>
+          )}
           <br />
           <br />
         </div>
@@ -545,7 +553,7 @@ export default function Profile() {
           </Card>
         </TabPanel>
         <TabPanel value={value} index={2}>
-          <ValidationForm></ValidationForm>
+          <MyValidation uid={currentUser.uid}></MyValidation>
         </TabPanel>
         <TabPanel value={value} index={3}>
           <Typography variant="h6" component="div">

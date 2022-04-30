@@ -1,0 +1,9 @@
+POST http://localhost:4000/app/validation
+Content-Type: application/json
+
+{
+    "description": "this is the duplicate vendor test",
+    "role": "Vendor",
+    "phoneNumber": "1234567",
+    "uid":"ijz2F8dmDlYeAQhXGGgirGbkwJS2"
+}
