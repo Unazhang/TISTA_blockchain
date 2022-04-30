@@ -230,6 +230,10 @@ router.get("/user", async (req, res) => {
   users.findOne({ email: req.query.user_email }, function(err, result) {
     if (err) {
       res.send(err);
+    } else if (result.avatarUrl == null || result.avatarUrl.length == 0) {
+      res.send(
+        "https://i0.wp.com/sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png?ssl=1"
+      );
     } else {
       res.send(result.avatarUrl);
     }
@@ -299,7 +303,7 @@ router.post("/validation", async (req, res) => {
 
 /** Get all existing validations */
 router.get("/validation", async (req, res) => {
-  users.findOne({ uid: req.body.uid }, (err, result)=>{
+  users.findOne({ uid: req.body.uid }, (err, result) => {
     if (err) {
       res.send(err);
     } else {
@@ -307,7 +311,6 @@ router.get("/validation", async (req, res) => {
       res.send(result.validations);
     }
   });
-
 });
 
 module.exports = router;

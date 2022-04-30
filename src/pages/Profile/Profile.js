@@ -258,7 +258,13 @@ export default function Profile() {
         console.log(err);
       })
       .then((res) => {
-        setAvatarUrl(res.data);
+        if (res == null || res.data == null || res.data.length == 0) {
+          setAvatarUrl(
+            "https://i0.wp.com/sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png?ssl=1"
+          );
+        } else {
+          setAvatarUrl(res.data);
+        }
       });
   };
 
