@@ -32,7 +32,6 @@ router.post("/signup", async (req, res) => {
     uid: req.body.uid,
     email: req.body.email,
     blockchainAddress: req.body.blockchainAddress,
-    role: req.body.role,
   });
 
   signedUpUser
@@ -225,13 +224,17 @@ router.post("/userdata", async (req, res) => {
   });
 });
 
-router.get("/user", async (req, res) => {
-  console.log("inside /user", req.query);
-  users.findOne({ email: req.query.user_email }, function(err, result) {
+router.post("/user", async (req, res) => {
+  console.log("inside /user", req);
+  users.findOne({ email: req.body.user_email }, function(err, result) {
     if (err) {
       res.send(err);
     } else {
-      res.send(result.avatarUrl);
+      if (result) {
+        res.send(result.avatarUrl);
+      } else {
+        res.send("Cannot find avatar");
+      }
     }
   });
 });
@@ -278,36 +281,31 @@ router.post("/validation", async (req, res) => {
     { uid: req.body.uid },
     {
       phoneNumber: req.body.phoneNumber,
-      $push: {
-        validations: {
-          description: req.body.description,
-          role: req.body.role,
-        },
-      },
+      "role.[req.body.role].description": req.body.description,
+      "role.[req.body.role].added": true
     },
     function(err, result) {
       if (err) {
         res.send(err);
       } else {
-        res.send(result);
+        res.send(result.role);
         console.log("User Validation Updated================");
-        console.log(result);
+        console.log(result.role);
       }
     }
   );
 });
 
 /** Get all existing validations */
-router.get("/validation", async (req, res) => {
-  users.findOne({ uid: req.body.uid }, (err, result)=>{
+router.post("/validationstatus", async (req, res) => {
+  users.findOne({ uid: req.body.uid }, (err, result) => {
     if (err) {
       res.send(err);
     } else {
-      console.log("my validations", result.validations);
-      res.send(result.validations);
+      console.log("my validations", result.role);
+      res.send(result.role);
     }
   });
-
 });
 
 module.exports = router;

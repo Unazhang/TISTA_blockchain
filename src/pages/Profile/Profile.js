@@ -250,8 +250,8 @@ export default function Profile() {
   // get user avatar
   const fetchProfile = async () => {
     await axios
-      .get(`${API_BASE_URL}/app/user`, {
-        params: { user_email: user_email },
+      .post(`${API_BASE_URL}/app/user`, {
+        user_email: user_email
       })
       .catch((err) => {
         console.log(err);

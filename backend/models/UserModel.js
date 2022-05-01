@@ -19,15 +19,15 @@ const donation_record = new mongoose.Schema({
   },
 });
 
-const validationTemplate = new mongoose.Schema({
-  description: {
-    type: String,
-  },
-  role: {
-    type: String,
-    required: true,
-  },
-});
+// const validationTemplate = new mongoose.Schema({
+//   description: {
+//     type: String,
+//   },
+//   role: {
+//     type: String,
+//     required: true,
+//   },
+// });
 
 const userTemplate = new mongoose.Schema({
   displayName: String,
@@ -43,16 +43,49 @@ const userTemplate = new mongoose.Schema({
   blockchainAddress: [String],
   donateTo: { type: [donation_record] },
   role: {
-    type: String,
-    default: "Donor",
+    Donor: {
+      description: String,
+      validated: {
+        type: Boolean,
+        default: false,
+      },
+      added: {
+        type: Boolean,
+        default: false,
+      },
+    },
+    Requester: {
+      description: String,
+      validated: {
+        type: Boolean,
+        default: false,
+      },
+      added: {
+        type: Boolean,
+        default: false,
+      },
+    },
+    Vendor: {
+      description: String,
+      validated: {
+        type: Boolean,
+        default: false,
+      },
+      added: {
+        type: Boolean,
+        default: false,
+      },
+    },
   },
   avatarUrl: {
     type: String,
     default:
       "https://i0.wp.com/sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png?ssl=1",
   },
-  validations: [validationTemplate],
 });
+
+// default: "Donor", type: String,
+//validations: [validationTemplate],
 
 userTemplate.pre("save", function(next) {
   this.userId = this._id.toString();
