@@ -20,6 +20,8 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import Checkbox from "@mui/material/Checkbox";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 class Send extends Component {
   constructor(props) {
@@ -148,6 +150,12 @@ class Send extends Component {
     this.transfer(recipient, amount);
   }
 
+  handleAnonChange = () => {
+    this.setState({
+      donor_name: "Anonymous",
+    });
+  };
+
   render() {
     let amountUSD = this.state.amountUSD;
     let isUpdated = this.state.isUpdated;
@@ -186,35 +194,72 @@ class Send extends Component {
           </Dialog>
           <Form onSubmit={this.handleSubmit.bind(this)}>
             <div className="form-group mr-sm-2">
-              <Grid warp="nowrap">
-                <TextField
-                  variant="outlined"
-                  helperText={this.state.helperText}
-                  onChange={this.onChange.bind(this)}
-                  error={this.state.error}
-                  required
-                  id="amount"
-                  label="Amount (XYZ Token)"
-                  inputRef={(element) => (this.amountRef = element)}
-                  style={{ width: 150 }}
-                />
-                XYZ Token = {amountUSD} USD
+              <Grid warp="nowrap" spacing={1}>
+                <Grid container>
+                  <Grid item xs={5}>
+                    <TextField
+                      size="small"
+                      label="XYZ Token"
+                      variant="outlined"
+                      disabled
+                      select
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      size="small"
+                      variant="outlined"
+                      helperText={this.state.helperText}
+                      onChange={this.onChange.bind(this)}
+                      error={this.state.error}
+                      required
+                      id="amount"
+                      label="Amount: "
+                      inputRef={(element) => (this.amountRef = element)}
+                      style={{ width: 150 }}
+                    />
+                  </Grid>
+                </Grid>
               </Grid>
-              <TextField
-                variant="outlined"
-                helperText={this.state.helperText}
-                onChange={this.handleNameChange.bind(this)}
-                error={this.state.error}
-                required
-                id="donor_name"
-                label="Your Name:"
-                placeholder="Anonymous"
-                style={{ width: 200 }}
-              />
-              <Typography>Send to vendor: {this.state.vendor_name}</Typography>
-              <div align="middle">
-                <Button variant="contained" color="primary" type="submit">
-                  Send
+              <Grid>
+                <Grid container>
+                  <Grid item xs={6} />
+                  <Grid item xs={5}>
+                    <Typography> = {amountUSD} USD</Typography>
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid>
+                <Grid container>
+                  <Grid item xs={5}>
+                    <TextField
+                      size="small"
+                      variant="outlined"
+                      // helperText={this.state.helperText}
+                      onChange={this.handleNameChange.bind(this)}
+                      // error={this.state.error}
+                      // required
+                      id="donor_name"
+                      label="Donated as:"
+                      placeholder="Donated as:"
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Checkbox onChange={this.handleAnonChange} />
+                    Make it anonymous?
+                  </Grid>
+                </Grid>
+              </Grid>
+              <br />
+              {/* <Typography>Send to vendor: {this.state.vendor_name}</Typography> */}
+              <div align="left">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  style={{ borderRadius: 50, width: "150px" }}
+                >
+                  Donate
                 </Button>
               </div>
             </div>

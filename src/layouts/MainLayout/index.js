@@ -67,6 +67,7 @@ const styles = (theme) => ({
   navbutton: {
     width: 200,
     fontWeight: "bold",
+    display: "inline-block",
   },
   drawerPaper: {
     width: drawerWidth,
@@ -146,7 +147,7 @@ function MainLayout(props) {
           </div>
           <RequireRole requiredRole={["Requester", "Donor"]}>
             <div className={classes.navbutton}>
-              <NavLink to="/request">Make a Request?</NavLink>
+              <NavLink to="/request">New Request?</NavLink>
             </div>
           </RequireRole>
           <RequireRole requiredRole={["Donor", "Vendor", "Requester"]}>

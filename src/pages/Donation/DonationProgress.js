@@ -28,9 +28,14 @@ class DonationProgress extends Component {
             barHeight: "50%",
           },
         },
-        colors: ["#304db0", "#808080"],
+        dataLabels: {
+          style: {
+            colors: ["#fff", "000000"],
+          },
+        },
+        colors: ["#304db0", "#e3f2fd"],
         stroke: {
-          width: 1,
+          width: 0,
           colors: ["#fff"],
         },
         title: {
