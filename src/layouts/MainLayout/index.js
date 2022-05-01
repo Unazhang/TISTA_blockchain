@@ -52,7 +52,9 @@ import RequireNonAuth from "../../pages/RequireNonAuth";
 const drawerWidth = 240;
 const styles = (theme) => ({
   root: {
-    display: "flex",
+    // display: "flex",
+    height: "20px",
+    weight: "100%",
   },
   appBar: {
     width: "100%",
@@ -144,7 +146,7 @@ function MainLayout(props) {
           </div>
           <RequireRole requiredRole={["Requester", "Donor"]}>
             <div className={classes.navbutton}>
-              <NavLink to="/request">Request</NavLink>
+              <NavLink to="/request">Make a Request?</NavLink>
             </div>
           </RequireRole>
           <RequireRole requiredRole={["Donor", "Vendor", "Requester"]}>

@@ -34,8 +34,8 @@ function App() {
             <Route exact path="/request" component={RequestDonation} />
             <Route path="/donation" component={CommunityPage} />
             <Route exact path="/profile" component={Profile} />
-            <Route exact path="/make-a-donation" component={MakeNewDonation} />
           </MainLayout>
+          <Route exact path="/make-a-donation" component={MakeNewDonation} />
         </Switch>
       </div>
     </div>

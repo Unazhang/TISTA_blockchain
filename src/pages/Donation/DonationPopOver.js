@@ -91,6 +91,8 @@ export default function DonationPopOver(props) {
         vendor_name: props.vendor_name,
         vendor_email: props.vendor_email,
         requester_email: props.requester_email,
+        imageUrl: props.imageUrl,
+        projectImage: props.projectImage,
       };
       console.log(data);
       history.push({

@@ -11,11 +11,25 @@ import {
   CardActions,
   CardMedia,
 } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+
+const LINES_TO_SHOW = 3;
+
+const useStyles = makeStyles({
+  multiLineEllipsis: {
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    display: "-webkit-box",
+    "-webkit-line-clamp": LINES_TO_SHOW,
+    "-webkit-box-orient": "vertical",
+  },
+});
 
 function DonationCards({ cardNumber }) {
   let arr = [];
   const [events, setEvents] = useState([]);
   const API_BASE_URL = `http://localhost:4000`;
+  const classes = useStyles();
 
   const fetchDonations = async () => {
     try {
@@ -75,31 +89,31 @@ function DonationCards({ cardNumber }) {
                 item
                 style={{
                   width: "600px",
-                  height: "100%",
+                  height: "700px",
                   backgroundSize: "contained",
                 }}
                 alignContent={"center"}
               >
-                {/* testtttt */}
                 <Card sx={{ maxWidth: 345 }}>
                   <CardMedia
                     component="img"
-                    height="250"
+                    height="350"
                     image={events[i].imageUrl}
                     alt={events[i].imageUrl}
                   />
                   <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
+                    <Typography
+                      fontFamily={"sans-serif"}
+                      fontSize="40%"
+                      fontWeight={"600"}
+                    >
                       {events[i].title}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      <b>Description: </b>
+                    <Typography className={classes.multiLineEllipsis}>
                       {events[i].description}
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    {/* <Button size="small">Share</Button>
-                    <Button size="small">Learn More</Button> */}
                     <DonationPopOver
                       amount={
                         events[i].current_amount +
@@ -119,10 +133,10 @@ function DonationCards({ cardNumber }) {
                       donation_history={events[i].donation_history}
                       vendor_name={events[i].vendor_name}
                       vendor_email={events[i].vendor_email}
+                      projectImage={events[i].imageUrl}
                     />
                   </CardActions>
                 </Card>
-                {/* testttt */}
               </Grid>
             </Grid>
           </Grid>
