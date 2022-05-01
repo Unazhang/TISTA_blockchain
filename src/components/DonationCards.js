@@ -4,12 +4,32 @@ import axios from "axios";
 import Typography from "@material-ui/core/Typography";
 import { reaction } from "mobx";
 import { donationStore } from "../pages/Donation/DonationStore";
-import { Grid, Card, CardContent, CardActions } from "@material-ui/core";
+import {
+  Grid,
+  Card,
+  CardContent,
+  CardActions,
+  CardMedia,
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+
+const LINES_TO_SHOW = 3;
+
+const useStyles = makeStyles({
+  multiLineEllipsis: {
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    display: "-webkit-box",
+    "-webkit-line-clamp": LINES_TO_SHOW,
+    "-webkit-box-orient": "vertical",
+  },
+});
 
 function DonationCards({ cardNumber }) {
   let arr = [];
   const [events, setEvents] = useState([]);
   const API_BASE_URL = `http://localhost:4000`;
+  const classes = useStyles();
 
   const fetchDonations = async () => {
     try {
@@ -63,82 +83,37 @@ function DonationCards({ cardNumber }) {
     for (let i = 0; i < arrLength; i++) {
       if (events[i].blockchainAddress.length > 0) {
         arr.push(
-          <Grid item xs={12} sm={6}>
-            <Grid container>
+          <Grid item xs={12} sm={6} alignContent={"center"}>
+            <Grid container alignContent={"center"}>
               <Grid
                 item
                 style={{
-                  width: "50%",
-                  height: "100%",
+                  width: "600px",
+                  height: "700px",
                   backgroundSize: "contained",
                 }}
+                alignContent={"center"}
               >
-                <Card style={{ width: 300, margin: "auto", height: 200 }}>
-                  <img
-                    src={events[i].imageUrl}
-                    width="100%"
-                    height="100%"
-                    alt=""
+                <Card sx={{ maxWidth: 345 }}>
+                  <CardMedia
+                    component="img"
+                    height="350"
+                    image={events[i].imageUrl}
+                    alt={events[i].imageUrl}
                   />
-                </Card>
-              </Grid>
-              <Grid item style={{ width: "50%", height: "100%" }}>
-                <Card variant="outlined" style={{ width: 300, height: 200 }}>
-                  <CardContent
-                    style={{
-                      height: "80%",
-                      ordWrap: "break-word",
-                      display: "block",
-                      overflow: "hidden",
-                      whiteSpace: "normal",
-                    }}
-                  >
-                    {/* <ShowImage url={events[i].imageUrl} /> */}
+                  <CardContent>
                     <Typography
-                      id="title"
-                      gutterBottom
-                      variant="h6"
-                      style={{ fontSize: "2.5vh" }}
+                      fontFamily={"sans-serif"}
+                      fontSize="40%"
+                      fontWeight={"600"}
                     >
                       {events[i].title}
                     </Typography>
-                    <Typography
-                      noWrap
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                    >
-                      <b>{events[i].current_amount} raised</b> of{" "}
-                      {events[i].target_amount} XYZ Token
-                    </Typography>
-                    <Typography
-                      noWrap
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                    >
-                      Blockchain Address: {events[i].blockchainAddress}
-                    </Typography>
-                    <Typography
-                      noWrap
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                    >
-                      {" "}
-                      Description:
+                    <Typography className={classes.multiLineEllipsis}>
                       {events[i].description}
                     </Typography>
                   </CardContent>
-                  <CardActions
-                    style={{
-                      height: "80%",
-                      ordWrap: "break-word",
-                      display: "block",
-                      overflow: "hidden",
-                      whiteSpace: "normal",
-                    }}
-                  >
+                  <CardActions>
                     <DonationPopOver
                       amount={
                         events[i].current_amount +
@@ -158,6 +133,7 @@ function DonationCards({ cardNumber }) {
                       donation_history={events[i].donation_history}
                       vendor_name={events[i].vendor_name}
                       vendor_email={events[i].vendor_email}
+                      projectImage={events[i].imageUrl}
                     />
                   </CardActions>
                 </Card>
