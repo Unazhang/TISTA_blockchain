@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
-import {
-  Typography,
-  Box,
-  makeStyles,
-  OutlinedInput,
-  TextField,
-} from "@material-ui/core";
+import { Typography, makeStyles, OutlinedInput } from "@material-ui/core";
 import { Stack, Button } from "@mui/material";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import ValidationCards from "./ValidationCards";
@@ -52,15 +46,18 @@ function MyValidation({ uid }) {
     setdisplayCards(!displayCards);
 
     try {
-      console.log(validationForm.phoneNumber);
-      console.log(validationForm.description);
-      console.log(currentCard);
-      await axios.post("http://localhost:4000/app/validation", {
+      // console.log(validationForm.phoneNumber);
+      // console.log(validationForm.description);
+      // console.log(currentCard);
+      const response = await axios.post("http://localhost:4000/app/validation", {
         phoneNumber: validationForm.phoneNumber,
         description: validationForm.description,
         role: currentCard,
         uid: uid,
       });
+
+      console.log(uid);
+      console.log(response);
 
       setValidationStatus((prevState) => ({
         ...prevState,
@@ -77,22 +74,31 @@ function MyValidation({ uid }) {
   // }, [validationStatus]);
 
   async function queryValidationStatus() {
-    const response = await axios.get("http://localhost:4000/app/validation", {
-      uid: uid,
-    });
+    const roles = ["Donor", "Vendor", "Requester"];
+    
+    try {
+      const response = await axios.post("http://localhost:4000/app/validationstatus", {
+        uid: uid,
+      });
+      console.log(uid);
+      console.log(response);
 
-    response.array.forEach((element) => {
-      if (element.role in ["Donor", "Vendor", "Requester"]) {
-        setValidationStatus((prevState) => ({
-          ...prevState,
-          [element.role]: true,
-        }));
-      }
-    });
+      roles.forEach((element) => {
+        if (response.data[element].added) {
+          setValidationStatus((prevState) => ({
+            ...prevState,
+            [element]: true,
+          }));
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   useEffect(() => {
     queryValidationStatus();
+    console.log("queried status");
   }, []);
   //TODO validate phone number
 

@@ -48,6 +48,7 @@ import RequireRole from "../../pages/RequireRole";
 import { useAuth } from "../../contexts/AuthContext";
 import Tooltip from "@mui/material/Tooltip";
 import RequireNonAuth from "../../pages/RequireNonAuth";
+import RequireAuth from "../../pages/RequireAuth";
 
 const drawerWidth = 240;
 const styles = (theme) => ({
@@ -131,6 +132,7 @@ function MainLayout(props) {
   };
 
   // icons: icon={HomeIcon} icon={VolunteerActivismRoundedIcon} icon={RequestPageIcon}
+
   return (
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.appBar}>
@@ -145,19 +147,17 @@ function MainLayout(props) {
           <div className={classes.navbutton}>
             <NavLink to="/donation">Community</NavLink>
           </div>
-          <RequireRole requiredRole={["Requester", "Donor"]}>
-            <div className={classes.navbutton}>
-              <NavLink to="/request">New Request?</NavLink>
-            </div>
-          </RequireRole>
-          <RequireRole requiredRole={["Donor", "Vendor", "Requester"]}>
+          <div className={classes.navbutton}>
+            <NavLink to="/request">Request</NavLink>
+          </div>
+          <RequireAuth>
             <Tooltip title="My Profile">
               <IconButton component={Link} to="/profile">
                 <ProfileIcon style={{ fill: "white" }} />
               </IconButton>
             </Tooltip>
-          </RequireRole>
-          <RequireRole requiredRole={["Donor", "Vendor", "Requester"]}>
+          </RequireAuth>
+          <RequireAuth>
             <Button
               variant="text"
               onClick={handleLogout}
@@ -167,7 +167,7 @@ function MainLayout(props) {
             >
               Log Out
             </Button>
-          </RequireRole>
+          </RequireAuth>
           <RequireNonAuth>
             <Button
               variant="text"

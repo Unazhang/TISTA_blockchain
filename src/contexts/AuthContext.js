@@ -11,11 +11,12 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
-  const [role, setRole] = useState(null);
+  const [role, setRole] = useState([]);
   const [name, setName] = useState(null);
 
-  async function signup(email, password, roleSelected, name) {
+  async function signup(email, password, name) {
     // console.log("in signup");
+
     let user = null;
     try {
       const userCredential = await auth.createUserWithEmailAndPassword(
@@ -26,7 +27,6 @@ export function AuthProvider({ children }) {
     } catch (err) {
       console.log(err);
     }
-    // console.log("after signup");
 
     if (user) {
       // console.log(user);
@@ -37,10 +37,8 @@ export function AuthProvider({ children }) {
           displayName: name,
           uid: user.uid,
           email: user.email,
-          role: roleSelected,
         });
-        // console.log(response);
-        setRole(response.data.data.role);
+        console.log(response);
         setName(name);
       } catch (err) {
         console.log(err);
@@ -82,13 +80,22 @@ export function AuthProvider({ children }) {
   async function updateRoleAndName(user) {
     if (user) {
       try {
-        const response = await axios.post("http://localhost:4000/app/userdata", {
-          uid: user.uid,
-        });
-        const currentRole = response.data.role;
+        const response = await axios.post(
+          "http://localhost:4000/app/userdata",
+          {
+            uid: user.uid,
+          }
+        );
 
-        // console.log(currentRole);
-        setRole(currentRole);
+        console.log(response);
+
+        ["Donor", "Requester", "Vendor"].forEach((match) => {
+          console.log(response.data.role[match].validated);
+          if (response.data.role[match].validated) {
+            setRole((pre) => ({ ...pre, match }));
+          }
+        });
+
         setName(response.data.displayName);
       } catch (err) {
         console.log(err);
@@ -115,9 +122,9 @@ export function AuthProvider({ children }) {
   //   }
   // }, [currentUser])
   // catch role change for debugging
-  // useEffect(() => {
-  //   console.log(role);
-  // }, [role]);
+  useEffect(() => {
+    console.log(role);
+  }, [role]);
 
   const value = {
     currentUser,

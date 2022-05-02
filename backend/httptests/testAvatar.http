@@ -1,0 +1,6 @@
+POST  http://localhost:4000/app/user
+Content-Type: application/json
+
+{
+    "user_email": "newtestnew@new.com"
+}
