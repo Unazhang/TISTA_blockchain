@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import DetectAccount from "./DetectAccount";
 import "./Donation.css";
 import poster from "./poster.jpeg";
+import Box from "@mui/material/Box";
 
 const useStyles = makeStyles((theme) => ({
   searchInput: {
@@ -56,10 +57,33 @@ export default function CommunityPage() {
   };
 
   return (
-    <>
-      <div className="donationMain">
+    <div
+      style={{
+        maxHeight: "200vh",
+        maxWidth: "100vw",
+        overflow: "auto",
+        left: "50px",
+        right: "50px",
+      }}
+    >
+      {" "}
+      <Box sx={{ ml: 15, mr: 15, mt: 5 }}>
+        <Typography variant="h6">
+          <b>Explore Projects</b>
+        </Typography>
+        <br />
+        <Typography
+          fontSize={"100%"}
+          fontFamily={"sans-serif"}
+          fontWeight={"500"}
+        >
+          You have brains in your head. You have feet in your shoes. You can
+          steer yourself any direction you choose. You're on your own. And you
+          know what you know. And YOU are the one who'll decide where to go.
+        </Typography>
+        <br />
         <AllProjects />
-      </div>
-    </>
+      </Box>
+    </div>
   );
 }

@@ -229,6 +229,10 @@ router.post("/user", async (req, res) => {
   users.findOne({ email: req.body.user_email }, function(err, result) {
     if (err) {
       res.send(err);
+    } else if (result.avatarUrl == null || result.avatarUrl.length == 0) {
+      res.send(
+        "https://i0.wp.com/sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png?ssl=1"
+      );
     } else {
       if (result) {
         res.send(result.avatarUrl);

@@ -1,7 +1,8 @@
 import React, { useRef, useState } from "react";
-import { Form, Button, Card, Alert, ButtonGroup } from "react-bootstrap";
+import { Form, Card, Alert, ButtonGroup } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
+import { Box, Button } from "@mui/material";
 
 export default function SignUp() {
   const emailRef = useRef();

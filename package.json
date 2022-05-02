@@ -4,6 +4,7 @@
   "description": "An Ethereum Marketplace",
   "author": "gregory@dappuniversity.com",
   "dependencies": {
+    "@babel/core": "^7.17.9",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "@material-ui/core": "^4.12.3",
@@ -14,6 +15,7 @@
     "antd": "^4.19.3",
     "apexcharts": "^3.35.0",
     "axios": "^0.23.0",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-polyfill": "6.26.0",
     "babel-preset-env": "1.7.0",
     "babel-preset-es2015": "6.24.1",
@@ -33,13 +35,14 @@
     "mdbreact": "^5.2.0",
     "mobx": "^6.3.6",
     "mobx-react-lite": "^3.2.2",
+    "moment": "^2.29.3",
     "react": "^16.14.0",
     "react-apexcharts": "^1.4.0",
-    "react-app-rewired": "^2.1.8",
     "react-bootstrap": "1.0.0-beta.5",
     "react-chartjs-2": "^4.0.1",
     "react-dnd": "^11.1.3",
     "react-dom": "16.8.4",
+    "react-moment": "^1.1.2",
     "react-redux": "^7.2.8",
     "react-router-dom": "^5.1.2",
     "react-router-guards": "^1.0.2",
@@ -47,14 +50,18 @@
     "react-table": "^7.7.0",
     "react-table-6": "^6.11.0",
     "redux": "^4.1.2",
+    "regenerator-runtime": "^0.13.9",
     "truffle": "5.0.5",
     "web3": "1.0.0-beta.55"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts react-app-rewired build",
-    "test": "react-scripts react-app-rewired test",
-    "eject": "react-scripts react-app-rewired eject"
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "resolutions": {
+    "babel-core": "7.0.0-bridge.0"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -67,6 +74,8 @@
   ],
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.16.0",
-    "eslint-plugin-react-hooks": "^4.4.0"
+    "eslint-plugin-react-hooks": "^4.4.0",
+    "react-app-rewired": "^2.2.1",
+    "react-test-renderer": "^18.0.0"
   }
 }

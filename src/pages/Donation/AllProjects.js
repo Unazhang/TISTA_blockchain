@@ -121,36 +121,24 @@ export default function AllProjects() {
   // };
 
   return (
-    <div className={classes.root}>
-      <TabPanel value={value} index={0}>
-        <Toolbar>
-          <Controls.Input
-            label="Search"
-            className={classes.searchInput}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <Search />
-                </InputAdornment>
-              ),
-            }}
-            onChange={handleSearch}
-          />
-        </Toolbar>
-        <div style={{ maxHeight: "200vh", overflow: "auto" }}>
-          <Grid container spacing={2}>
-            <DonationCards />
-          </Grid>
-        </div>
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <Typography variant="h6" id="tableTitle" component="div">
-          Donation History
-        </Typography>
-        <div style={{ maxHeight: "58vh", overflow: "auto" }}>
-          <DonationAccordion />
-        </div>
-      </TabPanel>
+    <div>
+      {/* <Controls.Input
+        label="Search"
+        className={classes.searchInput}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Search />
+            </InputAdornment>
+          ),
+        }}
+        onChange={handleSearch}
+      /> */}
+      <div style={{ maxHeight: "auto", overflow: "auto" }}>
+        <Grid container spacing={2}>
+          <DonationCards />
+        </Grid>
+      </div>
     </div>
   );
 }

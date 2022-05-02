@@ -53,7 +53,9 @@ import RequireAuth from "../../pages/RequireAuth";
 const drawerWidth = 240;
 const styles = (theme) => ({
   root: {
-    display: "flex",
+    // display: "flex",
+    height: "20px",
+    weight: "100%",
   },
   appBar: {
     width: "100%",
@@ -66,6 +68,7 @@ const styles = (theme) => ({
   navbutton: {
     width: 200,
     fontWeight: "bold",
+    display: "inline-block",
   },
   drawerPaper: {
     width: drawerWidth,
