@@ -49,12 +49,15 @@ function MyValidation({ uid }) {
       // console.log(validationForm.phoneNumber);
       // console.log(validationForm.description);
       // console.log(currentCard);
-      const response = await axios.post("http://localhost:4000/app/validation", {
-        phoneNumber: validationForm.phoneNumber,
-        description: validationForm.description,
-        role: currentCard,
-        uid: uid,
-      });
+      const response = await axios.post(
+        "http://localhost:4000/app/validation",
+        {
+          phoneNumber: validationForm.phoneNumber,
+          description: validationForm.description,
+          role: currentCard,
+          uid: uid,
+        }
+      );
 
       console.log(uid);
       console.log(response);
@@ -75,11 +78,14 @@ function MyValidation({ uid }) {
 
   async function queryValidationStatus() {
     const roles = ["Donor", "Vendor", "Requester"];
-    
+
     try {
-      const response = await axios.post("http://localhost:4000/app/validationstatus", {
-        uid: uid,
-      });
+      const response = await axios.post(
+        "http://localhost:4000/app/validationstatus",
+        {
+          uid: uid,
+        }
+      );
       console.log(uid);
       console.log(response);
 
@@ -98,7 +104,6 @@ function MyValidation({ uid }) {
 
   useEffect(() => {
     queryValidationStatus();
-    console.log("queried status");
   }, []);
   //TODO validate phone number
 
@@ -156,11 +161,19 @@ function MyValidation({ uid }) {
                       Add File
                     </Button>
                   </label> */}
-                <label htmlFor="submit">
-                  <Button onClick={handleSubmit} variant="contained">
-                    Submit
-                  </Button>
-                </label>
+                {/* <label htmlFor="submit"> */}
+                <Button onClick={handleSubmit} variant="contained">
+                  Submit
+                </Button>
+                <Button
+                  onClick={() => {
+                    setdisplayCards(!displayCards);
+                  }}
+                  variant="contained"
+                >
+                  Cancel
+                </Button>
+                {/* </label> */}
               </Stack>
             </Stack>
             <div>
