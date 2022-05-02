@@ -10,10 +10,15 @@ function RequireRole({ requiredRole, children }) {
   // const access = requiredRole.some((item) => {
   //   return item === role;
   // });
-  
-  const access = role.some((item) => {
-    return item in requiredRole;
-  });
+  let access;
+
+  if (role.length < 0) {
+    access = false;
+  } else {
+    access = role.some((item) => {
+      return item in requiredRole;
+    });
+  }
 
   console.log(access);
 
