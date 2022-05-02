@@ -2,8 +2,8 @@ POST http://localhost:4000/app/validation
 Content-Type: application/json
 
 {
-    "description": "this is the vendor test2",
-    "role": "Vendor",
+    "description": "this is the Requester test2",
+    "role": "Requester",
     "phoneNumber": "1234567",
     "uid":"0wPHYPgfW8RJz8E7p2ut5x4N6Ak1"
 }

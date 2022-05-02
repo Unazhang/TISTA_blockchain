@@ -270,20 +270,24 @@ router.post("/update-blockchain-address", async (req, res) => {
     }
   );
 });
-//TODO: change role to an array and reflect it on pages
+
 //TODO: if phone number exist, don't substitute
-//TODO: only add validation when that validation for that role doesn't exist
+
 router.post("/validation", async (req, res) => {
   console.log("inside /validate...");
   console.log("validate request body", req.body);
+
+  const descriptionUpdate = `role.${req.body.role}.description`;
+  const addedUpdate = `role.${req.body.role}.added`;
 
   users.findOneAndUpdate(
     { uid: req.body.uid },
     {
       phoneNumber: req.body.phoneNumber,
-      "role.[req.body.role].description": req.body.description,
-      "role.[req.body.role].added": true
+      [descriptionUpdate]: req.body.description,
+      [addedUpdate]: true,
     },
+    { new: true },
     function(err, result) {
       if (err) {
         res.send(err);
