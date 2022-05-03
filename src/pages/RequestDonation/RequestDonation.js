@@ -72,7 +72,7 @@ export default function RequestDonationForm(props) {
           ? imageUrl
           : "https://storage.googleapis.com/proudcity/sanrafaelca/uploads/2020/04/donate-image.png",
     };
-    console.log(name);
+    console.log(data.requester_name);
     console.log("data", data);
 
     if (!currentUser) {
@@ -105,6 +105,8 @@ export default function RequestDonationForm(props) {
   };
 
   const sendEmailToVendor = (e) => {
+    console.log(e.target);
+
     emailjs
       .sendForm(
         "service_x0a2x2c",
@@ -184,14 +186,6 @@ export default function RequestDonationForm(props) {
                     <option value="US">United States</option>
                   </Form.Control>
                 </Form.Group>
-                {/* <Form.Group>
-                  <Form.Label>What's your name?</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="requester_name"
-                    onChange={(e) => setReqName(e.target.value)}
-                  />
-                </Form.Group> */}
                 <h3>Tell us about your request</h3>
                 <Form.Group>
                   <Form.Label>What are you fundraising for?</Form.Label>
@@ -284,6 +278,15 @@ export default function RequestDonationForm(props) {
                   <Button variant="contained" color="primary" type="submit">
                     Submit
                   </Button>
+                </Form.Group>
+                <Form.Group style={{ visibility: "hidden" }}>
+                  <Form.Label>What's your name?</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="requester_name"
+                    defaultValue={name}
+                    // onChange={(e) => setReqName(name)}
+                  />
                 </Form.Group>
                 {/* <Form.Group>
           <Controls.Button text="Reset" color="default" onClick={resetForm} />
