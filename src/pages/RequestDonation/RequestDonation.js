@@ -77,31 +77,31 @@ export default function RequestDonationForm(props) {
 
     if (!currentUser) {
       history.push("/signup");
+    } else {
+      axios
+        .post("http://localhost:4000/app/request", data)
+        .catch((err) => {
+          console.log(err);
+        })
+        .then((e) => {
+          // send validation email to vendor
+        })
+        .then(() => (donationStore.isUpdate = true))
+        .then(() => {
+          if (validate()) {
+            console.log("is validated");
+            // console.log("title++++++++", title);
+            setOpenSubmitPopUp(true);
+            // addOrEdit(values, resetForm);
+            // resetForm();
+          } else {
+            console.log("not validated");
+            setOpenValidPopUp(true);
+          }
+        });
+
+      sendEmailToVendor(e);
     }
-
-    axios
-      .post("http://localhost:4000/app/request", data)
-      .catch((err) => {
-        console.log(err);
-      })
-      .then((e) => {
-        // send validation email to vendor
-      })
-      .then(() => (donationStore.isUpdate = true))
-      .then(() => {
-        if (validate()) {
-          console.log("is validated");
-          // console.log("title++++++++", title);
-          setOpenSubmitPopUp(true);
-          // addOrEdit(values, resetForm);
-          // resetForm();
-        } else {
-          console.log("not validated");
-          setOpenValidPopUp(true);
-        }
-      });
-
-    sendEmailToVendor(e);
   };
 
   const sendEmailToVendor = (e) => {
