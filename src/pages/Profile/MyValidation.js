@@ -22,10 +22,11 @@ const useStyles = makeStyles((theme) => ({
 function MyValidation({ uid }) {
   const classes = useStyles();
 
+  // 0 for not added, 1 for added but not validated, 2 for validated
   const [validationStatus, setValidationStatus] = useState({
-    Donor: false,
-    Requester: false,
-    Vendor: false,
+    Donor: 0,
+    Requester: 0,
+    Vendor: 0,
   });
 
   const [validationForm, setValidationForm] = useState({
@@ -61,7 +62,7 @@ function MyValidation({ uid }) {
 
       setValidationStatus((prevState) => ({
         ...prevState,
-        [currentCard]: true,
+        [currentCard]: 1,
       }));
     } catch (err) {
       console.log(err);
@@ -82,10 +83,15 @@ function MyValidation({ uid }) {
       });
 
       roles.forEach((element) => {
-        if (response.data.role[element].added) {
+        if (response.data.role[element].validated) {
           setValidationStatus((prevState) => ({
             ...prevState,
-            [element]: true,
+            [element]: 2,
+          }));
+        } else if (response.data.role[element].added) {
+          setValidationStatus((prevState) => ({
+            ...prevState,
+            [element]: 1,
           }));
         }
       });

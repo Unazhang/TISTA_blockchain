@@ -48,7 +48,10 @@ export default function RequestDonationForm(props) {
   const history = useHistory();
 
   let { currentUser } = useAuth();
-  let user_email = currentUser.email;
+  let user_email;
+  if (currentUser) {
+    user_email = currentUser.email;
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -71,6 +74,10 @@ export default function RequestDonationForm(props) {
     };
 
     console.log("data", data);
+
+    if (!currentUser) {
+      history.push("/signup");
+    }
 
     axios
       .post("http://localhost:4000/app/request", data)
