@@ -104,17 +104,15 @@ export default function DonationPopOver(props) {
 
   return (
     <div className={styles.actions}>
-      <Box spacing="2" component="span">
-        <span>&nbsp;&nbsp;</span>
-        <span>&nbsp;&nbsp;</span> <span>&nbsp;&nbsp;</span>
+      <Box spacing="2" component="span" sx={{ ml: 8, mr: 4 }}>
         <Button
           size="medium"
           variant="outlined"
           onClick={handleClick}
           style={{
-            maxWidth: "200px",
+            maxWidth: "150px",
             maxHeight: "50px",
-            minWidth: "200px",
+            minWidth: "150px",
             minHeight: "50px",
             borderColor: "#0F42AF",
             color: "#0F42AF",
@@ -153,13 +151,15 @@ export default function DonationPopOver(props) {
         <span>&nbsp;&nbsp;</span>
         <span>&nbsp;&nbsp;</span>
         <span>&nbsp;&nbsp;</span>
+        <span>&nbsp;&nbsp;</span>
+        <span>&nbsp;&nbsp;</span>
         <Button
           size="medium"
           variant="contained"
           style={{
-            maxWidth: "200px",
+            maxWidth: "150px",
             maxHeight: "50px",
-            minWidth: "200px",
+            minWidth: "150px",
             minHeight: "50px",
             backgroundColor: "#0F42AF",
             color: "#FFFFFF",

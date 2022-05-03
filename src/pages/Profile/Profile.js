@@ -197,7 +197,7 @@ export default function Profile({ location }) {
           events[i].title,
           events[i].vendor_name,
           events[i].current_amount,
-          events[i].target_amount,
+          events[i].target_amount
           // "Verified"
         )
       );
@@ -570,6 +570,31 @@ export default function Profile({ location }) {
           <br />
           <Form onSubmit={handleAvatarSubmit}>
             <Form.Group>
+              New Name:
+              <Form.Control
+                type="text"
+                // onChange={(e) => setAvatarUrl(e.target.value)}
+                style={{ width: 300 }}
+              />
+            </Form.Group>
+            <Form.Group>
+              New Password:
+              <Form.Control
+                type="text"
+                // onChange={(e) => setAvatarUrl(e.target.value)}
+                style={{ width: 300 }}
+              />
+            </Form.Group>
+            <Form.Group>
+              Confirm Password:
+              <Form.Control
+                type="text"
+                // onChange={(e) => setAvatarUrl(e.target.value)}
+                style={{ width: 300 }}
+              />
+            </Form.Group>
+            <Form.Group>
+              New Profile Picture:
               <Form.Control
                 type="text"
                 placeholder="Enter new avatar url:"
@@ -579,7 +604,7 @@ export default function Profile({ location }) {
             </Form.Group>
             <Form.Group>
               <Button variant="outlined" color="primary" type="submit">
-                Change Profile Picture
+                Submit Changes
               </Button>
             </Form.Group>
           </Form>

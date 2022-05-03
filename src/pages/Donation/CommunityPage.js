@@ -10,7 +10,8 @@ import Typography from "@material-ui/core/Typography";
 import DetectAccount from "./DetectAccount";
 import "./Donation.css";
 import poster from "./poster.jpeg";
-import Box from "@mui/material/Box";
+import { Box, Grid } from "@mui/material";
+import DonationCards from "../../components/DonationCards";
 
 const useStyles = makeStyles((theme) => ({
   searchInput: {
@@ -66,12 +67,8 @@ export default function CommunityPage() {
         right: "50px",
       }}
     >
-      {" "}
-      <Box sx={{ ml: 15, mr: 15, mt: 5 }}>
-        <Typography variant="h6">
-          <b>Explore Projects</b>
-        </Typography>
-        <br />
+      <Box sx={{ ml: 20, mr: 20 }}>
+        <Typography variant="h6">Explore Projects</Typography>
         <Typography
           fontSize={"100%"}
           fontFamily={"sans-serif"}
@@ -82,7 +79,11 @@ export default function CommunityPage() {
           know what you know. And YOU are the one who'll decide where to go.
         </Typography>
         <br />
-        <AllProjects />
+      </Box>
+      <Box sx={{ ml: 20, mr: 20 }}>
+        <Grid container spacing={3}>
+          <DonationCards />
+        </Grid>
       </Box>
     </div>
   );
