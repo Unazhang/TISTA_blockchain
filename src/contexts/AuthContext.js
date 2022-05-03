@@ -77,7 +77,7 @@ export function AuthProvider({ children }) {
     return currentUser.updatePassword(password);
   }
 
-  async function updateRoleAndName(user) {
+  async function updateUserInfo(user) {
     if (user) {
       try {
         const response = await axios.post(
@@ -90,7 +90,7 @@ export function AuthProvider({ children }) {
         console.log(response);
 
         ["Donor", "Requester", "Vendor"].forEach((match) => {
-          console.log(response.data.role[match].validated);
+          // console.log(response.data.role[match].validated);
           if (response.data.role[match].validated) {
             setRole((pre) => ({ ...pre, match }));
           }
@@ -110,7 +110,7 @@ export function AuthProvider({ children }) {
       setCurrentUser(user);
       setLoading(false);
       if (user != null) {
-        updateRoleAndName(user);
+        updateUserInfo(user);
       }
     });
     return unsubscribe;
@@ -122,9 +122,9 @@ export function AuthProvider({ children }) {
   //   }
   // }, [currentUser])
   // catch role change for debugging
-  useEffect(() => {
-    console.log(role);
-  }, [role]);
+  // useEffect(() => {
+  //   console.log(role);
+  // }, [role]);
 
   const value = {
     currentUser,

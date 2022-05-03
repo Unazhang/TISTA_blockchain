@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { styled } from "@mui/material/styles";
 import { Typography, makeStyles, OutlinedInput } from "@material-ui/core";
 import { Stack, Button } from "@mui/material";
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import ValidationCards from "./ValidationCards";
 import axios from "axios";
 
@@ -35,6 +33,8 @@ function MyValidation({ uid }) {
     description: "null",
   });
 
+  const [displayPhoneForm, setDisplayPhoneForm] = useState(true);
+
   const handleChange = (input) => (e) => {
     setValidationForm({ ...validationForm, [input]: e.target.value });
   };
@@ -59,9 +59,6 @@ function MyValidation({ uid }) {
         }
       );
 
-      console.log(uid);
-      console.log(response);
-
       setValidationStatus((prevState) => ({
         ...prevState,
         [currentCard]: true,
@@ -80,23 +77,22 @@ function MyValidation({ uid }) {
     const roles = ["Donor", "Vendor", "Requester"];
 
     try {
-      const response = await axios.post(
-        "http://localhost:4000/app/validationstatus",
-        {
-          uid: uid,
-        }
-      );
-      console.log(uid);
-      console.log(response);
+      const response = await axios.post("http://localhost:4000/app/userdata", {
+        uid: uid,
+      });
 
       roles.forEach((element) => {
-        if (response.data[element].added) {
+        if (response.data.role[element].added) {
           setValidationStatus((prevState) => ({
             ...prevState,
             [element]: true,
           }));
         }
       });
+
+      if (response.data.phoneNumber) {
+        setDisplayPhoneForm(false);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -130,14 +126,18 @@ function MyValidation({ uid }) {
               Validate your identity
             </Typography>
             <Stack spacing={2}>
-              <Typography variant="body1" component="div">
-                Enter your phone number:
-              </Typography>
-              <OutlinedInput
-                placeholder="Phone Number"
-                className={classes.textF}
-                onChange={handleChange("phoneNumber")}
-              ></OutlinedInput>
+              {displayPhoneForm && (
+                <div>
+                  <Typography variant="body1" component="div">
+                    Enter your phone number:
+                  </Typography>
+                  <OutlinedInput
+                    placeholder="Phone Number"
+                    className={classes.textF}
+                    onChange={handleChange("phoneNumber")}
+                  ></OutlinedInput>
+                </div>
+              )}
               <Typography variant="body1" component="div">
                 Briefly state your reason for validation:
               </Typography>

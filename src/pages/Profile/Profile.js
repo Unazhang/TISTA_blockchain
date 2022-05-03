@@ -412,7 +412,6 @@ export default function Profile() {
     }
   }
 
-  console.log(user_email);
 
   return (
     <div>
