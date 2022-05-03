@@ -25,6 +25,13 @@ function ValidationCards({
     setCurrentCard(e.target.id);
   };
 
+  const statusOptions = ["Incomplete", "Complete", "Verified"];
+  const actionOptions = [
+    "Add Validation",
+    "Edit Validation",
+    "Edit Validation",
+  ];
+
   return (
     <Stack spacing={2}>
       <Card
@@ -37,16 +44,16 @@ function ValidationCards({
           <Stack direction={"row"}>
             <Typography variant="body1">Donor Validation</Typography>
             <Typography variant="body1" className="ml-auto">
-              {validationStatus.Donor ? "Complete" : "Incomplete"}
+              {statusOptions[validationStatus.Donor]}
             </Typography>
           </Stack>
         </CardContent>
         <CardActions disableSpacing className="flex">
           <Button variant="contained" id="Donor" onClick={handleClick}>
-            {validationStatus.Donor ? "Edit Validation" : "Add Validation"}
+            {actionOptions[validationStatus.Donor]}
           </Button>
           <IconButton className="ml-auto">
-            {validationStatus.Donor ? (
+            {validationStatus.Donor != 0 ? (
               <CheckCircleIcon color="success" />
             ) : (
               <CancelIcon color="error" />
@@ -64,16 +71,16 @@ function ValidationCards({
           <Stack direction={"row"}>
             <Typography variant="body1">Requester Validation</Typography>
             <Typography variant="body1" className="ml-auto">
-              {validationStatus.Requester ? "Complete" : "Incomplete"}
+              {statusOptions[validationStatus.Requester]}
             </Typography>
           </Stack>
         </CardContent>
         <CardActions disableSpacing className="flex">
           <Button variant="contained" id="Requester" onClick={handleClick}>
-            {validationStatus.Requester ? "Edit Validation" : "Add Validation"}
+            {actionOptions[validationStatus.Requester]}
           </Button>
           <IconButton className="ml-auto">
-            {validationStatus.Requester ? (
+            {validationStatus.Requester != 0 ? (
               <CheckCircleIcon color="success" />
             ) : (
               <CancelIcon color="error" />
@@ -91,16 +98,16 @@ function ValidationCards({
           <Stack direction={"row"}>
             <Typography variant="body1">Vendor Validation</Typography>
             <Typography variant="body1" className="ml-auto">
-              {validationStatus.Vendor ? "Complete" : "Incomplete"}
+              {statusOptions[validationStatus.Vendor]}
             </Typography>
           </Stack>
         </CardContent>
         <CardActions disableSpacing className="flex">
           <Button variant="contained" id="Vendor" onClick={handleClick}>
-            {validationStatus.Vendor ? "Edit Validation" : "Add Validation"}
+            {actionOptions[validationStatus.Vendor]}
           </Button>
           <IconButton className="ml-auto">
-            {validationStatus.Vendor ? (
+            {validationStatus.Vendor != 0 ? (
               <CheckCircleIcon color="success" />
             ) : (
               <CancelIcon color="error" />
