@@ -21,12 +21,19 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import Popup from "../../components/Popup";
 
 export default function RequestDonationForm(props) {
+  const { role } = useAuth();
   // const { addOrEdit, recordForEdit } = props;
   const validate = () => {
     console.log("inside validate");
-    return true;
+
+    if (role.includes("Requester")) {
+      return true;
+    } else {
+      return false;
+    }
   };
   const [country, setCountry] = useState("");
   const [category, setCategory] = useState("");
@@ -40,7 +47,8 @@ export default function RequestDonationForm(props) {
   const [imageUrl, setImageUrl] = useState("");
 
   // redirect
-  const [open, setOpen] = React.useState(false);
+  const [openSubmitPopUp, setOpenSubmitPopUp] = React.useState(false);
+  const [openValidPopUp, setOpenValidPopUp] = React.useState(false);
 
   const history = useHistory();
 
@@ -51,7 +59,6 @@ export default function RequestDonationForm(props) {
     e.preventDefault();
     console.log("inside submit");
 
-    sendEmailToVendor(e);
     let data = {
       user_email: user_email,
       requester_name: requester_name,
@@ -69,24 +76,30 @@ export default function RequestDonationForm(props) {
     };
 
     console.log("data", data);
-    if (validate()) {
-      console.log("is validated");
-      console.log("title++++++++", title);
-      // addOrEdit(values, resetForm);
-      axios
-        .post("http://localhost:4000/app/request", data)
-        .catch((err) => {
-          console.log(err);
-        })
-        .then((e) => {
-          // send validation email to vendor
-        })
-        .then(() => (donationStore.isUpdate = true))
-        .then(() => {
-          setOpen(true);
-        });
-      // resetForm();
-    }
+
+    axios
+      .post("http://localhost:4000/app/request", data)
+      .catch((err) => {
+        console.log(err);
+      })
+      .then((e) => {
+        // send validation email to vendor
+      })
+      .then(() => (donationStore.isUpdate = true))
+      .then(() => {
+        if (validate()) {
+          console.log("is validated");
+          // console.log("title++++++++", title);
+          setOpenSubmitPopUp(true);
+          // addOrEdit(values, resetForm);
+          // resetForm();
+        } else {
+          console.log("not validated");
+          setOpenValidPopUp(true);
+        }
+      });
+
+    sendEmailToVendor(e);
   };
 
   const sendEmailToVendor = (e) => {
@@ -115,33 +128,35 @@ export default function RequestDonationForm(props) {
   return (
     <div>
       <div>
-        <Dialog
-          open={open}
-          // onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">
-            {"Your request has been submitted. "}
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
+        <Popup
+          open={openSubmitPopUp}
+          title="Your request has been submitted."
+          content={
+            <>
               We have sent your vendor an email about your request. <br />
               Please close this window and you will be redirected to the
               Community Page.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              onClick={() => {
-                setOpen(false);
-                history.push("/donation");
-              }}
-            >
-              Close
-            </Button>
-          </DialogActions>
-        </Dialog>
+            </>
+          }
+          handleClose={() => {
+            setOpenSubmitPopUp(false);
+            history.push("/donation");
+          }}
+        ></Popup>
+        <Popup
+          open={openValidPopUp}
+          title="Additional Action Required"
+          content={
+            <>
+              Your request has been recorded. <br />
+              Please validate yourself as a requester to finish the requesting process.
+            </>
+          }
+          handleClose={() => {
+            setOpenValidPopUp(false);
+            history.push("/profile");
+          }}
+        ></Popup>
       </div>
       <Box sx={{ ml: 10, mr: 10, mt: 0 }}>
         {" "}

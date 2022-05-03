@@ -92,7 +92,7 @@ export function AuthProvider({ children }) {
         ["Donor", "Requester", "Vendor"].forEach((match) => {
           // console.log(response.data.role[match].validated);
           if (response.data.role[match].validated) {
-            setRole((pre) => ({ ...pre, match }));
+            setRole((pre) => ([ ...pre, match ]));
           }
         });
 
