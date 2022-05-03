@@ -40,6 +40,7 @@ export function AuthProvider({ children }) {
         });
         console.log(response);
         setName(name);
+        setRole([]);
       } catch (err) {
         console.log(err);
       }
