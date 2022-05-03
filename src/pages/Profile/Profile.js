@@ -107,7 +107,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Profile() {
+export default function Profile({ location }) {
   let { currentUser, name } = useAuth();
   let user_email = currentUser.email;
 
@@ -252,7 +252,7 @@ export default function Profile() {
   const fetchProfile = async () => {
     await axios
       .post(`${API_BASE_URL}/app/user`, {
-        user_email: user_email
+        user_email: user_email,
       })
       .catch((err) => {
         console.log(err);
@@ -271,6 +271,10 @@ export default function Profile() {
   useEffect(() => {
     fetchProfile();
     fetchRequests();
+    // console.log(location.state);
+    if (location.state && location.state.from == "RequestPage") {
+      setValue(2);
+    }
   }, []);
 
   const handleAvatarSubmit = async () => {
@@ -411,7 +415,6 @@ export default function Profile() {
       );
     }
   }
-
 
   return (
     <div>

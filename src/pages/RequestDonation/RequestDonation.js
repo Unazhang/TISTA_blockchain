@@ -144,12 +144,13 @@ export default function RequestDonationForm(props) {
           content={
             <>
               Your request has been recorded. <br />
-              Please validate yourself as a requester to finish the requesting process.
+              Please validate yourself as a requester to finish the requesting
+              process.
             </>
           }
           handleClose={() => {
             setOpenValidPopUp(false);
-            history.push("/profile");
+            history.push("/profile", { from: "RequestPage" });
           }}
         ></Popup>
       </div>
