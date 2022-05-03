@@ -88,11 +88,15 @@ export function AuthProvider({ children }) {
         );
 
         console.log(response);
+        console.log(role);
 
         ["Donor", "Requester", "Vendor"].forEach((match) => {
-          // console.log(response.data.role[match].validated);
+          console.log(response.data.role[match].validated);
           if (response.data.role[match].validated) {
-            setRole((pre) => ([ ...pre, match ]));
+            setRole((pre) => {
+              // console.log(pre);
+              return [...(pre || []), match];
+            });
           }
         });
 

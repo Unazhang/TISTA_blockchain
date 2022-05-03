@@ -23,8 +23,8 @@ export default function RequestDonationForm(props) {
   // const { addOrEdit, recordForEdit } = props;
   const validate = () => {
     console.log("inside validate");
-
-    if (role.includes("Requester")) {
+    console.log(role);
+    if (role.length > 0 && role.includes("Requester")) {
       return true;
     } else {
       return false;
