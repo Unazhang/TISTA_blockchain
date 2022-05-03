@@ -12,7 +12,7 @@ import {
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import PendingIcon from "@mui/icons-material/Pending";
-import React, { useState } from "react";
+import React from "react";
 
 function ValidationCards({
   setdisplayCards,

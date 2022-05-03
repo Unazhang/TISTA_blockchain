@@ -482,9 +482,9 @@ export default function Profile({ location }) {
         </AppBar>
         <TabPanel value={value} index={0}>
           <Card>
-            <CardHeader title="Donation History" />
+            <CardHeader title="Request History" />
             <TableContainer component={Paper}>
-              <Table md={8} aira-label="Donation History">
+              <Table md={8} aira-label="Request History">
                 <TableHead>
                   <TableRow>
                     <TableCell>Created On</TableCell>

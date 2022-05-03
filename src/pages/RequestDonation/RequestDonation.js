@@ -19,7 +19,7 @@ import { useHistory } from "react-router-dom";
 import Popup from "../../components/Popup";
 
 export default function RequestDonationForm(props) {
-  const { role } = useAuth();
+  const { role, name } = useAuth();
   // const { addOrEdit, recordForEdit } = props;
   const validate = () => {
     console.log("inside validate");
@@ -59,7 +59,7 @@ export default function RequestDonationForm(props) {
 
     let data = {
       user_email: user_email,
-      requester_name: requester_name,
+      requester_name: name,
       country: country,
       category: category,
       title: title,
@@ -72,7 +72,7 @@ export default function RequestDonationForm(props) {
           ? imageUrl
           : "https://storage.googleapis.com/proudcity/sanrafaelca/uploads/2020/04/donate-image.png",
     };
-
+    console.log(name);
     console.log("data", data);
 
     if (!currentUser) {
@@ -184,14 +184,14 @@ export default function RequestDonationForm(props) {
                     <option value="US">United States</option>
                   </Form.Control>
                 </Form.Group>
-                <Form.Group>
+                {/* <Form.Group>
                   <Form.Label>What's your name?</Form.Label>
                   <Form.Control
                     type="text"
                     name="requester_name"
                     onChange={(e) => setReqName(e.target.value)}
                   />
-                </Form.Group>
+                </Form.Group> */}
                 <h3>Tell us about your request</h3>
                 <Form.Group>
                   <Form.Label>What are you fundraising for?</Form.Label>
