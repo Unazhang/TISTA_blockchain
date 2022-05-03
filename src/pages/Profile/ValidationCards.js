@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
+import PendingIcon from "@mui/icons-material/Pending";
 import React, { useState } from "react";
 
 function ValidationCards({
@@ -30,6 +31,12 @@ function ValidationCards({
     "Add Validation",
     "Edit Validation",
     "Edit Validation",
+  ];
+
+  const iconOptions = [
+    <CancelIcon color="error" />,
+    <PendingIcon />,
+    <CheckCircleIcon color="success" />,
   ];
 
   return (
@@ -53,11 +60,7 @@ function ValidationCards({
             {actionOptions[validationStatus.Donor]}
           </Button>
           <IconButton className="ml-auto">
-            {validationStatus.Donor != 0 ? (
-              <CheckCircleIcon color="success" />
-            ) : (
-              <CancelIcon color="error" />
-            )}
+            {iconOptions[validationStatus.Donor]}
           </IconButton>
         </CardActions>
       </Card>
@@ -80,11 +83,7 @@ function ValidationCards({
             {actionOptions[validationStatus.Requester]}
           </Button>
           <IconButton className="ml-auto">
-            {validationStatus.Requester != 0 ? (
-              <CheckCircleIcon color="success" />
-            ) : (
-              <CancelIcon color="error" />
-            )}
+            {iconOptions[validationStatus.Requester]}
           </IconButton>
         </CardActions>
       </Card>
@@ -107,11 +106,7 @@ function ValidationCards({
             {actionOptions[validationStatus.Vendor]}
           </Button>
           <IconButton className="ml-auto">
-            {validationStatus.Vendor != 0 ? (
-              <CheckCircleIcon color="success" />
-            ) : (
-              <CancelIcon color="error" />
-            )}
+            {iconOptions[validationStatus.Vendor]}
           </IconButton>
         </CardActions>
       </Card>
