@@ -25,7 +25,7 @@ function ValidationCards({
     setCurrentCard(e.target.id);
   };
 
-  const statusOptions = ["Incomplete", "Complete", "Verified"];
+  const statusOptions = ["Incomplete", "Pending", "Verified"];
   const actionOptions = [
     "Add Validation",
     "Edit Validation",
