@@ -198,7 +198,7 @@ export default function Profile({ location }) {
           events[i].vendor_name,
           events[i].current_amount,
           events[i].target_amount,
-          "Verified"
+          // "Verified"
         )
       );
     }
@@ -492,7 +492,7 @@ export default function Profile({ location }) {
                     <TableCell>Vendor</TableCell>
                     <TableCell>Amount Raised (XYZ Token)</TableCell>
                     <TableCell>Target Amount (XYZ Token)</TableCell>
-                    <TableCell>Status</TableCell>
+                    {/* <TableCell>Status</TableCell> */}
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -514,7 +514,7 @@ export default function Profile({ location }) {
                       <TableCell align="left">{row.vendor}</TableCell>
                       <TableCell align="left">{row.current_amount}</TableCell>
                       <TableCell align="left">{row.target_amount}</TableCell>
-                      <TableCell align="left">{row.status}</TableCell>
+                      {/* <TableCell align="left">{row.status}</TableCell> */}
                     </TableRow>
                   ))}
                 </TableBody>
