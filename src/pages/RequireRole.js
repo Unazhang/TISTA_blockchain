@@ -2,7 +2,8 @@ import { useAuth } from "../contexts/AuthContext";
 
 function RequireRole({ requiredRole, children }) {
   const { role } = useAuth();
-  // console.log("requirerole", role);
+  console.log("requirerole", requiredRole);
+  console.log("currentrole", role);
 
   // if not signed in/ signed up, don't show
   // if (requiredRole.length === 0 && currentUser === null) { return null }
@@ -16,7 +17,7 @@ function RequireRole({ requiredRole, children }) {
     access = false;
   } else {
     access = role.some((item) => {
-      return item in requiredRole;
+      return requiredRole.includes(item);
     });
   }
 
