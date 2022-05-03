@@ -75,7 +75,7 @@ export default function HomePage() {
             <br />
           </Box>
           <Box sx={{ ml: 20, mr: 20 }}>
-            <Grid container spacing={3}>
+            <Grid container direction={"row"} spacing={3}>
               <DonationCards cardNumber={4} />
             </Grid>
           </Box>

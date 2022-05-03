@@ -83,13 +83,13 @@ function DonationCards({ cardNumber }) {
     for (let i = 0; i < arrLength; i++) {
       if (events[i].blockchainAddress.length > 0) {
         arr.push(
-          <Grid item xs={12} sm={6} alignContent={"center"}>
+          <Grid item xl={6} md={6} sm={6} xs={6} alignContent={"center"}>
             <Grid container alignContent={"center"}>
               <Grid
                 item
                 style={{
                   width: "600px",
-                  height: "700px",
+                  height: "550px",
                   backgroundSize: "contained",
                 }}
                 alignContent={"center"}
@@ -107,7 +107,7 @@ function DonationCards({ cardNumber }) {
                       fontSize="40%"
                       fontWeight={"600"}
                     >
-                      {events[i].title}
+                      <b>{events[i].title}</b>
                     </Typography>
                     <Typography className={classes.multiLineEllipsis}>
                       {events[i].description}
