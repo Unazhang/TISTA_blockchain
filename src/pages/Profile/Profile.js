@@ -37,6 +37,8 @@ import MyValidation from "./MyValidation";
 import ValidationCards from "./ValidationCards";
 import RequireRole from "../RequireRole";
 import Moment from "react-moment";
+import Popup from "../../components/Popup";
+import { useHistory } from "react-router-dom";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -110,6 +112,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Profile({ location }) {
   let { currentUser, name } = useAuth();
   let user_email = currentUser.email;
+  const history = useHistory();
 
   // const [name, setName] = useState("");
   // const [found, setFound] = useState(Data);
@@ -118,6 +121,8 @@ export default function Profile({ location }) {
   const [value, setValue] = React.useState(0);
 
   const [avatarUrl, setAvatarUrl] = useState("");
+
+  const [openSubmitPopUp, setOpenSubmitPopUp] = useState(false);
 
   // const handleSearch = (e) => {
   //   const keyword = e.target.value;
@@ -304,14 +309,19 @@ export default function Profile({ location }) {
       _id: requestId,
     };
     console.log("handleBlockchainAddressSubmit", data);
-    await axios
-      .post(`${API_BASE_URL}/app/update-blockchain-address`, data)
-      .catch((err) => {
-        console.log(err);
-      })
-      .then((res) => {
-        console.log(res);
-      });
+
+    try {
+      const response = await axios.post(
+        `${API_BASE_URL}/app/update-blockchain-address`,
+        data
+      );
+
+      console.log("blockchain update response++", response);
+
+    } catch (err) {
+      console.log(err);
+    }
+    setOpenSubmitPopUp(true);
   };
 
   let arr = [];
@@ -624,7 +634,24 @@ export default function Profile({ location }) {
             </div>
           </RequireRole>
           <RequireRole requiredRole={["Vendor"]}>
-            <div>{arr}</div>
+            <div>
+              {arr}
+              <Popup
+                open={openSubmitPopUp}
+                title="Your request has been submitted."
+                content={
+                  <>
+                    We have sent your vendor an email about your request. <br />
+                    Please close this window and you will be redirected to the
+                    Community Page.
+                  </>
+                }
+                handleClose={() => {
+                  setOpenSubmitPopUp(false);
+                  history.push("/donation");
+                }}
+              ></Popup>
+            </div>
           </RequireRole>
         </TabPanel>
       </div>

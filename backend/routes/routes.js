@@ -269,6 +269,7 @@ router.post("/update-blockchain-address", async (req, res) => {
       if (err) {
         res.send(err);
       } else {
+        res.send(result);
         console.log("success++", result);
       }
     }
