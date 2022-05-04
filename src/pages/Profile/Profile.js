@@ -29,7 +29,7 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { CardHeader } from "@mui/material";
+import { CardHeader, CardMedia } from "@mui/material";
 import { TableContainer } from "@material-ui/core";
 import { Form, FormLabel } from "react-bootstrap";
 
@@ -317,7 +317,6 @@ export default function Profile({ location }) {
       );
 
       console.log("blockchain update response++", response);
-
     } catch (err) {
       console.log(err);
     }
@@ -331,29 +330,25 @@ export default function Profile({ location }) {
       events[i].blockchainAddress.length === 0
     ) {
       arr.push(
-        <Grid item xs={12} sm={6}>
-          <Grid container spacing={2}>
-            <Grid item style={{ width: "50%", backgroundSize: "contained" }}>
-              <Card style={{ width: 380, margin: "auto", height: 300 }}>
-                <img
-                  src={events[i].imageUrl}
-                  width="100%"
-                  height="100%"
-                  alt=""
+        <Grid item xl={6} md={6} sm={6} xs={6} alignContent={"center"}>
+          <Grid container alignContent={"center"}>
+            <Grid
+              item
+              style={{
+                width: "600px",
+                height: "550px",
+                backgroundSize: "contained",
+              }}
+              alignContent={"center"}
+            >
+              <Card sx={{ maxWidth: 345 }}>
+                <CardMedia
+                  component="img"
+                  height="350"
+                  image={events[i].imageUrl}
+                  alt={events[i].imageUrl}
                 />
-              </Card>
-            </Grid>
-            <Grid item style={{ width: "50%", height: "100%" }}>
-              <Card variant="outlined" style={{ width: 400, height: "100%" }}>
-                <CardContent
-                  style={{
-                    height: "80%",
-                    ordWrap: "break-word",
-                    display: "block",
-                    overflow: "hidden",
-                    whiteSpace: "normal",
-                  }}
-                >
+                <CardContent>
                   <Typography
                     id="title"
                     gutterBottom
@@ -634,24 +629,27 @@ export default function Profile({ location }) {
             </div>
           </RequireRole>
           <RequireRole requiredRole={["Vendor"]}>
-            <div>
-              {arr}
-              <Popup
-                open={openSubmitPopUp}
-                title="Your request has been submitted."
-                content={
-                  <>
-                    We have sent your vendor an email about your request. <br />
-                    Please close this window and you will be redirected to the
-                    Community Page.
-                  </>
-                }
-                handleClose={() => {
-                  setOpenSubmitPopUp(false);
-                  history.push("/donation");
-                }}
-              ></Popup>
-            </div>
+            <Box sx={{ ml: 0 }}>
+              <Grid container direction={"row"} spacing={3}>
+                {arr}
+                <Popup
+                  open={openSubmitPopUp}
+                  title="Your request has been submitted."
+                  content={
+                    <>
+                      We have sent your vendor an email about your request.{" "}
+                      <br />
+                      Please close this window and you will be redirected to the
+                      Community Page.
+                    </>
+                  }
+                  handleClose={() => {
+                    setOpenSubmitPopUp(false);
+                    history.push("/donation");
+                  }}
+                ></Popup>
+              </Grid>
+            </Box>
           </RequireRole>
         </TabPanel>
       </div>
