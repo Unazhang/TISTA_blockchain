@@ -619,7 +619,7 @@ export default function Profile({ location }) {
               }}
             >
               <Typography variant="h6" component="div">
-                Update Blockchain Address (Vendor Only)
+                Update Blockchain Address
               </Typography>
             </div>
           </RequireRole>
