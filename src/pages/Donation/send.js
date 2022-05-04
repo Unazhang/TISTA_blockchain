@@ -244,7 +244,7 @@ class Send extends Component {
                       placeholder="Donated as:"
                     />
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={8}>
                     <Checkbox onChange={this.handleAnonChange} />
                     Make it anonymous?
                   </Grid>
